@@ -1,0 +1,102 @@
+<svg width="100%" viewBox="0 0 680 380" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>AutoHub — Logotipo oficial</title>
+  <desc>Logo AutoHub com ícone hub, tipografia em degradê e tagline moderna dentro do card</desc>
+  <defs>
+    <linearGradient id="grad-main" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F58226"/>
+      <stop offset="55%" stop-color="#E8421F"/>
+      <stop offset="100%" stop-color="#D62C27"/>
+    </linearGradient>
+    <linearGradient id="grad-soft" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F9A05A"/>
+      <stop offset="50%" stop-color="#F06040"/>
+      <stop offset="100%" stop-color="#E03535"/>
+    </linearGradient>
+    <linearGradient id="grad-icon-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F58226"/>
+      <stop offset="100%" stop-color="#D62C27"/>
+    </linearGradient>
+    <linearGradient id="grad-icon-bg-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9A05A"/>
+      <stop offset="100%" stop-color="#E8421F"/>
+    </linearGradient>
+    <linearGradient id="grad-underline" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#F58226" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#D62C27" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- VERSAO ESCURA -->
+  <rect x="40" y="28" width="280" height="160" rx="18" fill="#111111"/>
+  <rect x="64" y="52" width="50" height="50" rx="12" fill="url(#grad-icon-bg)"/>
+  <circle cx="89" cy="77" r="7" fill="#fff" opacity="0.95"/>
+  <circle cx="103" cy="63" r="4" fill="#fff" opacity="0.7"/>
+  <circle cx="106" cy="84" r="4" fill="#fff" opacity="0.7"/>
+  <circle cx="75" cy="91" r="4" fill="#fff" opacity="0.7"/>
+  <line x1="89" y1="77" x2="103" y2="63" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="89" y1="77" x2="106" y2="84" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="89" y1="77" x2="75" y2="91" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <text x="126" y="73" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" letter-spacing="-1" fill="url(#grad-main)">Auto</text>
+  <text x="207" y="73" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="300" letter-spacing="-0.5" fill="#ffffff" opacity="0.9">Hub</text>
+  <rect x="64" y="112" width="240" height="0.75" rx="0.5" fill="url(#grad-underline)"/>
+  <text x="64" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#F58226" opacity="0.9" letter-spacing="0.04em">Pedidos</text>
+  <text x="120" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#ffffff" opacity="0.2">·</text>
+  <text x="130" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#E8421F" opacity="0.9" letter-spacing="0.04em">Metricas</text>
+  <text x="194" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#ffffff" opacity="0.2">·</text>
+  <text x="204" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#D62C27" opacity="0.9" letter-spacing="0.04em">Controle</text>
+  <text x="64" y="155" font-family="system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="300" fill="#ffffff" opacity="0.28" letter-spacing="0.12em">PAINEL DE GESTAO AUTOMOTIVA</text>
+
+  <!-- VERSAO CLARA -->
+  <rect x="360" y="28" width="280" height="160" rx="18" fill="#ffffff" stroke="#e8e8e8" stroke-width="0.5"/>
+  <rect x="384" y="52" width="50" height="50" rx="12" fill="url(#grad-icon-bg-light)"/>
+  <circle cx="409" cy="77" r="7" fill="#fff" opacity="0.95"/>
+  <circle cx="423" cy="63" r="4" fill="#fff" opacity="0.7"/>
+  <circle cx="426" cy="84" r="4" fill="#fff" opacity="0.7"/>
+  <circle cx="395" cy="91" r="4" fill="#fff" opacity="0.7"/>
+  <line x1="409" y1="77" x2="423" y2="63" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="409" y1="77" x2="426" y2="84" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <line x1="409" y1="77" x2="395" y2="91" stroke="#fff" stroke-width="1.5" opacity="0.5"/>
+  <text x="446" y="73" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="700" letter-spacing="-1" fill="url(#grad-soft)">Auto</text>
+  <text x="527" y="73" font-family="system-ui,-apple-system,sans-serif" font-size="28" font-weight="300" letter-spacing="-0.5" fill="#1a1a1a">Hub</text>
+  <rect x="384" y="112" width="240" height="0.75" rx="0.5" fill="url(#grad-underline)"/>
+  <text x="384" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#F58226" letter-spacing="0.04em">Pedidos</text>
+  <text x="440" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#cccccc">·</text>
+  <text x="450" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#E8421F" letter-spacing="0.04em">Metricas</text>
+  <text x="514" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" fill="#cccccc">·</text>
+  <text x="524" y="136" font-family="system-ui,-apple-system,sans-serif" font-size="11" font-weight="600" fill="#D62C27" letter-spacing="0.04em">Controle</text>
+  <text x="384" y="155" font-family="system-ui,-apple-system,sans-serif" font-size="9.5" font-weight="300" fill="#aaaaaa" letter-spacing="0.12em">PAINEL DE GESTAO AUTOMOTIVA</text>
+
+  <!-- ICONE ISOLADO -->
+  <text x="340" y="222" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#aaaaaa" text-anchor="middle" letter-spacing="0.08em">ICONE ISOLADO</text>
+  <rect x="224" y="232" width="68" height="68" rx="18" fill="url(#grad-icon-bg)"/>
+  <circle cx="258" cy="266" r="10" fill="#fff" opacity="0.95"/>
+  <circle cx="276" cy="250" r="5.5" fill="#fff" opacity="0.7"/>
+  <circle cx="279" cy="273" r="5.5" fill="#fff" opacity="0.7"/>
+  <circle cx="241" cy="282" r="5.5" fill="#fff" opacity="0.7"/>
+  <line x1="258" y1="266" x2="276" y2="250" stroke="#fff" stroke-width="2" opacity="0.5"/>
+  <line x1="258" y1="266" x2="279" y2="273" stroke="#fff" stroke-width="2" opacity="0.5"/>
+  <line x1="258" y1="266" x2="241" y2="282" stroke="#fff" stroke-width="2" opacity="0.5"/>
+  <rect x="388" y="232" width="68" height="68" rx="18" fill="#FFF3EC" stroke="#F9A05A" stroke-width="0.75"/>
+  <circle cx="422" cy="266" r="10" fill="url(#grad-main)" opacity="0.9"/>
+  <circle cx="440" cy="250" r="5.5" fill="#E8421F" opacity="0.45"/>
+  <circle cx="443" cy="273" r="5.5" fill="#E8421F" opacity="0.45"/>
+  <circle cx="405" cy="282" r="5.5" fill="#E8421F" opacity="0.45"/>
+  <line x1="422" y1="266" x2="440" y2="250" stroke="#F58226" stroke-width="2" opacity="0.35"/>
+  <line x1="422" y1="266" x2="443" y2="273" stroke="#F58226" stroke-width="2" opacity="0.35"/>
+  <line x1="422" y1="266" x2="405" y2="282" stroke="#F58226" stroke-width="2" opacity="0.35"/>
+
+  <!-- PALETA -->
+  <text x="340" y="332" font-family="system-ui,-apple-system,sans-serif" font-size="10" fill="#aaaaaa" text-anchor="middle" letter-spacing="0.08em">PALETA</text>
+  <rect x="163" y="342" width="38" height="14" rx="4" fill="#F58226"/>
+  <rect x="209" y="342" width="38" height="14" rx="4" fill="#E8421F"/>
+  <rect x="255" y="342" width="38" height="14" rx="4" fill="#D62C27"/>
+  <rect x="301" y="342" width="38" height="14" rx="4" fill="#1a1a1a"/>
+  <rect x="347" y="342" width="38" height="14" rx="4" fill="#FFF3EC" stroke="#F9A05A" stroke-width="0.5"/>
+  <rect x="393" y="342" width="38" height="14" rx="4" fill="#ffffff" stroke="#eeeeee" stroke-width="0.5"/>
+  <text x="182" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#F58226</text>
+  <text x="228" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#E8421F</text>
+  <text x="274" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#D62C27</text>
+  <text x="320" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#1A1A1A</text>
+  <text x="366" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#FFF3EC</text>
+  <text x="412" y="368" font-family="system-ui,-apple-system,sans-serif" font-size="9" fill="#aaaaaa" text-anchor="middle">#FFFFFF</text>
+</svg>

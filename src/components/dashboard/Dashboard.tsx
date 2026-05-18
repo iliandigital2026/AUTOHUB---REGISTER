@@ -1,0 +1,285 @@
+import { useState, useMemo } from 'react'
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts'
+import { Download, Filter, TrendingUp, MessageCircle, Clock, DollarSign } from 'lucide-react'
+import type { Pedido } from '../../types'
+import { exportarExcel } from '../../services/excel'
+
+interface Props { pedidos: Pedido[] }
+
+const CORES_PGTO: Record<string, string> = {
+  pix: '#F58226', credito: '#F97B3B', debito: '#FAC775', dinheiro: '#BBBBBB'
+}
+const LABELS_PGTO: Record<string, string> = {
+  pix: 'PIX', credito: 'Crédito', debito: 'Débito', dinheiro: 'Dinheiro'
+}
+
+const css = `
+  .dash-page { padding: 24px; max-width: 1400px; }
+  .filter-bar { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-bar label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; }
+  .filter-bar input[type=date] { font-family: 'Montserrat', sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid #E0E0E0; border-radius: 8px; background: #F6F6F6; color: #1A1A1A; outline: none; }
+  .filter-bar input[type=date]:focus { border-color: #F58226; }
+  .btn-primary { background: #F58226; color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: opacity .15s; }
+  .btn-primary:hover { opacity: .88; }
+  .btn-outline { background: transparent; color: #F58226; border: 1px solid #F58226; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
+  .btn-outline:hover { background: #FFF0E9; }
+  .periodo-label { font-size: 12px; color: #999; margin-left: auto; font-weight: 600; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpi-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
+  .kpi-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #F58226; }
+  .kpi-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: #1A1A1A; }
+  .kpi-sub { font-size: 11px; color: #999; margin-top: 4px; }
+  .charts-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .tables-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 20px; }
+  .card-title { font-size: 12px; font-weight: 700; color: #1A1A1A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .card-title-icon { color: #F58226; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .bar-label { font-size: 11px; color: #666; font-weight: 500; min-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; background: #F0F0F0; border-radius: 20px; height: 10px; overflow: hidden; }
+  .bar-fill { height: 100%; background: #F58226; border-radius: 20px; }
+  .bar-val { font-size: 11px; font-weight: 700; color: #1A1A1A; min-width: 42px; text-align: right; }
+  .client-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid #F0F0F0; }
+  .client-row:last-child { border-bottom: none; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: #FFF0E9; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #F58226; flex-shrink: 0; }
+  .client-info { flex: 1; min-width: 0; }
+  .client-name { font-size: 12px; font-weight: 600; color: #1A1A1A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .client-detail { font-size: 11px; color: #999; }
+  .client-val { font-size: 13px; font-weight: 700; color: #F58226; }
+  .pay-row { margin-bottom: 12px; }
+  .pay-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+  .pay-label { font-size: 12px; font-weight: 500; color: #1A1A1A; display: flex; align-items: center; gap: 7px; }
+  .pay-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .pay-val { font-size: 12px; font-weight: 700; color: #1A1A1A; }
+  .pay-pct { font-size: 10px; color: #999; margin-left: 4px; }
+  .pay-bar-track { width: 100%; background: #F0F0F0; border-radius: 20px; height: 7px; overflow: hidden; }
+  .pay-bar-fill { height: 100%; border-radius: 20px; }
+  .ia-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .ia-card { background: #F6F6F6; border-radius: 10px; padding: 12px; text-align: center; }
+  .ia-num { font-size: 18px; font-weight: 700; color: #F58226; }
+  .ia-lbl { font-size: 10px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
+  @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} }
+`
+
+function iniciais(nome: string) {
+  return nome.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase()
+}
+
+function fmtMoeda(v: number) {
+  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+function calcTempo(pedidos: Pedido[]) {
+  const validos = pedidos.filter(p => p.started_at && p.ended_at)
+  if (!validos.length) return '—'
+  const avg = validos.reduce((acc, p) => {
+    return acc + (new Date(p.ended_at).getTime() - new Date(p.started_at).getTime())
+  }, 0) / validos.length / 1000
+  const m = Math.floor(avg / 60)
+  const s = Math.round(avg % 60)
+  return `${m}m ${s}s`
+}
+
+export default function Dashboard({ pedidos }: Props) {
+  const hoje = new Date()
+  const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1).toISOString().split('T')[0]
+  const ultimoDia = hoje.toISOString().split('T')[0]
+
+  const [dateFrom, setDateFrom] = useState(primeiroDia)
+  const [dateTo, setDateTo] = useState(ultimoDia)
+  const [filteredRange, setFilteredRange] = useState({ from: primeiroDia, to: ultimoDia })
+
+  const filtrados = useMemo(() => {
+    const d1 = new Date(filteredRange.from)
+    const d2 = new Date(filteredRange.to)
+    d2.setHours(23, 59, 59)
+    return pedidos.filter(p => {
+      const d = new Date(p.created_at)
+      return d >= d1 && d <= d2
+    })
+  }, [pedidos, filteredRange])
+
+  const finalizados = filtrados.filter(p => p.status === 'finalizado')
+  const faturamento = finalizados.reduce((a, p) => a + p.total, 0)
+  const conversao = filtrados.length ? Math.round((finalizados.length / filtrados.length) * 100) : 0
+  const tempoMedio = calcTempo(filtrados)
+
+  const pecasMap = new Map<string, number>()
+  filtrados.forEach(p => (p.itens || []).forEach((it: { descricao: string }) => {
+    pecasMap.set(it.descricao, (pecasMap.get(it.descricao) || 0) + 1)
+  }))
+  const pecasTop = Array.from(pecasMap.entries())
+    .sort((a, b) => b[1] - a[1]).slice(0, 6)
+    .map(([nome, qtd]) => ({ nome: nome.length > 22 ? nome.slice(0, 22) + '…' : nome, qtd }))
+  const maxPeca = pecasTop[0]?.qtd || 1
+
+  const pgtoMap = new Map<string, number>()
+  finalizados.forEach(p => pgtoMap.set(p.forma_pagamento, (pgtoMap.get(p.forma_pagamento) || 0) + p.total))
+  const pgtoData = Array.from(pgtoMap.entries()).map(([tipo, valor]) => ({
+    tipo, valor, label: LABELS_PGTO[tipo] || tipo.toUpperCase(), cor: CORES_PGTO[tipo] || '#ccc',
+    pct: faturamento ? Math.round((valor / faturamento) * 100) : 0,
+  })).sort((a, b) => b.valor - a.valor)
+
+  const clienteMap = new Map<string, { pedidos: number; total: number }>()
+  filtrados.forEach(p => {
+    const ex = clienteMap.get(p.cliente_nome) || { pedidos: 0, total: 0 }
+    clienteMap.set(p.cliente_nome, { pedidos: ex.pedidos + 1, total: ex.total + p.total })
+  })
+  const top5 = Array.from(clienteMap.entries())
+    .sort((a, b) => b[1].total - a[1].total).slice(0, 5)
+
+  const diasMap = new Map<string, number>()
+  filtrados.forEach(p => {
+    const dia = p.created_at.split('T')[0]
+    diasMap.set(dia, (diasMap.get(dia) || 0) + 1)
+  })
+  const lineData = Array.from(diasMap.entries()).sort().map(([dia, qtd]) => ({
+    dia: dia.slice(5), qtd
+  }))
+
+  const pieData = pgtoData.map(d => ({ name: d.label, value: d.valor, cor: d.cor }))
+
+  return (
+    <>
+      <style>{css}</style>
+      <div className="dash-page">
+        <div className="filter-bar">
+          <label>Período</label>
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
+          <span style={{ fontSize: 12, color: '#999' }}>até</span>
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} />
+          <button className="btn-primary" onClick={() => setFilteredRange({ from: dateFrom, to: dateTo })}>
+            <Filter size={13} /> Filtrar
+          </button>
+          <button className="btn-outline" onClick={() => exportarExcel(filtrados, dateFrom, dateTo)}>
+            <Download size={13} /> Exportar Excel
+          </button>
+          <span className="periodo-label">{filtrados.length} atendimentos no período</span>
+        </div>
+
+        <div className="kpis">
+          <div className="kpi-card">
+            <div className="kpi-accent" />
+            <div className="kpi-label"><DollarSign size={13} className="card-title-icon" /> Faturamento IA</div>
+            <div className="kpi-value">{fmtMoeda(faturamento)}</div>
+            <div className="kpi-sub">{finalizados.length} pedidos finalizados</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-accent" />
+            <div className="kpi-label"><MessageCircle size={13} className="card-title-icon" /> Atendimentos</div>
+            <div className="kpi-value">{filtrados.length}</div>
+            <div className="kpi-sub">total no período</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-accent" />
+            <div className="kpi-label"><Clock size={13} className="card-title-icon" /> Tempo médio coleta</div>
+            <div className="kpi-value">{tempoMedio}</div>
+            <div className="kpi-sub">do início ao pedido</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-accent" />
+            <div className="kpi-label"><TrendingUp size={13} className="card-title-icon" /> Taxa conversão</div>
+            <div className="kpi-value">{conversao}%</div>
+            <div className="kpi-sub">chats que viraram pedido</div>
+          </div>
+        </div>
+
+        <div className="charts-row">
+          <div className="card">
+            <div className="card-title"><span className="card-title-icon">▪</span> Peças mais vendidas</div>
+            {pecasTop.length === 0 && <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no período</p>}
+            {pecasTop.map(p => (
+              <div key={p.nome} className="bar-row">
+                <div className="bar-label">{p.nome}</div>
+                <div className="bar-track">
+                  <div className="bar-fill" style={{ width: `${Math.round((p.qtd / maxPeca) * 100)}%` }} />
+                </div>
+                <div className="bar-val">{p.qtd} un.</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="card">
+            <div className="card-title"><span className="card-title-icon">▪</span> Formas de pagamento</div>
+            {pieData.length > 0 && (
+              <ResponsiveContainer width="100%" height={130}>
+                <PieChart>
+                  <Pie data={pieData} cx="50%" cy="50%" innerRadius={38} outerRadius={58} dataKey="value" paddingAngle={3}>
+                    {pieData.map((entry, i) => <Cell key={i} fill={entry.cor} />)}
+                  </Pie>
+                  <Tooltip formatter={(v: number) => fmtMoeda(v)} />
+                </PieChart>
+              </ResponsiveContainer>
+            )}
+            <div style={{ marginTop: 8 }}>
+              {pgtoData.map(p => (
+                <div key={p.tipo} className="pay-row">
+                  <div className="pay-top">
+                    <div className="pay-label">
+                      <div className="pay-dot" style={{ background: p.cor }} />
+                      {p.label}
+                    </div>
+                    <div>
+                      <span className="pay-val">{fmtMoeda(p.valor)}</span>
+                      <span className="pay-pct">({p.pct}%)</span>
+                    </div>
+                  </div>
+                  <div className="pay-bar-track">
+                    <div className="pay-bar-fill" style={{ width: `${p.pct}%`, background: p.cor }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="tables-row">
+          <div className="card">
+            <div className="card-title"><span className="card-title-icon">▪</span> Top 5 clientes</div>
+            {top5.map(([nome, d], i) => (
+              <div key={nome} className="client-row">
+                <div className="avatar">{iniciais(nome)}</div>
+                <div className="client-info">
+                  <div className="client-name">#{i + 1} {nome}</div>
+                  <div className="client-detail">{d.pedidos} pedido{d.pedidos !== 1 ? 's' : ''}</div>
+                </div>
+                <div className="client-val">{fmtMoeda(d.total)}</div>
+              </div>
+            ))}
+            {top5.length === 0 && <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no período</p>}
+          </div>
+
+          <div className="card">
+            <div className="card-title"><span className="card-title-icon">▪</span> Métricas da IA</div>
+            <div className="ia-grid">
+              <div className="ia-card">
+                <div className="ia-num">{filtrados.length}</div>
+                <div className="ia-lbl">Atendimentos</div>
+              </div>
+              <div className="ia-card">
+                <div className="ia-num">{tempoMedio}</div>
+                <div className="ia-lbl">Tempo médio</div>
+              </div>
+              <div className="ia-card">
+                <div className="ia-num">{conversao}%</div>
+                <div className="ia-lbl">Conversão</div>
+              </div>
+            </div>
+            {lineData.length > 0 && (
+              <ResponsiveContainer width="100%" height={100}>
+                <LineChart data={lineData}>
+                  <XAxis dataKey="dia" tick={{ fontSize: 10, fill: '#999' }} />
+                  <YAxis hide />
+                  <Tooltip formatter={(v: number) => [`${v} atend.`, '']} />
+                  <Line type="monotone" dataKey="qtd" stroke="#F58226" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            )}
+            <div style={{ fontSize: 10, color: '#bbb', textAlign: 'center', marginTop: 4 }}>Atendimentos por dia</div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
