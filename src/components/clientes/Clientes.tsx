@@ -167,7 +167,7 @@ export default function Clientes({ pedidos }: Props) {
                   <div key={p.id} className="hist-card">
                     <div className="hist-card-top">
                       <span className="hist-date"><Clock size={11} /> {fmtData(p.created_at)}</span>
-                      <span className={\`hist-status \${p.status === 'finalizado' ? 'status-fin' : p.status === 'aguardando_registro' ? 'status-ag' : 'status-em'}\`}>
+                      <span className={`hist-status \${p.status === 'finalizado' ? 'status-fin' : p.status === 'aguardando_registro' ? 'status-ag' : 'status-em'}`}>
                         {STATUS_LABEL[p.status]}
                       </span>
                     </div>
