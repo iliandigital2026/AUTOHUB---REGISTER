@@ -49,6 +49,24 @@ const STATUS_LABEL: Record<string, string> = {
   finalizado: 'Finalizado', aguardando_registro: 'Aguardando', em_atendimento: 'Em atendimento'
 }
 
+function parseItens(itens: unknown): { descricao: string; valor: number }[] {
+  if (!itens) return []
+  if (Array.isArray(itens)) {
+    return itens.map((it: unknown) =>
+      typeof it === 'string' ? { descricao: it, valor: 0 } : it as { descricao: string; valor: number }
+    )
+  }
+  if (typeof itens === 'string') {
+    try {
+      const parsed = JSON.parse(itens)
+      return Array.isArray(parsed) ? parsed.map((it: unknown) =>
+        typeof it === 'string' ? { descricao: it, valor: 0 } : it as { descricao: string; valor: number }
+      ) : []
+    } catch { return [] }
+  }
+  return []
+}
+
 export default function Clientes({ pedidos }: Props) {
   const [busca, setBusca] = useState('')
   const [historico, setHistorico] = useState<string | null>(null)
@@ -95,7 +113,7 @@ export default function Clientes({ pedidos }: Props) {
                 <th>WhatsApp</th>
                 <th>Pedidos</th>
                 <th>Valor Total</th>
-                <th>Última Compra</th>
+                <th>Ultima Compra</th>
                 <th></th>
               </tr>
             </thead>
@@ -110,16 +128,16 @@ export default function Clientes({ pedidos }: Props) {
                   </td>
                   <td>
                     {d.telefone ? (
-                      <a className="wa-link" href={`https://wa.me/${d.telefone.replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer">
+                      <a className="wa-link" href={\`https://wa.me/\${d.telefone.replace(/\D/g,'')}\`} target="_blank" rel="noopener noreferrer">
                         <Phone size={12} /> {d.telefone}
                       </a>
-                    ) : '—'}
+                    ) : '-'}
                   </td>
                   <td><span style={{ fontWeight: 700 }}>{d.pedidos.length}</span></td>
                   <td><span style={{ color: '#F58226', fontWeight: 700 }}>{fmtMoeda(d.total)}</span></td>
-                  <td style={{ color: '#999', fontSize: 12 }}>{d.ultima ? fmtData(d.ultima) : '—'}</td>
+                  <td style={{ color: '#999', fontSize: 12 }}>{d.ultima ? fmtData(d.ultima) : '-'}</td>
                   <td>
-                    <button className="btn-hist" onClick={() => setHistorico(nome)}>Ver histórico</button>
+                    <button className="btn-hist" onClick={() => setHistorico(nome)}>Ver historico</button>
                   </td>
                 </tr>
               ))}
@@ -143,32 +161,31 @@ export default function Clientes({ pedidos }: Props) {
               <div className="drawer-close" onClick={() => setHistorico(null)}><X size={16} /></div>
             </div>
             <div className="drawer-body">
-              {clienteAtivo.pedidos.sort((a,b) => b.created_at.localeCompare(a.created_at)).map(p => (
-                <div key={p.id} className="hist-card">
-                  <div className="hist-card-top">
-                    <span className="hist-date"><Clock size={11} /> {fmtData(p.created_at)}</span>
-                    <span className={`hist-status ${p.status === 'finalizado' ? 'status-fin' : p.status === 'aguardando_registro' ? 'status-ag' : 'status-em'}`}>
-                      {STATUS_LABEL[p.status]}
-                    </span>
-                  </div>
-                  {(Array.isArray(p.itens) ? p.itens : []).map((it: string | { descricao: string; valor: number }, i: number) => {
-                    const descricao = typeof it === 'string' ? it : it.descricao
-                    const valor = typeof it === 'string' ? 0 : it.valor
-                    return (
-                      <div key={i} className="hist-item">
-                        <span>• {descricao}</span>
-                        {valor > 0 && <span style={{ fontWeight: 600 }}>{fmtMoeda(valor)}</span>}
-                      </div>
-                    )
-                  })}
-                  <div className="hist-total">Total: {fmtMoeda(p.total)}</div>
-                  {p.veiculo_carro && (
-                    <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>
-                      🚗 {[p.veiculo_carro, p.veiculo_ano, p.veiculo_placa].filter(Boolean).join(' · ')}
+              {clienteAtivo.pedidos.sort((a,b) => b.created_at.localeCompare(a.created_at)).map(p => {
+                const itens = parseItens(p.itens)
+                return (
+                  <div key={p.id} className="hist-card">
+                    <div className="hist-card-top">
+                      <span className="hist-date"><Clock size={11} /> {fmtData(p.created_at)}</span>
+                      <span className={\`hist-status \${p.status === 'finalizado' ? 'status-fin' : p.status === 'aguardando_registro' ? 'status-ag' : 'status-em'}\`}>
+                        {STATUS_LABEL[p.status]}
+                      </span>
                     </div>
-                  )}
-                </div>
-              ))}
+                    {itens.map((it, i) => (
+                      <div key={i} className="hist-item">
+                        <span>• {it.descricao}</span>
+                        {it.valor > 0 && <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>}
+                      </div>
+                    ))}
+                    <div className="hist-total">Total: {fmtMoeda(p.total)}</div>
+                    {p.veiculo_carro && (
+                      <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>
+                        carro {[p.veiculo_carro, p.veiculo_ano, p.veiculo_placa].filter(Boolean).join(' · ')}
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
             </div>
           </div>
         </>
