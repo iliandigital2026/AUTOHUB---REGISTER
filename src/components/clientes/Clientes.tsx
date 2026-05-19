@@ -151,12 +151,16 @@ export default function Clientes({ pedidos }: Props) {
                       {STATUS_LABEL[p.status]}
                     </span>
                   </div>
-                  {(p.itens || []).map((it: { descricao: string; valor: number }, i: number) => (
-                    <div key={i} className="hist-item">
-                      <span>• {it.descricao}</span>
-                      <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>
-                    </div>
-                  ))}
+                  {(Array.isArray(p.itens) ? p.itens : []).map((it: string | { descricao: string; valor: number }, i: number) => {
+                    const descricao = typeof it === 'string' ? it : it.descricao
+                    const valor = typeof it === 'string' ? 0 : it.valor
+                    return (
+                      <div key={i} className="hist-item">
+                        <span>• {descricao}</span>
+                        {valor > 0 && <span style={{ fontWeight: 600 }}>{fmtMoeda(valor)}</span>}
+                      </div>
+                    )
+                  })}
                   <div className="hist-total">Total: {fmtMoeda(p.total)}</div>
                   {p.veiculo_carro && (
                     <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>
