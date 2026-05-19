@@ -128,7 +128,7 @@ export default function Clientes({ pedidos }: Props) {
                   </td>
                   <td>
                     {d.telefone ? (
-                      <a className="wa-link" href={\`https://wa.me/\${d.telefone.replace(/\D/g,'')}\`} target="_blank" rel="noopener noreferrer">
+                        <a className="wa-link" href={`https://wa.me/${d.telefone.replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer">
                         <Phone size={12} /> {d.telefone}
                       </a>
                     ) : '-'}
