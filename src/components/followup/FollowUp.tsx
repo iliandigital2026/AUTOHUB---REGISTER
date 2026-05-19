@@ -116,8 +116,8 @@ export default function FollowUp({ pedidos }: Props) {
                   <div className="fu-info">
                     <div className="fu-nome">{p.cliente_nome}</div>
                     <div className="fu-detalhe">
-                      {(p.itens || []).slice(0, 2).map((it: { descricao: string }) => it.descricao).join(', ')}
-                      {(p.itens || []).length > 2 && ` +${(p.itens || []).length - 2} itens`}
+                      {(Array.isArray(p.itens) ? p.itens : []).slice(0, 2).map((it: string | { descricao: string }) => typeof it === 'string' ? it : it.descricao).join(', ')}
+                      {(Array.isArray(p.itens) ? p.itens : []).length > 2 && ` +${(Array.isArray(p.itens) ? p.itens : []).length - 2} itens`}
                       {p.veiculo_carro && ` · ${p.veiculo_carro} ${p.veiculo_ano}`}
                     </div>
                   </div>

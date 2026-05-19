@@ -106,8 +106,9 @@ export default function Dashboard({ pedidos }: Props) {
   const tempoMedio = calcTempo(filtrados)
 
   const pecasMap = new Map<string, number>()
-  filtrados.forEach(p => (p.itens || []).forEach((it: { descricao: string }) => {
-    pecasMap.set(it.descricao, (pecasMap.get(it.descricao) || 0) + 1)
+  filtrados.forEach(p => (Array.isArray(p.itens) ? p.itens : []).forEach((it: string | { descricao: string }) => {
+    const descricao = typeof it === 'string' ? it : it.descricao
+    if (descricao) pecasMap.set(descricao, (pecasMap.get(descricao) || 0) + 1)
   }))
   const pecasTop = Array.from(pecasMap.entries())
     .sort((a, b) => b[1] - a[1]).slice(0, 6)
@@ -115,7 +116,7 @@ export default function Dashboard({ pedidos }: Props) {
   const maxPeca = pecasTop[0]?.qtd || 1
 
   const pgtoMap = new Map<string, number>()
-  finalizados.forEach(p => pgtoMap.set(p.forma_pagamento, (pgtoMap.get(p.forma_pagamento) || 0) + p.total))
+  finalizados.forEach(p => { const fp = (p.forma_pagamento || '').toLowerCase(); pgtoMap.set(fp, (pgtoMap.get(fp) || 0) + p.total) })
   const pgtoData = Array.from(pgtoMap.entries()).map(([tipo, valor]) => ({
     tipo, valor, label: LABELS_PGTO[tipo] || tipo.toUpperCase(), cor: CORES_PGTO[tipo] || '#ccc',
     pct: faturamento ? Math.round((valor / faturamento) * 100) : 0,
