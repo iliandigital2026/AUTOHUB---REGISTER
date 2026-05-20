@@ -84,7 +84,7 @@ function calcTempo(pedidos: Pedido[]) {
 export default function Dashboard({ pedidos }: Props) {
   const hoje = new Date()
   const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1).toISOString().split('T')[0]
-  const ultimoDia = hoje.toISOString().split('T')[0]
+  const ultimoDia = new Date(hoje.getTime() - hoje.getTimezoneOffset() * 60000).toISOString().split('T')[0]
 
   const [dateFrom, setDateFrom] = useState(primeiroDia)
   const [dateTo, setDateTo] = useState(ultimoDia)
@@ -93,7 +93,7 @@ export default function Dashboard({ pedidos }: Props) {
   const filtrados = useMemo(() => {
     const d1 = new Date(filteredRange.from)
     const d2 = new Date(filteredRange.to)
-    d2.setHours(23, 59, 59)
+    d2.setHours(23, 59, 59, 999)
     return pedidos.filter(p => {
       const d = new Date(p.created_at)
       return d >= d1 && d <= d2
