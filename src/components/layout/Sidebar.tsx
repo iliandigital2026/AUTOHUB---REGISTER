@@ -23,6 +23,8 @@ const NAV_CONFIG = [
   { id: 'configuracoes',  label: 'Integrações N8N',  icon: Settings },
 ] as const
 
+const ADMIN_EMAIL = 'iliandigital2026@gmail.com'
+
 const style = `
   .sidebar {
     width: 230px; min-height: 100vh; background: #FFFFFF;
@@ -110,7 +112,7 @@ export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEm
 
         <div className="nav-section">
           <div className="nav-label">Configurações</div>
-          {NAV_CONFIG.map(({ id, label, icon: Icon }) => (
+          {NAV_CONFIG.filter(item => item.id !== 'configuracoes' || userEmail === ADMIN_EMAIL).map(({ id, label, icon: Icon }) => (
             <div
               key={id}
               className={`nav-item${page === id ? ' active' : ''}`}
