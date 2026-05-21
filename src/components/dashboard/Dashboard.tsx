@@ -84,7 +84,7 @@ function calcTempo(pedidos: Pedido[]) {
 export default function Dashboard({ pedidos }: Props) {
   const hoje = new Date()
   const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1).toISOString().split('T')[0]
-  const ultimoDia = new Date(hoje.getTime() - hoje.getTimezoneOffset() * 60000).toISOString().split('T')[0]
+  const ultimoDia = hoje.toISOString().split('T')[0]
 
   const [dateFrom, setDateFrom] = useState(primeiroDia)
   const [dateTo, setDateTo] = useState(ultimoDia)
@@ -93,7 +93,7 @@ export default function Dashboard({ pedidos }: Props) {
   const filtrados = useMemo(() => {
     const d1 = new Date(filteredRange.from)
     const d2 = new Date(filteredRange.to)
-    d2.setHours(23, 59, 59, 999)
+    d2.setHours(23, 59, 59)
     return pedidos.filter(p => {
       const d = new Date(p.created_at)
       return d >= d1 && d <= d2
@@ -106,21 +106,35 @@ export default function Dashboard({ pedidos }: Props) {
   const tempoMedio = calcTempo(filtrados)
 
   const pecasMap = new Map<string, number>()
-  filtrados.forEach(p => (Array.isArray(p.itens) ? p.itens : []).forEach((it: string | { descricao: string }) => {
-    const descricao = typeof it === 'string' ? it : it.descricao
-    if (descricao) pecasMap.set(descricao, (pecasMap.get(descricao) || 0) + 1)
-  }))
+  filtrados.forEach(p => {
+    const itens = Array.isArray(p.itens) ? p.itens : []
+    itens.forEach((it: string | { descricao: string }) => {
+      const nome = typeof it === 'string' ? it : it.descricao
+      if (nome) pecasMap.set(nome, (pecasMap.get(nome) || 0) + 1)
+    })
+  })
   const pecasTop = Array.from(pecasMap.entries())
     .sort((a, b) => b[1] - a[1]).slice(0, 6)
     .map(([nome, qtd]) => ({ nome: nome.length > 22 ? nome.slice(0, 22) + '…' : nome, qtd }))
   const maxPeca = pecasTop[0]?.qtd || 1
 
   const pgtoMap = new Map<string, number>()
-  finalizados.forEach(p => { const fp = (p.forma_pagamento || '').toLowerCase(); pgtoMap.set(fp, (pgtoMap.get(fp) || 0) + p.total) })
+  finalizados.forEach(p => { const fp = (p.forma_pagamento || 'outros').toLowerCase(); pgtoMap.set(fp, (pgtoMap.get(fp) || 0) + p.total) })
   const pgtoData = Array.from(pgtoMap.entries()).map(([tipo, valor]) => ({
     tipo, valor, label: LABELS_PGTO[tipo] || tipo.toUpperCase(), cor: CORES_PGTO[tipo] || '#ccc',
     pct: faturamento ? Math.round((valor / faturamento) * 100) : 0,
   })).sort((a, b) => b.valor - a.valor)
+
+  const entregaMap = new Map<string, number>()
+  filtrados.forEach(p => {
+    const fe = (p.forma_entrega || 'balcao').toLowerCase()
+    entregaMap.set(fe, (entregaMap.get(fe) || 0) + 1)
+  })
+  const entregaData = [
+    { tipo: 'balcao', label: 'Balcao', qtd: entregaMap.get('balcao') || 0, cor: '#7C3AED' },
+    { tipo: 'entrega', label: 'Entrega', qtd: entregaMap.get('entrega') || 0, cor: '#1565C0' },
+    { tipo: 'transportadora', label: 'Transportadora', qtd: entregaMap.get('transportadora') || 0, cor: '#E65100' },
+  ]
 
   const clienteMap = new Map<string, { pedidos: number; total: number }>()
   filtrados.forEach(p => {
@@ -232,6 +246,22 @@ export default function Dashboard({ pedidos }: Props) {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+
+        <div className="card" style={{ marginBottom: 16 }}>
+          <div className="card-title"><span className="card-title-icon">&#9642;</span> Formas de Entrega</div>
+          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            {entregaData.map(d => (
+              <div key={d.tipo} style={{ flex: 1, minWidth: 120, background: '#F9F9F9', borderRadius: 10, padding: '12px 16px', border: '0.5px solid #E0E0E0' }}>
+                <div style={{ fontSize: 22, fontWeight: 700, color: d.cor }}>{d.qtd}</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#999', textTransform: 'uppercase', letterSpacing: '.4px', marginTop: 2 }}>{d.label}</div>
+                <div style={{ marginTop: 8, height: 4, background: '#E0E0E0', borderRadius: 4 }}>
+                  <div style={{ width: filtrados.length ? Math.round((d.qtd / filtrados.length) * 100) + '%' : '0%', height: '100%', background: d.cor, borderRadius: 4 }} />
+                </div>
+                <div style={{ fontSize: 10, color: '#bbb', marginTop: 4 }}>{filtrados.length ? Math.round((d.qtd / filtrados.length) * 100) : 0}% dos pedidos</div>
+              </div>
+            ))}
           </div>
         </div>
 
