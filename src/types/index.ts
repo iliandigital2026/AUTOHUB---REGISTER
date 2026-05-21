@@ -20,6 +20,8 @@ export interface Pedido {
   itens: ItemPedido[]
   total: number
   forma_pagamento: FormaPagamento
+  forma_entrega?: string
+  endereco_entrega?: string
   status: PedidoStatus
   vendedor: string | null
   n8n_pedido_id: string | null
