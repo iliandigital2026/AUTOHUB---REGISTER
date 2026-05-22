@@ -60,7 +60,7 @@ export default function Clientes({ pedidos }: Props) {
       map.set(p.cliente_nome, {
         telefone: p.cliente_telefone || ex.telefone,
         pedidos: [...ex.pedidos, p],
-        total: ex.total + (Number(p.total) || 0),
+        total: ex.total + (parseFloat(String(p.total)) || 0),
         ultima: p.created_at > ex.ultima ? p.created_at : ex.ultima,
       })
     })
