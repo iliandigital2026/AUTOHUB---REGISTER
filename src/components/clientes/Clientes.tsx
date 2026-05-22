@@ -42,7 +42,7 @@ const css = `
 `
 
 function iniciais(n: string) { return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase() }
-function fmtMoeda(v: number) { return v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' }) }
+function fmtMoeda(v: number) { return (v || 0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' }) }
 function fmtData(d: string) { return new Date(d).toLocaleDateString('pt-BR') }
 
 const STATUS_LABEL: Record<string, string> = {
@@ -60,7 +60,7 @@ export default function Clientes({ pedidos }: Props) {
       map.set(p.cliente_nome, {
         telefone: p.cliente_telefone || ex.telefone,
         pedidos: [...ex.pedidos, p],
-        total: ex.total + p.total,
+        total: ex.total + (p.total || 0),
         ultima: p.created_at > ex.ultima ? p.created_at : ex.ultima,
       })
     })
@@ -157,7 +157,7 @@ export default function Clientes({ pedidos }: Props) {
                       <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>
                     </div>
                   ))}
-                  <div className="hist-total">Total: {fmtMoeda(p.total)}</div>
+                  <div className="hist-total">Total: {fmtMoeda(p.total || 0)}</div>
                   {p.veiculo_carro && (
                     <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>
                       🚗 {[p.veiculo_carro, p.veiculo_ano, p.veiculo_placa].filter(Boolean).join(' · ')}
