@@ -43,8 +43,9 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
 }) {
   const [showVendedor, setShowVendedor] = useState(false)
   const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: '#F0F0F0', color: '#666', label: pedido.forma_pagamento || '—' }
-  const itens = (pedido.itens || []).map((it: string | { descricao: string; valor: number }) =>
-    typeof it === 'string' ? { descricao: it, valor: 0 } : it
+  const itensRaw = Array.isArray(pedido.itens) ? pedido.itens : []
+  const itens = itensRaw.map((it: string | { descricao: string; valor: number }) =>
+    typeof it === 'string' ? { descricao: it, valor: 0 } : (it || { descricao: '', valor: 0 })
   )
 
   const atribuirVendedor = async (nome: string) => {
