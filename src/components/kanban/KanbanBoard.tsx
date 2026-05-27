@@ -75,9 +75,14 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
         </span>
       </div>
 
-      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A', marginBottom: 8 }}>
+      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>
         {pedido.cliente_nome}
       </div>
+      {(pedido as { marca_produto?: string }).marca_produto && (
+        <div style={{ fontSize: 11, color: '#F58226', fontWeight: 600, marginBottom: 8 }}>
+          {(pedido as { marca_produto?: string }).marca_produto}
+        </div>
+      )}
 
       <div style={{ borderTop: '0.5px solid #F0F0F0', borderBottom: '0.5px solid #F0F0F0', padding: '8px 0', marginBottom: 8 }}>
         {itens.map((it: { descricao: string; valor: number }, i: number) => (

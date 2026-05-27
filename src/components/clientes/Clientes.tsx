@@ -211,7 +211,7 @@ export default function Clientes({ pedidos }: Props) {
                       ) : (
                         itens.map((it, i) => (
                           <div key={i} className="hist-item">
-                            <span>• {it.descricao}</span>
+                            <span>• {(p as { marca_produto?: string }).marca_produto ? `${(p as { marca_produto?: string }).marca_produto} — ` : ''}{it.descricao}</span>
                             {it.valor > 0 && (
                               <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>
                             )}

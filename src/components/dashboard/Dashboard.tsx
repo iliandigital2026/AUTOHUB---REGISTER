@@ -146,11 +146,12 @@ export default function Dashboard({ pedidos }: Props) {
     } else if (typeof p.itens === 'string') {
       try { itensArr = JSON.parse(p.itens) } catch { itensArr = [p.itens] }
     }
+    const marcaPedido = (p as { marca_produto?: string }).marca_produto || '-'
     itensArr.forEach((it: unknown) => {
-      const { marca, descricao } = parseItem(it)
+      const { descricao } = parseItem(it)
       if (!descricao) return
       const key = descricao.toLowerCase().trim()
-      const ex = pecasMap.get(key) || { marca, descricao, qtd: 0 }
+      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + 1 })
     })
   })
