@@ -59,6 +59,9 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
     await atualizarStatusN8N({ pedidoId: pedido.id, status: 'finalizado', vendedor: pedido.vendedor || undefined, clienteNome: pedido.cliente_nome, total: pedido.total, formaPagamento: pedido.forma_pagamento })
   }
 
+  const formaEntrega = ((pedido as { forma_entrega?: string }).forma_entrega || 'balcao').toLowerCase().trim()
+  const entregaBadge = ENTREGA_BADGE[formaEntrega] || ENTREGA_BADGE['balcao']
+
   return (
     <div style={{
       background: '#fff', border: '0.5px solid #E0E0E0', borderRadius: 12, padding: '14px 16px',
