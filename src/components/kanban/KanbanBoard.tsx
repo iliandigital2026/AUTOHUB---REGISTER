@@ -83,13 +83,6 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
           {(pedido as { marca_produto?: string }).marca_produto}
         </div>
       )}
-      <div style={{ borderTop: '0.5px solid #F0F0F0', padding: '8px 0', marginBottom: 8 }}>
-        {itens.map((it: { descricao: string; valor: number }, i: number) => (
-          <div key={i} style={{ fontSize: 11, color: '#555', marginBottom: 3 }}>
-            • {it.descricao}
-          </div>
-        ))}
-      </div>
       <div style={{ display: 'flex', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
         <span style={{ background: entregaBadge.bg, color: entregaBadge.color, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 4 }}>
           {entregaBadge.icon} {entregaBadge.label}
