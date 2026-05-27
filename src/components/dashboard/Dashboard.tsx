@@ -140,10 +140,16 @@ export default function Dashboard({ pedidos }: Props) {
   // Pecas mais vendidas — chave: "marca||descricao"
   const pecasMap = new Map<string, { marca: string; descricao: string; qtd: number }>()
   filtrados.forEach(p => {
-    const itens = Array.isArray(p.itens) ? p.itens : []
-    itens.forEach((it: unknown) => {
+    let itensArr: unknown[] = []
+    if (Array.isArray(p.itens)) {
+      itensArr = p.itens
+    } else if (typeof p.itens === 'string') {
+      try { itensArr = JSON.parse(p.itens) } catch { itensArr = [p.itens] }
+    }
+    itensArr.forEach((it: unknown) => {
       const { marca, descricao } = parseItem(it)
-      const key = `${marca}||${descricao}`
+      if (!descricao) return
+      const key = descricao.toLowerCase().trim()
       const ex = pecasMap.get(key) || { marca, descricao, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + 1 })
     })
