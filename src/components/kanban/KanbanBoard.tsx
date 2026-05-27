@@ -16,6 +16,12 @@ const COLS: { id: PedidoStatus; label: string; cor: string; bordaTopo: string; b
   { id: 'finalizado', label: 'Finalizado / Registrado', cor: '#16A34A', bordaTopo: '#16A34A', bg: '#F0FDF4' },
 ]
 
+const ENTREGA_BADGE: Record<string, { bg: string; color: string; label: string; icon: string }> = {
+  balcao: { bg: '#EDE7F6', color: '#4527A0', label: 'Balcao', icon: '🏪' },
+  entrega: { bg: '#E3F2FD', color: '#1565C0', label: 'Entrega', icon: '📦' },
+  transportadora: { bg: '#FFF8E1', color: '#E65100', label: 'Transportadora', icon: '🚚' },
+}
+
 const PGTO_BADGE: Record<string, { bg: string; color: string; label: string }> = {
   pix: { bg: '#E8F5E9', color: '#2E7D32', label: 'PIX' },
   credito: { bg: '#E3F2FD', color: '#1565C0', label: 'Crédito' },
