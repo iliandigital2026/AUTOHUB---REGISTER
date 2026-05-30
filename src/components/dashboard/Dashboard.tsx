@@ -174,7 +174,7 @@ export default function Dashboard({ pedidos }: Props) {
   // Formas de entrega
   const entregaMap = new Map<string, number>()
   filtrados.forEach(p => {
-    const fe = (p.forma_entrega || 'balcao').toLowerCase()
+    const fe = (p.forma_entrega || 'balcao').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace('retirada', 'balcao')
     entregaMap.set(fe, (entregaMap.get(fe) || 0) + 1)
   })
   const entregaData = [
