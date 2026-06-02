@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
+import { supabase } from '../../lib/supabase';
 import { Trash2, RotateCcw, Clock } from "lucide-react";
 
 interface Pedido {
