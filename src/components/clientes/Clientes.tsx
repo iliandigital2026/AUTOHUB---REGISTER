@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Search, X, Clock, Phone, Trash2 } from 'lucide-react'
-import { supabase } from '../../supabaseClient'
+import { supabase } from '../../lib/supabase'
 import type { Pedido } from '../../types'
 
 interface Props { pedidos: Pedido[] }

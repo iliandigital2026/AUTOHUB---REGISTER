@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors, useDroppable, useDraggable } from '@dnd-kit/core'
 import { User, Clock, CheckCircle, ChevronDown, Trash2 } from 'lucide-react'
-import { supabase } from '../../supabaseClient'
+import { supabase } from '../../lib/supabase'
 import type { Pedido, PedidoStatus } from '../../types'
 import { atualizarStatusN8N } from '../../services/n8n'
 
