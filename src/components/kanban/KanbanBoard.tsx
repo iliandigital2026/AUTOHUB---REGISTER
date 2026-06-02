@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors, useDroppable, useDraggable } from '@dnd-kit/core'
-import { User, Clock, CheckCircle, ChevronDown } from 'lucide-react'
+import { User, Clock, CheckCircle, ChevronDown, Trash2 } from 'lucide-react'
+import { supabase } from '../../supabaseClient'
 import type { Pedido, PedidoStatus } from '../../types'
 import { atualizarStatusN8N } from '../../services/n8n'
 
@@ -63,6 +64,12 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
   const finalizar = async () => {
     await onUpdate(pedido.id, 'finalizado', pedido.vendedor || undefined)
     await atualizarStatusN8N({ pedidoId: pedido.id, status: 'finalizado', vendedor: pedido.vendedor || undefined, clienteNome: pedido.cliente_nome, total: pedido.total, formaPagamento: pedido.forma_pagamento })
+  }
+
+  const moverLixeira = async () => {
+    if (!confirm('Mover este pedido para a lixeira?')) return
+    await supabase.from('pedidos').update({ deleted_at: new Date().toISOString() }).eq('id', pedido.id)
+    window.location.reload()
   }
 
   const formaEntrega = ((pedido as { forma_entrega?: string }).forma_entrega || 'balcao').toLowerCase().trim()
@@ -179,6 +186,12 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
           <CheckCircle size={13} /> Marcar como Finalizado
         </button>
       )}
+      <button
+        onClick={moverLixeira}
+        style={{ width: '100%', marginTop: 6, background: '#FFF0F0', border: '0.5px solid #FFCDD2', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 700, color: '#C62828', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
+      >
+        <Trash2 size={13} /> Mover para Lixeira
+      </button>
     </div>
   )
 }

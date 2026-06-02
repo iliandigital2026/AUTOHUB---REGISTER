@@ -25,6 +25,8 @@ export interface Pedido {
   status: PedidoStatus
   vendedor: string | null
   n8n_pedido_id: string | null
+  deleted_at?: string | null
+  marca_produto?: string
 }
 
 export interface Cliente {
@@ -42,4 +44,4 @@ export interface Vendedor {
   ativo: boolean
 }
 
-export type PageName = 'dashboard' | 'kanban' | 'clientes' | 'followup' | 'vendedores' | 'relatorios' | 'configuracoes'
+export type PageName = 'dashboard' | 'kanban' | 'clientes' | 'followup' | 'vendedores' | 'relatorios' | 'configuracoes' | 'lixeira'

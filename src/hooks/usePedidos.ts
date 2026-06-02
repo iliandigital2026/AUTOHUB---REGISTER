@@ -10,6 +10,7 @@ export function usePedidos() {
     const { data, error } = await supabase
       .from('pedidos')
       .select('*')
+      .is('deleted_at', null)
       .order('created_at', { ascending: false })
     if (!error && data) setPedidos(data as Pedido[])
     setLoading(false)

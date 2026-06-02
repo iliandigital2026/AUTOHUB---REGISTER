@@ -9,6 +9,7 @@ import Vendedores from './components/vendedores/Vendedores'
 import Relatorios from './components/relatorios/Relatorios'
 import Configuracoes from './components/configuracoes/Configuracoes'
 import Login from './components/auth/Login'
+import Lixeira from './components/lixeira/Lixeira'
 import { usePedidos, useVendedores } from './hooks/usePedidos'
 import { useAuth } from './hooks/useAuth'
 import { useSoundNotification } from './hooks/useSoundNotification'
@@ -107,6 +108,7 @@ export default function App() {
                 {page === 'vendedores'     && <Vendedores />}
                 {page === 'relatorios'     && <Relatorios pedidos={pedidos} />}
                 {page === 'configuracoes'  && <Configuracoes />}
+                {page === 'lixeira'        && <Lixeira />}
               </>
             )}
           </div>

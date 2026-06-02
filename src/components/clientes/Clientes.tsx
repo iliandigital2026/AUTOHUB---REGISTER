@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
-import { Search, X, Clock, Phone } from 'lucide-react'
+import { Search, X, Clock, Phone, Trash2 } from 'lucide-react'
+import { supabase } from '../../supabaseClient'
 import type { Pedido } from '../../types'
 
 interface Props { pedidos: Pedido[] }
@@ -79,6 +80,15 @@ const STATUS_LABEL: Record<string, string> = {
 export default function Clientes({ pedidos }: Props) {
   const [busca, setBusca] = useState('')
   const [historico, setHistorico] = useState<string | null>(null)
+  const [removendo, setRemovendo] = useState<string | null>(null)
+
+  const moverLixeira = async (id: string) => {
+    if (!confirm('Mover este pedido para a lixeira?')) return
+    setRemovendo(id)
+    await supabase.from('pedidos').update({ deleted_at: new Date().toISOString() }).eq('id', id)
+    setRemovendo(null)
+    window.location.reload()
+  }
 
   const clienteMap = useMemo(() => {
     const map = new Map<string, { telefone: string; pedidos: Pedido[]; total: number; ultima: string }>()
@@ -246,6 +256,13 @@ export default function Clientes({ pedidos }: Props) {
                         {p.endereco_entrega && (
                           <span style={{ fontSize: 10, color: '#888' }}>📍 {p.endereco_entrega}</span>
                         )}
+                        <button
+                          onClick={() => moverLixeira(p.id)}
+                          disabled={removendo === p.id}
+                          style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, background: '#FFF0F0', border: '0.5px solid #FFCDD2', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 700, color: '#C62828', cursor: 'pointer', opacity: removendo === p.id ? 0.6 : 1 }}
+                        >
+                          <Trash2 size={11} /> {removendo === p.id ? 'Removendo...' : 'Lixeira'}
+                        </button>
                       </div>
                     </div>
                   )

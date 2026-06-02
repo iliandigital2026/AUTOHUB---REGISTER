@@ -1,4 +1,4 @@
-import { LayoutDashboard, Kanban, Users, Bell, Settings, BarChart2, UserCog, LogOut } from 'lucide-react'
+import { LayoutDashboard, Kanban, Users, Bell, Settings, BarChart2, UserCog, LogOut, Trash2 } from 'lucide-react'
 import type { PageName } from '../../types'
 import { LogoFull } from './Logo'
 
@@ -16,6 +16,7 @@ const NAV_MAIN = [
   { id: 'clientes',   label: 'Clientes',       icon: Users },
   { id: 'followup',   label: 'Follow-up',      icon: Bell },
   { id: 'relatorios', label: 'Relatórios',     icon: BarChart2 },
+  { id: 'lixeira',    label: 'Lixeira',        icon: Trash2 },
 ] as const
 
 const NAV_CONFIG = [
