@@ -138,7 +138,7 @@ export default function Dashboard({ pedidos }: Props) {
   const tempoMedio = calcTempo(filtrados)
 
   // Pecas mais vendidas — chave: "marca||descricao"
-  const pecasMap = new Map<string, { marca: string; descricao: string; qtd: number }>()
+  const pecasMap = new Map<string, { marca: string; descricao: string; carro: string; qtd: number }>()
   finalizados.forEach(p => {
     let itensArr: unknown[] = []
     if (Array.isArray(p.itens)) {
@@ -147,12 +147,13 @@ export default function Dashboard({ pedidos }: Props) {
       try { itensArr = JSON.parse(p.itens) } catch { itensArr = [p.itens] }
     }
     const marcaPedido = (p as { marca_produto?: string }).marca_produto || '-'
+    const carroPedido = (p as { veiculo_carro?: string }).veiculo_carro || '-'
     const qtdPedido = parseInt(String((p as { quantidade?: string }).quantidade || '1')) || 1
     itensArr.forEach((it: unknown) => {
       const { descricao } = parseItem(it)
       if (!descricao) return
       const key = `${marcaPedido.toLowerCase()}||${descricao.toLowerCase().trim()}`
-      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, qtd: 0 }
+      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroPedido, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + qtdPedido })
     })
   })
@@ -262,6 +263,7 @@ export default function Dashboard({ pedidos }: Props) {
                   <tr>
                     <th style={{ minWidth: 70 }}>Marca</th>
                     <th>Produto</th>
+                    <th>Carro</th>
                     <th style={{ width: 120 }}>Unidades</th>
                   </tr>
                 </thead>
@@ -270,6 +272,7 @@ export default function Dashboard({ pedidos }: Props) {
                     <tr key={i}>
                       <td style={{ fontWeight: 600, color: '#1A1A1A' }}>{p.marca}</td>
                       <td>{p.descricao}</td>
+                      <td style={{ color: '#666', fontSize: 12 }}>{p.carro}</td>
                       <td>
                         <div className="peca-bar-wrap">
                           <div className="peca-bar-track">
