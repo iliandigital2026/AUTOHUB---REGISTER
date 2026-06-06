@@ -148,12 +148,14 @@ export default function Dashboard({ pedidos }: Props) {
     }
     const marcaPedido = (p as { marca_produto?: string }).marca_produto || '-'
     const carroPedido = (p as { veiculo_carro?: string }).veiculo_carro || '-'
+    const anoPedido = (p as { veiculo_ano?: string }).veiculo_ano || ''
     const qtdPedido = parseInt(String((p as { quantidade?: string }).quantidade || '1')) || 1
     itensArr.forEach((it: unknown) => {
       const { descricao } = parseItem(it)
       if (!descricao) return
       const key = `${marcaPedido.toLowerCase()}||${descricao.toLowerCase().trim()}`
-      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroPedido, qtd: 0 }
+      const carroComAno = anoPedido ? `${carroPedido} ${anoPedido}` : carroPedido
+      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroComAno, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + qtdPedido })
     })
   })
