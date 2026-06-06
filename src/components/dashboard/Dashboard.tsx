@@ -138,7 +138,7 @@ export default function Dashboard({ pedidos }: Props) {
   const tempoMedio = calcTempo(filtrados)
 
   // Pecas mais vendidas — chave: "marca||descricao"
-  const pecasMap = new Map<string, { marca: string; descricao: string; carro: string; qtd: number }>()
+  const pecasMap = new Map<string, { marca: string; descricao: string; carro: string; ano: string; qtd: number }>()
   finalizados.forEach(p => {
     let itensArr: unknown[] = []
     if (Array.isArray(p.itens)) {
@@ -154,8 +154,7 @@ export default function Dashboard({ pedidos }: Props) {
       const { descricao } = parseItem(it)
       if (!descricao) return
       const key = `${marcaPedido.toLowerCase()}||${descricao.toLowerCase().trim()}`
-      const carroComAno = anoPedido ? `${carroPedido} ${anoPedido}` : carroPedido
-      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroComAno, qtd: 0 }
+      const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroPedido, ano: anoPedido, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + qtdPedido })
     })
   })
@@ -266,6 +265,7 @@ export default function Dashboard({ pedidos }: Props) {
                     <th style={{ minWidth: 70 }}>Marca</th>
                     <th>Produto</th>
                     <th>Carro</th>
+                    <th>Ano</th>
                     <th style={{ width: 120 }}>Unidades</th>
                   </tr>
                 </thead>
@@ -275,6 +275,7 @@ export default function Dashboard({ pedidos }: Props) {
                       <td style={{ fontWeight: 600, color: '#1A1A1A' }}>{p.marca}</td>
                       <td>{p.descricao}</td>
                       <td style={{ color: '#666', fontSize: 12 }}>{p.carro}</td>
+                      <td style={{ color: '#666', fontSize: 12 }}>{p.ano}</td>
                       <td>
                         <div className="peca-bar-wrap">
                           <div className="peca-bar-track">
