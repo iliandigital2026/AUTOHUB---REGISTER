@@ -259,15 +259,14 @@ export default function Dashboard({ pedidos }: Props) {
             {pecasTop.length === 0 ? (
               <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no periodo</p>
             ) : (
-              <div style={{ maxHeight: 300, overflowY: 'auto', borderRadius: 8, display: 'block' }}>
-            <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>Marca</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>Produto</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>Carro</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>Ano</th>
-                    <th style={{ width: 120, position: 'sticky', top: 0, background: '#fff', zIndex: 1 }}>Unidades</th>
+                    <th style={{ minWidth: 70 }}>Marca</th>
+                    <th>Produto</th>
+                    <th>Carro</th>
+                    <th>Ano</th>
+                    <th style={{ width: 120 }}>Unidades</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -289,7 +288,6 @@ export default function Dashboard({ pedidos }: Props) {
                   ))}
                 </tbody>
               </table>
-            </div>
             )}
           </div>
 
