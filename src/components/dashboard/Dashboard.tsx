@@ -93,7 +93,11 @@ function fmtMoeda(v: number) {
 }
 
 function calcTempo(pedidos: Pedido[]) {
-  const validos = pedidos.filter(p => p.started_at && p.ended_at)
+  const validos = pedidos.filter(p => {
+    if (!p.started_at || !p.ended_at) return false
+    const diff = new Date(p.ended_at).getTime() - new Date(p.started_at).getTime()
+    return diff > 0 && diff < 24 * 60 * 60 * 1000
+  })
   if (!validos.length) return '-'
   const avg = validos.reduce((acc, p) => {
     return acc + (new Date(p.ended_at).getTime() - new Date(p.started_at).getTime())
