@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors, useDroppable, useDraggable } from '@dnd-kit/core'
-import { User, Clock, CheckCircle, ChevronDown, Trash2 } from 'lucide-react'
+import { User, Clock, CheckCircle, ChevronDown, Trash2, Square, SquareCheck } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import type { Pedido, PedidoStatus } from '../../types'
 import { atualizarStatusN8N } from '../../services/n8n'
@@ -42,11 +42,13 @@ function fmtMoeda(v: number) {
   return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 }
 
-function Card({ pedido, vendedores, onUpdate, isDragging }: {
+function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecionar }: {
   pedido: Pedido
   vendedores: { id: string; nome: string }[]
   onUpdate: Props['onUpdate']
   isDragging?: boolean
+  selecionado?: boolean
+  onSelecionar?: (id: string) => void
 }) {
   const [showVendedor, setShowVendedor] = useState(false)
   const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: '#F0F0F0', color: '#666', label: pedido.forma_pagamento || '—' }
@@ -91,6 +93,24 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
         </span>
       </div>
 
+      {onSelecionar && (
+        <div
+          onClick={(e) => { e.stopPropagation(); onSelecionar(pedido.id) }}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            marginBottom: 10, cursor: 'pointer',
+            background: selecionado ? '#F0FDF4' : '#F6F6F6',
+            border: selecionado ? '0.5px solid #A5D6A7' : '0.5px solid #E0E0E0',
+            borderRadius: 8, padding: '6px 10px',
+            fontSize: 11, fontWeight: 700,
+            color: selecionado ? '#16A34A' : '#999',
+            transition: 'all 0.15s',
+          }}
+        >
+          {selecionado ? <SquareCheck size={13} /> : <Square size={13} />}
+          {selecionado ? 'Selecionado' : 'Selecionar'}
+        </div>
+      )}
       <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>
         {pedido.cliente_nome}
       </div>
@@ -196,20 +216,22 @@ function Card({ pedido, vendedores, onUpdate, isDragging }: {
   )
 }
 
-function DraggableCard({ pedido, vendedores, onUpdate }: { pedido: Pedido; vendedores: Props['vendedores']; onUpdate: Props['onUpdate'] }) {
+function DraggableCard({ pedido, vendedores, onUpdate, selecionado, onSelecionar }: { pedido: Pedido; vendedores: Props['vendedores']; onUpdate: Props['onUpdate']; selecionado?: boolean; onSelecionar?: (id: string) => void }) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({ id: pedido.id })
   return (
     <div ref={setNodeRef} {...listeners} {...attributes}>
-      <Card pedido={pedido} vendedores={vendedores} onUpdate={onUpdate} isDragging={isDragging} />
+      <Card pedido={pedido} vendedores={vendedores} onUpdate={onUpdate} isDragging={isDragging} selecionado={selecionado} onSelecionar={onSelecionar} />
     </div>
   )
 }
 
-function Column({ col, pedidos, vendedores, onUpdate }: {
+function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar }: {
   col: typeof COLS[0]
   pedidos: Pedido[]
   vendedores: Props['vendedores']
   onUpdate: Props['onUpdate']
+  selecionados?: Set<string>
+  onSelecionar?: (id: string) => void
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: col.id })
   return (
@@ -231,7 +253,7 @@ function Column({ col, pedidos, vendedores, onUpdate }: {
         </div>
         <div ref={setNodeRef} style={{ minHeight: 60 }}>
           {pedidos.map(p => (
-            <DraggableCard key={p.id} pedido={p} vendedores={vendedores} onUpdate={onUpdate} />
+            <DraggableCard key={p.id} pedido={p} vendedores={vendedores} onUpdate={onUpdate} selecionado={selecionados?.has(p.id)} onSelecionar={onSelecionar} />
           ))}
           {pedidos.length === 0 && (
             <div style={{ textAlign: 'center', padding: '30px 0', color: '#ccc', fontSize: 12 }}>
@@ -246,6 +268,41 @@ function Column({ col, pedidos, vendedores, onUpdate }: {
 
 export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
   const [activeId, setActiveId] = useState<string | null>(null)
+  const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
+  const [processando, setProcessando] = useState(false)
+
+  const toggleSelecionar = (id: string) => {
+    setSelecionados(prev => {
+      const novo = new Set(prev)
+      if (novo.has(id)) novo.delete(id)
+      else novo.add(id)
+      return novo
+    })
+  }
+
+  const limparSelecao = () => setSelecionados(new Set())
+
+  const moverSelecionadosLixeira = async () => {
+    if (!confirm(`Mover ${selecionados.size} pedido(s) para a lixeira?`)) return
+    setProcessando(true)
+    await supabase.from('pedidos')
+      .update({ deleted_at: new Date().toISOString() })
+      .in('id', Array.from(selecionados))
+    setProcessando(false)
+    limparSelecao()
+    window.location.reload()
+  }
+
+  const marcarConcluidos = async () => {
+    if (!confirm(`Marcar ${selecionados.size} pedido(s) como Concluído?`)) return
+    setProcessando(true)
+    await supabase.from('pedidos')
+      .update({ status: 'concluido' as PedidoStatus })
+      .in('id', Array.from(selecionados))
+    setProcessando(false)
+    limparSelecao()
+    window.location.reload()
+  }
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
   const byStatus = useMemo(() => {
@@ -276,10 +333,42 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
           💡 Arraste os cards entre as colunas ou use os botões para atualizar o status
         </span>
       </div>
+      {selecionados.size > 0 && (
+        <div style={{
+          position: 'fixed', bottom: 32, left: '50%', transform: 'translateX(-50%)',
+          background: '#1A1A1A', borderRadius: 16, padding: '12px 20px',
+          display: 'flex', alignItems: 'center', gap: 12,
+          boxShadow: '0 8px 32px rgba(0,0,0,0.25)', zIndex: 200,
+        }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>
+            {selecionados.size} selecionado(s)
+          </span>
+          <button
+            onClick={marcarConcluidos}
+            disabled={processando}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#16A34A', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
+          >
+            <CheckCircle size={13} /> Concluído
+          </button>
+          <button
+            onClick={moverSelecionadosLixeira}
+            disabled={processando}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#C62828', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
+          >
+            <Trash2 size={13} /> Lixeira
+          </button>
+          <button
+            onClick={limparSelecao}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#444', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+          >
+            Cancelar
+          </button>
+        </div>
+      )}
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
           {COLS.map(col => (
-            <Column key={col.id} col={col} pedidos={byStatus[col.id] || []} vendedores={vendedores} onUpdate={onUpdate} />
+            <Column key={col.id} col={col} pedidos={byStatus[col.id] || []} vendedores={vendedores} onUpdate={onUpdate} selecionados={col.id === 'finalizado' ? selecionados : undefined} onSelecionar={col.id === 'finalizado' ? toggleSelecionar : undefined} />
           ))}
         </div>
         <DragOverlay>

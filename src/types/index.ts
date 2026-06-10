@@ -1,4 +1,4 @@
-export type PedidoStatus = 'em_atendimento' | 'aguardando_registro' | 'finalizado' | 'nao_finalizado'
+export type PedidoStatus = 'em_atendimento' | 'aguardando_registro' | 'finalizado' | 'nao_finalizado' | 'concluido'
 export type FormaPagamento = 'pix' | 'credito' | 'debito' | 'dinheiro'
 
 export interface ItemPedido {
