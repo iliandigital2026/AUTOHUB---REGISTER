@@ -65,7 +65,7 @@ export default function Relatorios({ pedidos }: Props) {
     return pedidos.filter(p => { const d = new Date(p.created_at); return d >= d1 && d <= d2 })
   }, [pedidos, range])
 
-  const finalizados = filtrados.filter(p => p.status === 'finalizado' && p.vendedor)
+  const finalizados = filtrados.filter(p => (p.status === 'finalizado' || p.status === 'concluido') && p.vendedor)
 
   const vendMap = useMemo(() => {
     const m = new Map<string, { pedidos: number; total: number; pedidosData: Pedido[] }>()

@@ -247,9 +247,34 @@ function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar
           <div style={{ fontSize: 12, fontWeight: 700, color: col.cor, textTransform: 'uppercase', letterSpacing: '.5px' }}>
             {col.label}
           </div>
-          <span style={{ background: col.cor, color: '#fff', fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 20 }}>
-            {pedidos.length}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            {onSelecionar && pedidos.length > 0 && (
+              <button
+                onClick={() => {
+                  const todosSelecionados = pedidos.every(p => selecionados?.has(p.id))
+                  pedidos.forEach(p => {
+                    if (todosSelecionados) {
+                      if (selecionados?.has(p.id)) onSelecionar(p.id)
+                    } else {
+                      if (!selecionados?.has(p.id)) onSelecionar(p.id)
+                    }
+                  })
+                }}
+                style={{
+                  fontSize: 10, fontWeight: 700, cursor: 'pointer',
+                  background: pedidos.every(p => selecionados?.has(p.id)) ? '#16A34A' : '#F0FDF4',
+                  color: pedidos.every(p => selecionados?.has(p.id)) ? '#fff' : '#16A34A',
+                  border: '0.5px solid #A5D6A7', borderRadius: 6,
+                  padding: '3px 8px', fontFamily: 'Montserrat,sans-serif',
+                }}
+              >
+                {pedidos.every(p => selecionados?.has(p.id)) ? '✓ Todos' : 'Sel. Tudo'}
+              </button>
+            )}
+            <span style={{ background: col.cor, color: '#fff', fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 20 }}>
+              {pedidos.length}
+            </span>
+          </div>
         </div>
         <div ref={setNodeRef} style={{ minHeight: 60 }}>
           {pedidos.map(p => (
