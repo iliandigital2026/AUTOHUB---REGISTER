@@ -49,7 +49,8 @@ function minutosDesde(dt: string) {
 export default function FollowUp({ pedidos }: Props) {
   const pendentes = useMemo(() => {
     return pedidos
-      .filter(p => p.status !== 'finalizado' && p.status !== 'nao_finalizado')
+      .filter(p => p.status === 'em_atendimento' || p.status === 'aguardando_registro')
+      .filter(p => !(p as { deleted_at?: string }).deleted_at)
       .filter(p => minutosDesde(p.created_at) >= 1320) // 22 horas
       .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
   }, [pedidos])
