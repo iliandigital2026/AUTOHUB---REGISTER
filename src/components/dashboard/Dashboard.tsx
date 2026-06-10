@@ -132,7 +132,7 @@ export default function Dashboard({ pedidos }: Props) {
     })
   }, [pedidos, filteredRange])
 
-  const finalizados = filtrados.filter(p => p.status === 'finalizado')
+  const finalizados = filtrados.filter(p => p.status === 'finalizado' || p.status === 'concluido')
   const faturamento = finalizados.reduce((a, p) => a + p.total, 0)
   const conversao = filtrados.length ? Math.round((finalizados.length / filtrados.length) * 100) : 0
   const tempoMedio = calcTempo(filtrados)
@@ -153,7 +153,7 @@ export default function Dashboard({ pedidos }: Props) {
     itensArr.forEach((it: unknown) => {
       const { descricao } = parseItem(it)
       if (!descricao) return
-      const key = `${marcaPedido.toLowerCase()}||${descricao.toLowerCase().trim()}`
+      const key = `${marcaPedido.toLowerCase()}||${descricao.toLowerCase().trim()}||${carroPedido.toLowerCase()}||${anoPedido}`
       const ex = pecasMap.get(key) || { marca: marcaPedido, descricao, carro: carroPedido, ano: anoPedido, qtd: 0 }
       pecasMap.set(key, { ...ex, qtd: ex.qtd + qtdPedido })
     })
