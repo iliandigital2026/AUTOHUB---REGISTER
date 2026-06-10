@@ -75,6 +75,13 @@ const css = `
   .entrega-bar-fill { height: 100%; border-radius: 4px; }
   .entrega-pct { font-size: 10px; color: #bbb; margin-top: 4px; }
   @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} .entrega-grid{grid-template-columns:1fr} }
+  .peca-scroll::-webkit-scrollbar { width: 10px; }
+  .peca-scroll::-webkit-scrollbar-track { background: #F5F5F5; border-radius: 10px; }
+  .peca-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #F58226, #D62C27); border-radius: 10px; border: 2px solid #F5F5F5; }
+  .peca-scroll::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #E8421F, #C62828); }
+  .peca-scroll::-webkit-scrollbar-button:single-button { display: block; height: 16px; border-radius: 4px; }
+  .peca-scroll::-webkit-scrollbar-button:single-button:vertical:decrement { background: #F58226 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 3l4 4H1z' fill='white'/%3E%3C/svg%3E") no-repeat center; border-radius: 4px 4px 0 0; }
+  .peca-scroll::-webkit-scrollbar-button:single-button:vertical:increment { background: #D62C27 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M5 7L1 3h8z' fill='white'/%3E%3C/svg%3E") no-repeat center; border-radius: 0 0 4px 4px; }
 `
 
 function iniciais(nome: string) {
@@ -259,14 +266,15 @@ export default function Dashboard({ pedidos }: Props) {
             {pecasTop.length === 0 ? (
               <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no periodo</p>
             ) : (
-              <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
+              <div style={{ maxHeight: 236, overflowY: 'scroll', borderRadius: 8 }} className="peca-scroll">
+            <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ minWidth: 70 }}>Marca</th>
-                    <th>Produto</th>
-                    <th>Carro</th>
-                    <th>Ano</th>
-                    <th style={{ width: 120 }}>Unidades</th>
+                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Marca</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Produto</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Carro</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Ano</th>
+                    <th style={{ width: 120, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Unidades</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -288,6 +296,7 @@ export default function Dashboard({ pedidos }: Props) {
                   ))}
                 </tbody>
               </table>
+            </div>
             )}
           </div>
 
