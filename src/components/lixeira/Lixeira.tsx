@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../../lib/supabase'
+import { useCompany } from '../../hooks/useCompany';
 import { Trash2, RotateCcw, Clock } from "lucide-react";
 
 interface Pedido {
@@ -31,6 +32,7 @@ function diasRestantes(deleted_at: string): number {
 }
 
 export default function Lixeira() {
+  const companyId = useCompany()
   const [pedidos, setPedidos] = useState<Pedido[]>([]);
   const [loading, setLoading] = useState(true);
   const [restaurando, setRestaurando] = useState<string | null>(null);
@@ -58,7 +60,7 @@ export default function Lixeira() {
     setRestaurando(null);
   }
 
-  useEffect(() => { carregar(); }, []);
+  useEffect(() => { carregar(); }, [companyId]);
 
   return (
     <div style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>

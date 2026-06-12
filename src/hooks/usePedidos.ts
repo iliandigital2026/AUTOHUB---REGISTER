@@ -2,15 +2,17 @@ import { useEffect, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Pedido, PedidoStatus } from '../types'
 
-export function usePedidos() {
+export function usePedidos(companyId?: string | null) {
   const [pedidos, setPedidos] = useState<Pedido[]>([])
   const [loading, setLoading] = useState(true)
 
   const fetchPedidos = useCallback(async () => {
+    if (!companyId) { setLoading(false); return }
     const { data, error } = await supabase
       .from('pedidos')
       .select('*')
       .is('deleted_at', null)
+      .eq('company_id', companyId || '')
       .order('created_at', { ascending: false })
     if (!error && data) setPedidos(data as Pedido[])
     setLoading(false)

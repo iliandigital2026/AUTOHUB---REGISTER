@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Plus, Pencil, Trash2, Check, X, UserCheck, UserX } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
+import { useCompany } from '../../hooks/useCompany'
 
 interface Vendedor { id: string; nome: string; ativo: boolean }
 
@@ -42,6 +43,7 @@ const css = `
 function iniciais(n: string) { return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase() }
 
 export default function Vendedores() {
+  const companyId = useCompany()
   const [vendedores, setVendedores] = useState<Vendedor[]>([])
   const [loading, setLoading] = useState(true)
   const [showAdd, setShowAdd] = useState(false)
@@ -51,17 +53,18 @@ export default function Vendedores() {
   const [saving, setSaving] = useState(false)
 
   const fetch = async () => {
-    const { data } = await supabase.from('vendedores').select('*').order('nome')
+    if (!companyId) return
+    const { data } = await supabase.from('vendedores').select('*').eq('company_id', companyId).order('nome')
     if (data) setVendedores(data)
     setLoading(false)
   }
 
-  useEffect(() => { fetch() }, [])
+  useEffect(() => { fetch() }, [companyId])
 
   const adicionar = async () => {
     if (!novoNome.trim()) return
     setSaving(true)
-    const { data } = await supabase.from('vendedores').insert({ nome: novoNome.trim(), ativo: true }).select().single()
+    const { data } = await supabase.from('vendedores').insert({ nome: novoNome.trim(), ativo: true, company_id: companyId }).select().single()
     if (data) setVendedores(prev => [...prev, data].sort((a,b) => a.nome.localeCompare(b.nome)))
     setNovoNome('')
     setShowAdd(false)

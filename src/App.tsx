@@ -12,6 +12,7 @@ import Login from './components/auth/Login'
 import Lixeira from './components/lixeira/Lixeira'
 import { usePedidos, useVendedores } from './hooks/usePedidos'
 import { useAuth } from './hooks/useAuth'
+import { useCompany } from './hooks/useCompany'
 import { useSoundNotification } from './hooks/useSoundNotification'
 import type { PageName, PedidoStatus } from './types'
 
@@ -26,11 +27,12 @@ const appCss = `
 
 export default function App() {
   const { user, loading: authLoading, signOut } = useAuth()
+  const companyId = useCompany()
   const [page, setPage] = useState<PageName>('dashboard')
   const [toasts, setToasts] = useState<string[]>([])
   const [n8nOnline, setN8nOnline] = useState(false)
-  const { pedidos, loading: pedidosLoading, atualizarStatus } = usePedidos()
-  const vendedores = useVendedores()
+  const { pedidos, loading: pedidosLoading, atualizarStatus } = usePedidos(companyId)
+  const vendedores = useVendedores(companyId)
   const { playNewOrder } = useSoundNotification()
 
   const pendingCount = pedidos.filter(p => p.status === 'aguardando_registro').length
