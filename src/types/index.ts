@@ -44,4 +44,4 @@ export interface Vendedor {
   ativo: boolean
 }
 
-export type PageName = 'dashboard' | 'kanban' | 'clientes' | 'followup' | 'vendedores' | 'relatorios' | 'configuracoes' | 'lixeira'
+export type PageName = 'dashboard' | 'kanban' | 'clientes' | 'followup' | 'vendedores' | 'relatorios' | 'configuracoes' | 'lixeira' | 'estoque'
