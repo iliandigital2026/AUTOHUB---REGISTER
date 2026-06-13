@@ -16,7 +16,7 @@ export function usePedidos(companyId?: string | null) {
       .order('created_at', { ascending: false })
     if (!error && data) setPedidos(data as Pedido[])
     setLoading(false)
-  }, [])
+  }, [companyId])
 
   useEffect(() => {
     fetchPedidos()
@@ -42,14 +42,15 @@ export function usePedidos(companyId?: string | null) {
   return { pedidos, loading, fetchPedidos, atualizarStatus }
 }
 
-export function useVendedores() {
+export function useVendedores(companyId?: string | null) {
   const [vendedores, setVendedores] = useState<{ id: string; nome: string }[]>([])
 
   useEffect(() => {
-    supabase.from('vendedores').select('*').eq('ativo', true).order('nome').then(({ data }) => {
+    if (!companyId) return
+    supabase.from('vendedores').select('*').eq('ativo', true).eq('company_id', companyId).order('nome').then(({ data }) => {
       if (data) setVendedores(data)
     })
-  }, [])
+  }, [companyId])
 
   return vendedores
 }
