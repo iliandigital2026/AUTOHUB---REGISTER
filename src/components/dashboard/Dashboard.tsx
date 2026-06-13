@@ -133,10 +133,8 @@ export default function Dashboard({ pedidos }: Props) {
   const [filteredRange, setFilteredRange] = useState({ from: primeiroDia, to: ultimoDia })
 
   const filtrados = useMemo(() => {
-    const d1 = new Date(filteredRange.from)
-    const d2 = new Date(filteredRange.to)
-    // incluir dia inteiro no fuso local
-    d2.setHours(23, 59, 59, 999)
+    const d1 = new Date(filteredRange.from + 'T00:00:00')
+    const d2 = new Date(filteredRange.to + 'T23:59:59')
     return pedidos.filter(p => {
       const d = new Date(p.created_at)
       return d >= d1 && d <= d2
