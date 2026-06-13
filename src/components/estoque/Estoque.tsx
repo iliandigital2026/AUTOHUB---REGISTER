@@ -75,7 +75,29 @@ export default function Estoque() {
   const [editando, setEditando] = useState<(Peca & { id: string }) | null>(null)
   const [form, setForm] = useState<Peca>(VAZIA)
   const [saving, setSaving] = useState(false)
+  const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
   const fileRef = useRef<HTMLInputElement>(null)
+
+  const toggleSelecionar = (id: string) => {
+    setSelecionados(prev => {
+      const novo = new Set(prev)
+      if (novo.has(id)) novo.delete(id)
+      else novo.add(id)
+      return novo
+    })
+  }
+
+  const toggleTodos = () => {
+    if (selecionados.size === pecas.length) setSelecionados(new Set())
+    else setSelecionados(new Set(pecas.map(p => p.id)))
+  }
+
+  const excluirSelecionados = async () => {
+    if (!confirm(`Excluir ${selecionados.size} peça(s) do estoque?`)) return
+    await supabase.from('estoque').delete().in('id', Array.from(selecionados))
+    setSelecionados(new Set())
+    await carregar()
+  }
 
   const carregar = async () => {
     if (!companyId) return
@@ -161,6 +183,16 @@ export default function Estoque() {
             <Package size={16} style={{ display: 'inline', marginRight: 8, color: '#F58226' }} />
             Estoque de Peças
           </div>
+          {selecionados.size > 0 && (
+            <button className="btn-primary" style={{ background: '#C62828' }} onClick={excluirSelecionados}>
+              <Trash2 size={13} /> Excluir {selecionados.size} selecionado(s)
+            </button>
+          )}
+          {pecas.length > 0 && (
+            <button className="btn-gray" onClick={toggleTodos}>
+              {selecionados.size === pecas.length ? 'Desmarcar tudo' : 'Selecionar tudo'}
+            </button>
+          )}
           <button className="btn-gray" onClick={baixarModelo}>
             <Download size={13} /> Baixar modelo
           </button>
@@ -200,6 +232,7 @@ export default function Estoque() {
             <table className="est-table">
               <thead>
                 <tr>
+                  <th style={{ width: 40 }}></th>
                   <th>Produto</th>
                   <th>Marca</th>
                   <th>Carro</th>
@@ -213,6 +246,14 @@ export default function Estoque() {
               <tbody>
                 {pecas.map(p => (
                   <tr key={p.id}>
+                    <td>
+                      <input
+                        type="checkbox"
+                        checked={selecionados.has(p.id)}
+                        onChange={() => toggleSelecionar(p.id)}
+                        style={{ width: 16, height: 16, accentColor: '#F58226', cursor: 'pointer' }}
+                      />
+                    </td>
                     <td style={{ fontWeight: 600 }}>{p.produto}</td>
                     <td>{p.marca_produto}</td>
                     <td>{p.carro}</td>
