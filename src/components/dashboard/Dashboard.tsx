@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts'
 import { Download, Filter, TrendingUp, MessageCircle, Clock, DollarSign } from 'lucide-react'
 import type { Pedido } from '../../types'
 import { exportarExcel } from '../../services/excel'
 import { supabase } from '../../lib/supabase'
 import { useCompany } from '../../hooks/useCompany'
-import { useState as useStateExtra, useEffect as useEffectExtra } from 'react'
+
 
 interface Props { pedidos: Pedido[] }
 
