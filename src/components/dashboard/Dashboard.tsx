@@ -3,8 +3,18 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pi
 import { Download, Filter, TrendingUp, MessageCircle, Clock, DollarSign } from 'lucide-react'
 import type { Pedido } from '../../types'
 import { exportarExcel } from '../../services/excel'
+import { supabase } from '../../lib/supabase'
+import { useCompany } from '../../hooks/useCompany'
+import { useState as useStateExtra, useEffect as useEffectExtra } from 'react'
 
 interface Props { pedidos: Pedido[] }
+
+interface Conversa {
+  id: string
+  created_at: string
+  produto_consultado: string
+  carro: string
+}
 
 const CORES_PGTO: Record<string, string> = {
   pix: '#F58226', credito: '#F97B3B', debito: '#FAC775', dinheiro: '#BBBBBB'
@@ -24,7 +34,7 @@ const css = `
   .btn-outline { background: transparent; color: #F58226; border: 1px solid #F58226; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
   .btn-outline:hover { background: #FFF0E9; }
   .periodo-label { font-size: 12px; color: #999; margin-left: auto; font-weight: 600; }
-  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
   .kpi-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
   .kpi-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #F58226; }
   .kpi-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
@@ -74,7 +84,7 @@ const css = `
   .entrega-bar { margin-top: 8px; height: 4px; background: #E0E0E0; border-radius: 4px; overflow: hidden; }
   .entrega-bar-fill { height: 100%; border-radius: 4px; }
   .entrega-pct { font-size: 10px; color: #bbb; margin-top: 4px; }
-  @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} .entrega-grid{grid-template-columns:1fr} }
+  @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} .entrega-grid{grid-template-columns:1fr} }
   .peca-scroll::-webkit-scrollbar { width: 10px; }
   .peca-scroll::-webkit-scrollbar-track { background: #F5F5F5; border-radius: 10px; }
   .peca-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #F58226, #D62C27); border-radius: 10px; border: 2px solid #F5F5F5; }
@@ -131,6 +141,18 @@ export default function Dashboard({ pedidos }: Props) {
   const [dateFrom, setDateFrom] = useState(primeiroDia)
   const [dateTo, setDateTo] = useState(ultimoDia)
   const [filteredRange, setFilteredRange] = useState({ from: primeiroDia, to: ultimoDia })
+  const companyId = useCompany()
+  const [conversas, setConversas] = useState<Conversa[]>([])
+
+  useEffect(() => {
+    if (!companyId) return
+    supabase
+      .from('conversas')
+      .select('*')
+      .eq('company_id', companyId)
+      .order('created_at', { ascending: false })
+      .then(({ data }) => { if (data) setConversas(data) })
+  }, [companyId])
 
   const filtrados = useMemo(() => {
     const d1 = new Date(filteredRange.from + 'T00:00:00')
@@ -142,6 +164,13 @@ export default function Dashboard({ pedidos }: Props) {
   }, [pedidos, filteredRange])
 
   const finalizados = filtrados.filter(p => p.status === 'finalizado' || p.status === 'concluido')
+
+  const conversasFiltradas = conversas.filter(c => {
+    const d = new Date(c.created_at)
+    const d1 = new Date(filteredRange.from + 'T00:00:00')
+    const d2 = new Date(filteredRange.to + 'T23:59:59')
+    return d >= d1 && d <= d2
+  })
   const faturamento = finalizados.reduce((a, p) => a + p.total, 0)
   const conversao = filtrados.length ? Math.round((finalizados.length / filtrados.length) * 100) : 0
   const tempoMedio = calcTempo(filtrados)
@@ -246,6 +275,12 @@ export default function Dashboard({ pedidos }: Props) {
             <div className="kpi-label"><MessageCircle size={13} className="card-title-icon" /> Atendimentos</div>
             <div className="kpi-value">{filtrados.length}</div>
             <div className="kpi-sub">total no periodo</div>
+          </div>
+          <div className="kpi-card">
+            <div className="kpi-accent" style={{ background: '#7C3AED' }} />
+            <div className="kpi-label" style={{ color: '#7C3AED' }}>🤖 Consultas IA</div>
+            <div className="kpi-value">{conversasFiltradas.length}</div>
+            <div className="kpi-sub">conversas ativas da IA</div>
           </div>
           <div className="kpi-card">
             <div className="kpi-accent" />
