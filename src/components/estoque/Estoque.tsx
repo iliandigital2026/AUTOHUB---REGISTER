@@ -6,6 +6,7 @@ import * as XLSX from 'xlsx'
 
 interface Peca {
   id?: string
+  codigo_peca?: string
   categoria: string
   produto: string
   marca_produto: string
@@ -58,7 +59,7 @@ const css = `
 `
 
 const VAZIA: Peca = {
-  categoria: 'Carro', produto: '', marca_produto: '', carro: '',
+  codigo_peca: '', categoria: 'Carro', produto: '', marca_produto: '', carro: '',
   motor_carro: '', marca_carro: '', carro_chave: '', ano_carro: '',
   quantidade: 0, valor: 0,
 }
@@ -134,8 +135,8 @@ export default function Estoque() {
 
   const baixarModelo = () => {
     const ws = XLSX.utils.aoa_to_sheet([
-      ['CATEGORIA','PRODUTO','MARCA_PRODUTO','CARRO','MOTOR_CARRO','MARCA_CARRO','CARRO_CHAVE','ANO_CARRO','QUANTIDADE','VALOR'],
-      ['Carro','Amortecedor Dianteiro','Monroe','Hyundai Creta','1.6, 2.0','Hyundai','Creta','2020, 2021, 2022',4,1320],
+      ['CODIGO_PECA','CATEGORIA','PRODUTO','MARCA_PRODUTO','CARRO','MOTOR_CARRO','MARCA_CARRO','CARRO_CHAVE','ANO_CARRO','QUANTIDADE','VALOR'],
+      ['GP30352PS','Carro','Amortecedor Dianteiro','Monroe','Hyundai Creta','1.6, 2.0','Hyundai','Creta','2020, 2021, 2022',4,1320],
     ])
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, 'Estoque')
@@ -151,6 +152,7 @@ export default function Estoque() {
     const rows = XLSX.utils.sheet_to_json(ws) as any[]
     const inserir = rows.map(r => ({
       company_id: companyId,
+      codigo_peca: r.CODIGO_PECA || r.CODIGO || '',
       categoria: r.CATEGORIA || 'Carro',
       produto: r.PRODUTO || '',
       marca_produto: r.MARCA_PRODUTO || '',
@@ -233,6 +235,7 @@ export default function Estoque() {
               <thead>
                 <tr>
                   <th style={{ width: 40 }}></th>
+                  <th>Codigo</th>
                   <th>Produto</th>
                   <th>Marca</th>
                   <th>Carro</th>
@@ -254,6 +257,7 @@ export default function Estoque() {
                         style={{ width: 16, height: 16, accentColor: '#F58226', cursor: 'pointer' }}
                       />
                     </td>
+                    <td style={{ fontSize: 11, color: '#888', fontFamily: 'monospace' }}>{p.codigo_peca || '—'}</td>
                     <td style={{ fontWeight: 600 }}>{p.produto}</td>
                     <td>{p.marca_produto}</td>
                     <td>{p.carro}</td>
@@ -285,6 +289,7 @@ export default function Estoque() {
             <div className="modal-title">{editando ? 'Editar peça' : 'Nova peça'}</div>
             <div className="form-grid">
               {[
+                { label: 'Codigo da peca', key: 'codigo_peca' },
                 { label: 'Produto', key: 'produto', full: true },
                 { label: 'Marca do produto', key: 'marca_produto' },
                 { label: 'Categoria', key: 'categoria' },
