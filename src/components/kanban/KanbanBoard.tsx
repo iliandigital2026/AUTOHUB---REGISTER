@@ -114,11 +114,6 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
       <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>
         {pedido.cliente_nome}
       </div>
-      {(pedido as { marca_produto?: string }).marca_produto && (
-        <div style={{ fontSize: 11, color: '#F58226', fontWeight: 600, marginBottom: 4 }}>
-          {(pedido as { marca_produto?: string }).marca_produto}
-        </div>
-      )}
       <div style={{ display: 'flex', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
         <span style={{ background: entregaBadge.bg, color: entregaBadge.color, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 4 }}>
           {entregaBadge.icon} {entregaBadge.label}
@@ -134,7 +129,13 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
       <div style={{ borderTop: '0.5px solid #F0F0F0', borderBottom: '0.5px solid #F0F0F0', padding: '8px 0', marginBottom: 8 }}>
         {itens.map((it: { descricao: string; valor: number }, i: number) => (
           <div key={i} style={{ fontSize: 11, color: '#555', marginBottom: 3, display: 'flex', justifyContent: 'space-between' }}>
-            <span>• {it.descricao}</span>
+            <span>
+              {(pedido as { quantidade?: string }).quantidade && `${(pedido as { quantidade?: string }).quantidade}x `}
+              {it.descricao}
+              {(pedido as { marca_produto?: string }).marca_produto && (
+                <span style={{ color: '#F58226', fontWeight: 600 }}> — {(pedido as { marca_produto?: string }).marca_produto}</span>
+              )}
+            </span>
             {it.valor > 0 && <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>}
           </div>
         ))}
