@@ -12,6 +12,7 @@ interface Props {
 }
 
 const COLS: { id: PedidoStatus; label: string; cor: string; bordaTopo: string; bg: string }[] = [
+  { id: 'aguardando_humano', label: 'Aguardando Humano', cor: '#7C3AED', bordaTopo: '#7C3AED', bg: '#F5F3FF' },
   { id: 'em_atendimento', label: 'Em Atendimento', cor: '#F58226', bordaTopo: '#F58226', bg: '#FFF5F0' },
   { id: 'aguardando_registro', label: 'Aguardando Registro', cor: '#F59E0B', bordaTopo: '#F59E0B', bg: '#FFFBEB' },
   { id: 'finalizado', label: 'Finalizado / Registrado', cor: '#16A34A', bordaTopo: '#16A34A', bg: '#F0FDF4' },
@@ -332,7 +333,7 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
 
   const byStatus = useMemo(() => {
-    const map: Record<string, Pedido[]> = { em_atendimento: [], aguardando_registro: [], finalizado: [] }
+    const map: Record<string, Pedido[]> = { aguardando_humano: [], em_atendimento: [], aguardando_registro: [], finalizado: [] }
     pedidos.forEach(p => { if (map[p.status]) map[p.status].push(p) })
     return map
   }, [pedidos])
