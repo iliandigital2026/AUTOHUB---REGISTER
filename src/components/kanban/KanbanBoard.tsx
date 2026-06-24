@@ -112,8 +112,14 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
           {selecionado ? 'Selecionado' : 'Selecionar'}
         </div>
       )}
-      <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A', marginBottom: 4 }}>
-        {pedido.cliente_nome}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>
+          {pedido.cliente_nome}
+        </div>
+        <span title={(pedido as { origem?: string }).origem === 'humano' ? 'Atendimento Humano' : 'Atendimento IA'} style={{
+          width: 8, height: 8, borderRadius: '50%', display: 'inline-block', flexShrink: 0,
+          background: (pedido as { origem?: string }).origem === 'humano' ? '#F58226' : '#7C3AED'
+        }} />
       </div>
       <div style={{ display: 'flex', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
         <span style={{ background: entregaBadge.bg, color: entregaBadge.color, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20, display: 'flex', alignItems: 'center', gap: 4 }}>
