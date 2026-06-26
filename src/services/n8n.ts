@@ -38,3 +38,4 @@ export async function dispararFollowUp(pedidoId: string, telefone: string) {
     console.warn('N8N follow-up webhook não configurado:', e)
   }
 }
+
