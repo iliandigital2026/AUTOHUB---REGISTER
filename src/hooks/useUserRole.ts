@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+grep -n "useUserRole" src/components/estoque/Estoque.tsx
 
 export type UserRole = 'dono' | 'vendedor' | 'estoquista'
 
