@@ -69,6 +69,8 @@ function fmtMoeda(v: number) {
 }
 
 export default function Estoque() {
+  const { role } = useUserRole()
+  const podeGerenciar = role !== 'vendedor'
   const companyId = useCompany()
   const [pecas, setPecas] = useState<(Peca & { id: string })[]>([])
   const [loading, setLoading] = useState(true)
@@ -185,26 +187,32 @@ export default function Estoque() {
             <Package size={16} style={{ display: 'inline', marginRight: 8, color: '#F58226' }} />
             Estoque de Peças
           </div>
-          {selecionados.size > 0 && (
+          {podeGerenciar && selecionados.size > 0 && (
             <button className="btn-primary" style={{ background: '#C62828' }} onClick={excluirSelecionados}>
               <Trash2 size={13} /> Excluir {selecionados.size} selecionado(s)
             </button>
           )}
-          {pecas.length > 0 && (
+          {podeGerenciar && pecas.length > 0 && (
             <button className="btn-gray" onClick={toggleTodos}>
               {selecionados.size === pecas.length ? 'Desmarcar tudo' : 'Selecionar tudo'}
             </button>
           )}
-          <button className="btn-gray" onClick={baixarModelo}>
-            <Download size={13} /> Baixar modelo
-          </button>
-          <button className="btn-outline" onClick={() => fileRef.current?.click()}>
-            <Upload size={13} /> Importar planilha
-          </button>
+          {podeGerenciar && (
+            <button className="btn-gray" onClick={baixarModelo}>
+              <Download size={13} /> Baixar modelo
+            </button>
+          )}
+          {podeGerenciar && (
+            <button className="btn-outline" onClick={() => fileRef.current?.click()}>
+              <Upload size={13} /> Importar planilha
+            </button>
+          )}
           <input ref={fileRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: 'none' }} onChange={importar} />
-          <button className="btn-primary" onClick={abrirNovo}>
-            <Plus size={13} /> Nova peça
-          </button>
+          {podeGerenciar && (
+            <button className="btn-primary" onClick={abrirNovo}>
+              <Plus size={13} /> Nova peça
+            </button>
+          )}
         </div>
 
         <div className="est-stats">

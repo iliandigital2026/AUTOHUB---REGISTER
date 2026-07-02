@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useUserRole } from '../../hooks/useUserRole'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
 import { Trophy, TrendingUp, Package, Clock } from 'lucide-react'
 import type { Pedido } from '../../types'
@@ -56,6 +57,7 @@ function calcTempo(pedidos: Pedido[]) {
 }
 
 export default function Relatorios({ pedidos }: Props) {
+  const { role, vendedorNome } = useUserRole()
   const hoje = new Date()
   const ini = new Date(hoje.getFullYear(), hoje.getMonth(), 1).toISOString().split('T')[0]
   const fim = hoje.toISOString().split('T')[0]
@@ -69,7 +71,11 @@ export default function Relatorios({ pedidos }: Props) {
     return pedidos.filter(p => { const d = new Date(p.created_at); return d >= d1 && d <= d2 })
   }, [pedidos, range])
 
-  const finalizados = filtrados.filter(p => (p.status === 'finalizado' || p.status === 'concluido') && p.vendedor)
+  const finalizados = filtrados.filter(p => {
+    if (!((p.status === 'finalizado' || p.status === 'concluido') && p.vendedor)) return false
+    if (role === 'vendedor' && vendedorNome) return p.vendedor === vendedorNome
+    return true
+  })
 
   const vendMap = useMemo(() => {
     const m = new Map<string, { pedidos: number; total: number; pedidosData: Pedido[] }>()
