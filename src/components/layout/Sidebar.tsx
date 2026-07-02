@@ -15,7 +15,7 @@ const NAV_MAIN = [
   { id: 'dashboard',  label: 'Dashboard',     icon: LayoutDashboard, roles: ['dono'] },
   { id: 'kanban',     label: 'Pedidos',        icon: Kanban,          roles: ['dono', 'vendedor'] },
   { id: 'clientes',   label: 'Clientes',       icon: Users,           roles: ['dono', 'vendedor'] },
-  { id: 'followup',   label: 'Follow-up',      icon: Bell,            roles: ['dono'] },
+  { id: 'followup',   label: 'Follow-up',      icon: Bell,            roles: ['dono', 'vendedor'] },
   { id: 'relatorios', label: 'Relatórios',     icon: BarChart2,       roles: ['dono', 'vendedor'] },
   { id: 'lixeira',    label: 'Lixeira',        icon: Trash2,          roles: ['dono'] },
   { id: 'estoque',    label: 'Estoque',        icon: Package,         roles: ['dono', 'vendedor', 'estoquista'] },
