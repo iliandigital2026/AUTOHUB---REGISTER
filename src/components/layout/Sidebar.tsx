@@ -12,18 +12,18 @@ interface Props {
 }
 
 const NAV_MAIN = [
-  { id: 'dashboard',  label: 'Dashboard',     icon: LayoutDashboard, roles: ['dono'] },
-  { id: 'kanban',     label: 'Pedidos',        icon: Kanban,          roles: ['dono', 'vendedor'] },
-  { id: 'clientes',   label: 'Clientes',       icon: Users,           roles: ['dono', 'vendedor'] },
-  { id: 'followup',   label: 'Follow-up',      icon: Bell,            roles: ['dono', 'vendedor'] },
-  { id: 'relatorios', label: 'Relatórios',     icon: BarChart2,       roles: ['dono', 'vendedor'] },
-  { id: 'lixeira',    label: 'Lixeira',        icon: Trash2,          roles: ['dono'] },
-  { id: 'estoque',    label: 'Estoque',        icon: Package,         roles: ['dono', 'vendedor', 'estoquista'] },
+  { id: 'dashboard',  label: 'Dashboard',     icon: LayoutDashboard, roles: ['dono', 'suporte'] },
+  { id: 'kanban',     label: 'Pedidos',        icon: Kanban,          roles: ['dono', 'vendedor', 'suporte'] },
+  { id: 'clientes',   label: 'Clientes',       icon: Users,           roles: ['dono', 'vendedor', 'suporte'] },
+  { id: 'followup',   label: 'Follow-up',      icon: Bell,            roles: ['dono', 'vendedor', 'suporte'] },
+  { id: 'relatorios', label: 'Relatórios',     icon: BarChart2,       roles: ['dono', 'vendedor', 'suporte'] },
+  { id: 'lixeira',    label: 'Lixeira',        icon: Trash2,          roles: ['dono', 'suporte'] },
+  { id: 'estoque',    label: 'Estoque',        icon: Package,         roles: ['dono', 'vendedor', 'estoquista', 'suporte'] },
 ] as const
 
 const NAV_CONFIG = [
-  { id: 'vendedores',     label: 'Vendedores',       icon: UserCog,  roles: ['dono'] },
-  { id: 'configuracoes',  label: 'Integrações N8N',  icon: Settings, roles: ['dono'] },
+  { id: 'vendedores',     label: 'Vendedores',       icon: UserCog,  roles: ['dono', 'suporte'] },
+  { id: 'configuracoes',  label: 'Integrações N8N',  icon: Settings, roles: ['suporte'] },
 ] as const
 
 const ADMIN_EMAIL = 'iliandigital2026@gmail.com'
@@ -94,6 +94,7 @@ const ROLE_LABEL: Record<string, string> = {
   dono: 'Dono/Gerente',
   vendedor: 'Vendedor',
   estoquista: 'Estoquista',
+  suporte: 'Suporte AutoHub',
 }
 
 export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEmail }: Props) {
