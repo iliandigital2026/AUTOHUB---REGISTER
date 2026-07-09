@@ -19,10 +19,10 @@ import type { PageName, PedidoStatus } from './types'
 import { useTheme } from './hooks/useTheme'
 
 const appCss = `
-  .app-shell { display: flex; min-height: 100vh; background: #F6F6F6; }
+  .app-shell { display: flex; min-height: 100vh; background: var(--bg-input); }
   .app-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
   .app-content { flex: 1; overflow-y: auto; }
-  .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; gap: 14px; background: #F6F6F6; }
+  .loading-screen { display: flex; align-items: center; justify-content: center; height: 100vh; flex-direction: column; gap: 14px; background: var(--bg-input); }
   .spinner { width: 36px; height: 36px; border: 3px solid #F58226; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 `

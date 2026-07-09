@@ -57,25 +57,25 @@ Body:
 const css = `
   .config-page { padding: 24px; max-width: 800px; }
   .config-section { margin-bottom: 28px; }
-  .config-section-title { font-size: 13px; font-weight: 700; color: #1A1A1A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 0.5px solid #E8E8E8; }
-  .wh-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 20px; margin-bottom: 14px; }
-  .wh-label { font-size: 13px; font-weight: 700; color: #1A1A1A; margin-bottom: 4px; }
-  .wh-desc { font-size: 12px; color: #999; margin-bottom: 14px; }
+  .config-section-title { font-size: 13px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; padding-bottom: 10px; border-bottom: 0.5px solid #E8E8E8; }
+  .wh-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; margin-bottom: 14px; }
+  .wh-label { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .wh-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
   .wh-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
-  .wh-input { flex: 1; padding: 10px 14px; border: 0.5px solid #E0E0E0; border-radius: 9px; font-family: 'Montserrat',sans-serif; font-size: 12px; color: #1A1A1A; background: #F9F9F9; outline: none; }
+  .wh-input { flex: 1; padding: 10px 14px; border: 0.5px solid var(--border-card); border-radius: 9px; font-family: 'Montserrat',sans-serif; font-size: 12px; color: var(--text-primary); background: var(--bg-table-head); outline: none; }
   .wh-input:focus { border-color: #F58226; background: #fff; }
   .wh-input.saved { border-color: #A5D6A7; background: #F1F8E9; }
-  .btn-test { background: #F6F6F6; color: #555; border: 0.5px solid #E0E0E0; border-radius: 9px; padding: 10px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: all .15s; }
+  .btn-test { background: var(--bg-input); color: #555; border: 0.5px solid var(--border-card); border-radius: 9px; padding: 10px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: all .15s; }
   .btn-test:hover { background: #F58226; color: #fff; border-color: #F58226; }
   .btn-save-wh { background: #F58226; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; }
   .test-result { font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 7px; display: flex; align-items: center; gap: 5px; }
   .test-ok { background: #E8F5E9; color: #2E7D32; }
   .test-fail { background: #FFEBEE; color: #C62828; }
-  .payload-block { background: #1A1A1A; color: #E8E8E8; border-radius: 10px; padding: 14px 16px; font-size: 11px; font-family: monospace; line-height: 1.7; overflow-x: auto; position: relative; }
+  .payload-block { background: var(--text-primary); color: #E8E8E8; border-radius: 10px; padding: 14px 16px; font-size: 11px; font-family: monospace; line-height: 1.7; overflow-x: auto; position: relative; }
   .copy-btn { position: absolute; top: 10px; right: 10px; background: #333; color: #ccc; border: none; border-radius: 6px; padding: 4px 8px; font-size: 10px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
   .copy-btn:hover { background: #F58226; color: #fff; }
   .info-box { background: #FFF8E1; border: 0.5px solid #F59E0B40; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #92400E; display: flex; gap: 10px; margin-bottom: 14px; }
-  .env-list { background: #F6F6F6; border-radius: 10px; padding: 14px 16px; font-size: 12px; font-family: monospace; line-height: 2; }
+  .env-list { background: var(--bg-input); border-radius: 10px; padding: 14px 16px; font-size: 12px; font-family: monospace; line-height: 2; }
   .env-row { display: flex; justify-content: space-between; align-items: center; }
   .env-key { color: #F58226; font-weight: 700; }
   .env-val { color: #555; }

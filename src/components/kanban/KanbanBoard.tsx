@@ -52,7 +52,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
   onSelecionar?: (id: string) => void
 }) {
   const [showVendedor, setShowVendedor] = useState(false)
-  const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: '#F0F0F0', color: '#666', label: pedido.forma_pagamento || '—' }
+  const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: 'var(--border-color)', color: '#666', label: pedido.forma_pagamento || '—' }
   const itensRaw = Array.isArray(pedido.itens) ? pedido.itens : []
   const itens = itensRaw.map((it: string | { descricao: string; valor: number }) =>
     typeof it === 'string' ? { descricao: it, valor: 0 } : (it || { descricao: '', valor: 0 })
@@ -80,7 +80,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
 
   return (
     <div style={{
-      background: '#fff', border: '0.5px solid #E0E0E0', borderRadius: 12, padding: '14px 16px',
+      background: '#fff', border: '0.5px solid var(--border-card)', borderRadius: 12, padding: '14px 16px',
       marginBottom: 10, cursor: 'grab', opacity: isDragging ? 0.5 : 1,
       boxShadow: isDragging ? 'none' : '0 1px 3px rgba(0,0,0,0.04)',
       transition: 'box-shadow 0.15s',
@@ -100,8 +100,8 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             marginBottom: 10, cursor: 'pointer',
-            background: selecionado ? '#F0FDF4' : '#F6F6F6',
-            border: selecionado ? '0.5px solid #A5D6A7' : '0.5px solid #E0E0E0',
+            background: selecionado ? '#F0FDF4' : 'var(--bg-input)',
+            border: selecionado ? '0.5px solid #A5D6A7' : '0.5px solid var(--border-card)',
             borderRadius: 8, padding: '6px 10px',
             fontSize: 11, fontWeight: 700,
             color: selecionado ? '#16A34A' : '#999',
@@ -113,7 +113,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
         </div>
       )}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#1A1A1A' }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)' }}>
           {pedido.cliente_nome}
         </div>
         <span title={(pedido as { origem?: string }).origem === 'humano' ? 'Atendimento Humano' : 'Atendimento IA'} style={{
@@ -127,13 +127,13 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
         </span>
       </div>
       {(pedido as { endereco_entrega?: string }).endereco_entrega && (
-        <div style={{ fontSize: 11, color: '#555', background: '#F9F9F9', padding: '6px 10px', borderRadius: 8, marginBottom: 8, display: 'flex', gap: 6 }}>
+        <div style={{ fontSize: 11, color: '#555', background: 'var(--bg-table-head)', padding: '6px 10px', borderRadius: 8, marginBottom: 8, display: 'flex', gap: 6 }}>
           <span>📍</span>
           <span>{(pedido as { endereco_entrega?: string }).endereco_entrega}</span>
         </div>
       )}
 
-      <div style={{ borderTop: '0.5px solid #F0F0F0', borderBottom: '0.5px solid #F0F0F0', padding: '8px 0', marginBottom: 8 }}>
+      <div style={{ borderTop: '0.5px solid var(--border-color)', borderBottom: '0.5px solid var(--border-color)', padding: '8px 0', marginBottom: 8 }}>
         {itens.map((it: { descricao: string; valor: number }, i: number) => (
           <div key={i} style={{ fontSize: 11, color: '#555', marginBottom: 3, display: 'flex', justifyContent: 'space-between' }}>
             <span>
@@ -146,7 +146,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
             {it.valor > 0 && <span style={{ fontWeight: 600 }}>{fmtMoeda(it.valor)}</span>}
           </div>
         ))}
-        <div style={{ fontSize: 12, fontWeight: 700, color: '#1A1A1A', marginTop: 6, display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-primary)', marginTop: 6, display: 'flex', justifyContent: 'space-between' }}>
           <span>Total</span>
           <span style={{ color: '#F58226' }}>{fmtMoeda(pedido.total)} ✅</span>
         </div>
@@ -178,24 +178,24 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
       {(pedido.veiculo_carro || pedido.veiculo_placa) && (
         <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>
           🚗 {[pedido.veiculo_carro, pedido.veiculo_ano, pedido.veiculo_motor].filter(Boolean).join(' / ')}
-          {pedido.veiculo_placa && <span style={{ marginLeft: 6, background: '#F0F0F0', padding: '1px 6px', borderRadius: 4, fontWeight: 600 }}>{pedido.veiculo_placa}</span>}
+          {pedido.veiculo_placa && <span style={{ marginLeft: 6, background: 'var(--border-color)', padding: '1px 6px', borderRadius: 4, fontWeight: 600 }}>{pedido.veiculo_placa}</span>}
         </div>
       )}
 
       <div style={{ position: 'relative', marginBottom: 6 }}>
         <button
           onClick={() => setShowVendedor(!showVendedor)}
-          style={{ width: '100%', background: '#F6F6F6', border: '0.5px solid #E0E0E0', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 600, color: pedido.vendedor ? '#F58226' : '#999', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
+          style={{ width: '100%', background: 'var(--bg-input)', border: '0.5px solid var(--border-card)', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 600, color: pedido.vendedor ? '#F58226' : '#999', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
         >
           <User size={13} />
           {pedido.vendedor || 'Atribuir vendedor'}
           <ChevronDown size={12} style={{ marginLeft: 'auto' }} />
         </button>
         {showVendedor && (
-          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '0.5px solid #E0E0E0', borderRadius: 8, zIndex: 50, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '0.5px solid var(--border-card)', borderRadius: 8, zIndex: 50, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
             {vendedores.map(v => (
               <div key={v.id} onClick={() => atribuirVendedor(v.nome)}
-                style={{ padding: '9px 14px', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: '#1A1A1A', borderBottom: '0.5px solid #F5F5F5' }}
+                style={{ padding: '9px 14px', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text-primary)', borderBottom: '0.5px solid #F5F5F5' }}
                 onMouseEnter={e => (e.currentTarget.style.background = '#FFF0E9')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
@@ -369,7 +369,7 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
       {selecionados.size > 0 && (
         <div style={{
           position: 'fixed', bottom: 32, left: '50%', transform: 'translateX(-50%)',
-          background: '#1A1A1A', borderRadius: 16, padding: '12px 20px',
+          background: 'var(--text-primary)', borderRadius: 16, padding: '12px 20px',
           display: 'flex', alignItems: 'center', gap: 12,
           boxShadow: '0 8px 32px rgba(0,0,0,0.25)', zIndex: 200,
         }}>

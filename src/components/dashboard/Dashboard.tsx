@@ -25,63 +25,63 @@ const LABELS_PGTO: Record<string, string> = {
 
 const css = `
   .dash-page { padding: 24px; max-width: 1400px; }
-  .filter-bar { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-  .filter-bar label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; }
-  .filter-bar input[type=date] { font-family: 'Montserrat', sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid #E0E0E0; border-radius: 8px; background: #F6F6F6; color: #1A1A1A; outline: none; }
+  .filter-bar { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-bar label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+  .filter-bar input[type=date] { font-family: 'Montserrat', sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid var(--border-card); border-radius: 8px; background: var(--bg-input); color: var(--text-primary); outline: none; }
   .filter-bar input[type=date]:focus { border-color: #F58226; }
   .btn-primary { background: #F58226; color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: opacity .15s; }
   .btn-primary:hover { opacity: .88; }
   .btn-outline { background: transparent; color: #F58226; border: 1px solid #F58226; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
   .btn-outline:hover { background: #FFF0E9; }
-  .periodo-label { font-size: 12px; color: #999; margin-left: auto; font-weight: 600; }
+  .periodo-label { font-size: 12px; color: var(--text-muted); margin-left: auto; font-weight: 600; }
   .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
-  .kpi-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
+  .kpi-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
   .kpi-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #F58226; }
-  .kpi-label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .kpi-value { font-size: 24px; font-weight: 700; color: #1A1A1A; }
-  .kpi-sub { font-size: 11px; color: #999; margin-top: 4px; }
+  .kpi-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .kpi-value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
+  .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
   .charts-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 20px; }
   .tables-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 20px; }
-  .card-title { font-size: 12px; font-weight: 700; color: #1A1A1A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
+  .card-title { font-size: 12px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
   .card-title-icon { color: #F58226; }
   .peca-table { width: 100%; border-collapse: collapse; }
-  .peca-table th { font-size: 10px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; padding: 0 8px 10px 0; text-align: left; border-bottom: 0.5px solid #F0F0F0; }
+  .peca-table th { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; padding: 0 8px 10px 0; text-align: left; border-bottom: 0.5px solid var(--border-color); }
   .peca-table td { font-size: 12px; color: #555; padding: 8px 8px 8px 0; border-bottom: 0.5px solid #F8F8F8; vertical-align: middle; }
   .peca-table tr:last-child td { border-bottom: none; }
   .peca-bar-wrap { display: flex; align-items: center; gap: 8px; }
-  .peca-bar-track { flex: 1; background: #F0F0F0; border-radius: 20px; height: 8px; overflow: hidden; min-width: 60px; }
+  .peca-bar-track { flex: 1; background: var(--border-color); border-radius: 20px; height: 8px; overflow: hidden; min-width: 60px; }
   .peca-bar-fill { height: 100%; background: #F58226; border-radius: 20px; }
-  .peca-qtd { font-size: 11px; font-weight: 700; color: #1A1A1A; white-space: nowrap; }
+  .peca-qtd { font-size: 11px; font-weight: 700; color: var(--text-primary); white-space: nowrap; }
   .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .bar-label { font-size: 11px; color: #666; font-weight: 500; min-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bar-track { flex: 1; background: #F0F0F0; border-radius: 20px; height: 10px; overflow: hidden; }
+  .bar-label { font-size: 11px; color: var(--text-secondary); font-weight: 500; min-width: 130px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .bar-track { flex: 1; background: var(--border-color); border-radius: 20px; height: 10px; overflow: hidden; }
   .bar-fill { height: 100%; background: #F58226; border-radius: 20px; }
-  .bar-val { font-size: 11px; font-weight: 700; color: #1A1A1A; min-width: 42px; text-align: right; }
-  .client-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid #F0F0F0; }
+  .bar-val { font-size: 11px; font-weight: 700; color: var(--text-primary); min-width: 42px; text-align: right; }
+  .client-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 0.5px solid var(--border-color); }
   .client-row:last-child { border-bottom: none; }
   .avatar { width: 34px; height: 34px; border-radius: 50%; background: #FFF0E9; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #F58226; flex-shrink: 0; }
   .client-info { flex: 1; min-width: 0; }
-  .client-name { font-size: 12px; font-weight: 600; color: #1A1A1A; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .client-detail { font-size: 11px; color: #999; }
+  .client-name { font-size: 12px; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .client-detail { font-size: 11px; color: var(--text-muted); }
   .client-val { font-size: 13px; font-weight: 700; color: #F58226; }
   .pay-row { margin-bottom: 12px; }
   .pay-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-  .pay-label { font-size: 12px; font-weight: 500; color: #1A1A1A; display: flex; align-items: center; gap: 7px; }
+  .pay-label { font-size: 12px; font-weight: 500; color: var(--text-primary); display: flex; align-items: center; gap: 7px; }
   .pay-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .pay-val { font-size: 12px; font-weight: 700; color: #1A1A1A; }
-  .pay-pct { font-size: 10px; color: #999; margin-left: 4px; }
-  .pay-bar-track { width: 100%; background: #F0F0F0; border-radius: 20px; height: 7px; overflow: hidden; }
+  .pay-val { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+  .pay-pct { font-size: 10px; color: var(--text-muted); margin-left: 4px; }
+  .pay-bar-track { width: 100%; background: var(--border-color); border-radius: 20px; height: 7px; overflow: hidden; }
   .pay-bar-fill { height: 100%; border-radius: 20px; }
   .ia-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-  .ia-card { background: #F6F6F6; border-radius: 10px; padding: 12px; text-align: center; }
+  .ia-card { background: var(--bg-input); border-radius: 10px; padding: 12px; text-align: center; }
   .ia-num { font-size: 18px; font-weight: 700; color: #F58226; }
-  .ia-lbl { font-size: 10px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
+  .ia-lbl { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
   .entrega-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .entrega-card { background: #F9F9F9; border-radius: 10px; padding: 14px 16px; border: 0.5px solid #E0E0E0; }
+  .entrega-card { background: var(--bg-table-head); border-radius: 10px; padding: 14px 16px; border: 0.5px solid var(--border-card); }
   .entrega-num { font-size: 24px; font-weight: 700; }
-  .entrega-lbl { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
-  .entrega-bar { margin-top: 8px; height: 4px; background: #E0E0E0; border-radius: 4px; overflow: hidden; }
+  .entrega-lbl { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .4px; margin-top: 2px; }
+  .entrega-bar { margin-top: 8px; height: 4px; background: var(--border-card); border-radius: 4px; overflow: hidden; }
   .entrega-bar-fill { height: 100%; border-radius: 4px; }
   .entrega-pct { font-size: 10px; color: #bbb; margin-top: 4px; }
   @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} .entrega-grid{grid-template-columns:1fr} }
@@ -307,17 +307,17 @@ export default function Dashboard({ pedidos }: Props) {
             <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Marca</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Produto</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Carro</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Ano</th>
-                    <th style={{ width: 120, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 #F0F0F0' }}>Unidades</th>
+                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Marca</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Produto</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Carro</th>
+                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Ano</th>
+                    <th style={{ width: 120, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Unidades</th>
                   </tr>
                 </thead>
                 <tbody>
                   {pecasTop.map((p, i) => (
                     <tr key={i}>
-                      <td style={{ fontWeight: 600, color: '#1A1A1A' }}>{p.marca}</td>
+                      <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{p.marca}</td>
                       <td>{p.descricao}</td>
                       <td style={{ color: '#666', fontSize: 12 }}>{p.carro}</td>
                       <td style={{ color: '#666', fontSize: 12 }}>{p.ano}</td>

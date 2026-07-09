@@ -54,7 +54,7 @@ const style = `
     display: flex; flex-direction: column; gap: 8px; pointer-events: none;
   }
   .toast {
-    background: #1A1A1A; color: #fff; font-size: 13px; font-weight: 500;
+    background: var(--text-primary); color: #fff; font-size: 13px; font-weight: 500;
     padding: 12px 18px; border-radius: 10px; max-width: 320px;
     border-left: 4px solid #F58226; animation: slideIn 0.3s ease;
     font-family: 'Montserrat', sans-serif;

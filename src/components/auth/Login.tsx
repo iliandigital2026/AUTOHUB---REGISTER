@@ -24,7 +24,7 @@ const css = `
   }
   .login-logo-wrap { margin-bottom: 36px; }
   .login-title {
-    font-size: 17px; font-weight: 700; color: #1A1A1A;
+    font-size: 17px; font-weight: 700; color: var(--text-primary);
     margin-bottom: 4px; text-align: center;
     font-family: 'Montserrat', sans-serif;
   }
@@ -42,7 +42,7 @@ const css = `
     width: 100%; padding: 12px 14px;
     border: 0.5px solid #E8E8E8; border-radius: 10px;
     font-family: 'Montserrat', sans-serif; font-size: 13px;
-    color: #1A1A1A; background: #FAFAFA; outline: none;
+    color: var(--text-primary); background: #FAFAFA; outline: none;
     transition: border .15s, box-shadow .15s;
   }
   .field input:focus {
@@ -74,7 +74,7 @@ const css = `
     margin: 18px 0; color: #ddd; font-size: 11px;
     font-family: 'Montserrat', sans-serif;
   }
-  .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: #EEEEEE; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: var(--border-color); }
   .login-footer {
     text-align: center; margin-top: 22px; font-size: 10px;
     color: #ccc; font-family: 'Montserrat', sans-serif; letter-spacing: 0.04em;

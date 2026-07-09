@@ -9,17 +9,17 @@ interface Props { pedidos: Pedido[] }
 const css = `
   .followup-page { padding: 24px; }
   .followup-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-  .fs-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
+  .fs-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
   .fs-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .fs-val { font-size: 22px; font-weight: 700; color: #1A1A1A; }
-  .fs-label { font-size: 11px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
+  .fs-val { font-size: 22px; font-weight: 700; color: var(--text-primary); }
+  .fs-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
   .followup-list { display: flex; flex-direction: column; gap: 10px; }
-  .fu-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+  .fu-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
   .fu-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
   .fu-urgente { background: #FFEBEE; color: #C62828; }
   .fu-moderado { background: #FFF8E1; color: #F57F17; }
   .fu-info { flex: 1; min-width: 0; }
-  .fu-nome { font-size: 14px; font-weight: 700; color: #1A1A1A; margin-bottom: 3px; }
+  .fu-nome { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
   .fu-detalhe { font-size: 12px; color: #888; }
   .fu-tempo { font-size: 12px; font-weight: 600; color: #F58226; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
   .fu-actions { display: flex; gap: 8px; }
@@ -31,7 +31,7 @@ const css = `
   .btn-red { background: #FFEBEE; color: #C62828; }
   .empty-fu { text-align: center; padding: 64px; color: #bbb; font-size: 14px; }
   .empty-fu-icon { font-size: 40px; margin-bottom: 12px; }
-  .section-title { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; margin: 20px 0 10px; }
+  .section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin: 20px 0 10px; }
 `
 
 function tempoSemResposta(dt: string) {
@@ -124,7 +124,7 @@ export default function FollowUp({ pedidos }: Props) {
         {pendentes.length === 0 && naoFinalizados.length === 0 ? (
           <div className="empty-fu">
             <div className="empty-fu-icon">🎉</div>
-            <div style={{ fontWeight: 700, color: '#1A1A1A', fontSize: 16, marginBottom: 6 }}>Tudo em dia!</div>
+            <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 16, marginBottom: 6 }}>Tudo em dia!</div>
             <div>Nenhum atendimento pendente de follow-up no momento.</div>
           </div>
         ) : (

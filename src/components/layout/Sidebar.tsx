@@ -30,12 +30,12 @@ const ADMIN_EMAIL = 'iliandigital2026@gmail.com'
 
 const style = `
   .sidebar {
-    width: 230px; min-height: 100vh; background: #FFFFFF;
-    border-right: 1px solid #EEEEEE; display: flex; flex-direction: column;
+    width: 230px; min-height: 100vh; background: var(--bg-card);
+    border-right: 1px solid var(--border-color); display: flex; flex-direction: column;
     position: sticky; top: 0; height: 100vh; overflow-y: auto;
   }
   .sidebar-logo {
-    padding: 22px 18px 18px; border-bottom: 1px solid #F0F0F0;
+    padding: 22px 18px 18px; border-bottom: 1px solid var(--border-color);
   }
   .nav-section { padding: 14px 10px 4px; }
   .nav-label {
@@ -46,7 +46,7 @@ const style = `
   .nav-item {
     display: flex; align-items: center; gap: 10px; padding: 9px 12px;
     border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 500;
-    color: #666; transition: all 0.15s; margin-bottom: 2px;
+    color: var(--text-secondary); transition: all 0.15s; margin-bottom: 2px;
     border-left: 3px solid transparent; font-family: 'Montserrat', sans-serif;
   }
   .nav-item:hover { background: #FFF3EC; color: #E8421F; }
@@ -60,7 +60,7 @@ const style = `
     padding: 2px 7px; border-radius: 10px; margin-left: auto;
   }
   .sidebar-bottom {
-    margin-top: auto; padding: 12px 10px 16px; border-top: 1px solid #F0F0F0;
+    margin-top: auto; padding: 12px 10px 16px; border-top: 1px solid var(--border-color);
   }
   .user-row {
     display: flex; align-items: center; gap: 8px; padding: 8px 12px;
@@ -73,7 +73,7 @@ const style = `
     font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0;
   }
   .user-email {
-    font-size: 11px; color: #999; white-space: nowrap;
+    font-size: 11px; color: var(--text-muted); white-space: nowrap;
     overflow: hidden; text-overflow: ellipsis; flex: 1;
     font-family: 'Montserrat', sans-serif;
   }

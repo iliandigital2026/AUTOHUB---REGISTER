@@ -10,34 +10,34 @@ const CORES = ['#F58226', '#F97B3B', '#FAC775', '#FBDBA0', '#FDE8C4']
 
 const css = `
   .rel-page { padding: 24px; }
-  .rel-filter { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-  .rel-filter label { font-size: 11px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; }
-  .rel-filter input[type=date] { font-family: 'Montserrat',sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid #E0E0E0; border-radius: 8px; background: #F6F6F6; outline: none; }
+  .rel-filter { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .rel-filter label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+  .rel-filter input[type=date] { font-family: 'Montserrat',sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid var(--border-card); border-radius: 8px; background: var(--bg-input); outline: none; }
   .rel-filter input[type=date]:focus { border-color: #F58226; }
   .btn-filtrar { background: #F58226; color: #fff; border: none; border-radius: 8px; padding: 8px 16px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; }
-  .rank-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #1A1A1A; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
+  .rank-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
   .rank-icon { color: #F58226; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-  .card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 20px; }
-  .card-title { font-size: 12px; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
+  .card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
+  .card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
   .vend-rank { display: flex; flex-direction: column; gap: 10px; }
-  .vend-rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: #F9F9F9; border: 0.5px solid #F0F0F0; }
+  .vend-rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-table-head); border: 0.5px solid var(--border-color); }
   .vend-rank-item:first-child { background: #FFF0E9; border-color: #F5822630; }
   .rank-pos { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
   .rank-1 { background: #F58226; color: #fff; }
-  .rank-2 { background: #F0F0F0; color: #555; }
+  .rank-2 { background: var(--border-color); color: #555; }
   .rank-3 { background: #FAE8D0; color: #F58226; }
-  .rank-n { background: #F0F0F0; color: #999; font-size: 11px; }
-  .rank-nome { flex: 1; font-size: 13px; font-weight: 600; color: #1A1A1A; }
+  .rank-n { background: var(--border-color); color: var(--text-muted); font-size: 11px; }
+  .rank-nome { flex: 1; font-size: 13px; font-weight: 600; color: var(--text-primary); }
   .rank-stats { text-align: right; }
   .rank-val { font-size: 13px; font-weight: 700; color: #F58226; }
-  .rank-sub { font-size: 11px; color: #999; }
+  .rank-sub { font-size: 11px; color: var(--text-muted); }
   .kpis-vend { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
-  .kv-card { background: #fff; border: 0.5px solid #E0E0E0; border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+  .kv-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
   .kv-accent { position: absolute; top:0; left:0; width:4px; height:100%; background:#F58226; }
   .kv-icon { color: #F58226; margin-bottom: 8px; }
-  .kv-val { font-size: 20px; font-weight: 700; color: #1A1A1A; }
-  .kv-lbl { font-size: 11px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
+  .kv-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }
+  .kv-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
   .no-data { text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
 `
 
@@ -183,14 +183,14 @@ export default function Relatorios({ pedidos }: Props) {
               <thead>
                 <tr>
                   {['Vendedor','Pedidos','Faturamento','Ticket Médio','Tempo Médio','% do Total'].map(h => (
-                    <th key={h} style={{ fontSize: 11, fontWeight: 700, color: '#999', textTransform: 'uppercase', letterSpacing: '.4px', padding: '8px 12px', textAlign: 'left', borderBottom: '0.5px solid #F0F0F0' }}>{h}</th>
+                    <th key={h} style={{ fontSize: 11, fontWeight: 700, color: '#999', textTransform: 'uppercase', letterSpacing: '.4px', padding: '8px 12px', textAlign: 'left', borderBottom: '0.5px solid var(--border-color)' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {ranking.map((v, i) => (
                   <tr key={v.nome} style={{ background: i % 2 === 0 ? '#fff' : '#FAFAFA' }}>
-                    <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 600, color: '#1A1A1A' }}>
+                    <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                       <span style={{ marginRight: 8, fontSize: 14 }}>{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}º`}</span>
                       {v.nome}
                     </td>
@@ -200,7 +200,7 @@ export default function Relatorios({ pedidos }: Props) {
                     <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>{calcTempo(v.pedidosData)}</td>
                     <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <div style={{ flex: 1, background: '#F0F0F0', borderRadius: 20, height: 7, overflow: 'hidden', minWidth: 60 }}>
+                        <div style={{ flex: 1, background: 'var(--border-color)', borderRadius: 20, height: 7, overflow: 'hidden', minWidth: 60 }}>
                           <div style={{ width: `${totalGeral ? Math.round((v.total/totalGeral)*100) : 0}%`, height: '100%', background: CORES[i] || '#ddd', borderRadius: 20 }} />
                         </div>
                         {totalGeral ? Math.round((v.total/totalGeral)*100) : 0}%
