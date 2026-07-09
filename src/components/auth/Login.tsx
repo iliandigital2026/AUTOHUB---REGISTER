@@ -29,12 +29,12 @@ const css = `
     font-family: 'Montserrat', sans-serif;
   }
   .login-sub {
-    font-size: 12px; color: #aaa; text-align: center;
+    font-size: 12px; color: var(--text-muted); text-align: center;
     margin-bottom: 26px; font-family: 'Montserrat', sans-serif;
   }
   .field { margin-bottom: 15px; }
   .field label {
-    display: block; font-size: 10px; font-weight: 700; color: #777;
+    display: block; font-size: 10px; font-weight: 700; color: var(--text-muted);
     text-transform: uppercase; letter-spacing: .6px; margin-bottom: 6px;
     font-family: 'Montserrat', sans-serif;
   }
@@ -42,7 +42,7 @@ const css = `
     width: 100%; padding: 12px 14px;
     border: 0.5px solid #E8E8E8; border-radius: 10px;
     font-family: 'Montserrat', sans-serif; font-size: 13px;
-    color: var(--text-primary); background: #FAFAFA; outline: none;
+    color: var(--text-primary); background: var(--bg-input); outline: none;
     transition: border .15s, box-shadow .15s;
   }
   .field input:focus {
@@ -77,7 +77,7 @@ const css = `
   .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: var(--border-color); }
   .login-footer {
     text-align: center; margin-top: 22px; font-size: 10px;
-    color: #ccc; font-family: 'Montserrat', sans-serif; letter-spacing: 0.04em;
+    color: var(--text-label); font-family: 'Montserrat', sans-serif; letter-spacing: 0.04em;
   }
 `
 

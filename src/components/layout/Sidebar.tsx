@@ -49,7 +49,7 @@ const style = `
     color: var(--text-secondary); transition: all 0.15s; margin-bottom: 2px;
     border-left: 3px solid transparent; font-family: 'Montserrat', sans-serif;
   }
-  .nav-item:hover { background: #FFF3EC; color: #E8421F; }
+  .nav-item:hover { background: var(--bg-card)3EC; color: #E8421F; }
   .nav-item.active {
     background: linear-gradient(90deg, #FFF3EC 0%, #FFF8F4 100%);
     color: #E8421F; border-left: 3px solid #F58226; font-weight: 600;

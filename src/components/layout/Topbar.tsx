@@ -35,7 +35,7 @@ const style = `
     padding: 5px 12px; border-radius: 20px; font-family: 'Montserrat', sans-serif;
   }
   .n8n-badge.online { background: #E8F5E9; color: #2E7D32; }
-  .n8n-badge.offline { background: #F5F5F5; color: #bbb; }
+  .n8n-badge.offline { background: #F5F5F5; color: var(--text-muted); }
   .n8n-dot { width: 7px; height: 7px; border-radius: 50%; }
   .n8n-badge.online .n8n-dot { background: #2E7D32; animation: pulse-dot 2s infinite; }
   .n8n-badge.offline .n8n-dot { background: #ddd; }

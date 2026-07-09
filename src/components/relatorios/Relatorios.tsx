@@ -22,10 +22,10 @@ const css = `
   .card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
   .vend-rank { display: flex; flex-direction: column; gap: 10px; }
   .vend-rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-table-head); border: 0.5px solid var(--border-color); }
-  .vend-rank-item:first-child { background: #FFF0E9; border-color: #F5822630; }
+  .vend-rank-item:first-child { background: var(--bg-card)0E9; border-color: #F5822630; }
   .rank-pos { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
   .rank-1 { background: #F58226; color: #fff; }
-  .rank-2 { background: var(--border-color); color: #555; }
+  .rank-2 { background: var(--border-color); color: var(--text-secondary); }
   .rank-3 { background: #FAE8D0; color: #F58226; }
   .rank-n { background: var(--border-color); color: var(--text-muted); font-size: 11px; }
   .rank-nome { flex: 1; font-size: 13px; font-weight: 600; color: var(--text-primary); }
@@ -38,7 +38,7 @@ const css = `
   .kv-icon { color: #F58226; margin-bottom: 8px; }
   .kv-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }
   .kv-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
-  .no-data { text-align: center; padding: 40px; color: #bbb; font-size: 13px; }
+  .no-data { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; }
 `
 
 function fmtMoeda(v: number) { return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }

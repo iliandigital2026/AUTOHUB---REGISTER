@@ -17,10 +17,10 @@ const css = `
   .fu-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
   .fu-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
   .fu-urgente { background: #FFEBEE; color: #C62828; }
-  .fu-moderado { background: #FFF8E1; color: #F57F17; }
+  .fu-moderado { background: var(--bg-card)8E1; color: #F57F17; }
   .fu-info { flex: 1; min-width: 0; }
   .fu-nome { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
-  .fu-detalhe { font-size: 12px; color: #888; }
+  .fu-detalhe { font-size: 12px; color: var(--text-muted); }
   .fu-tempo { font-size: 12px; font-weight: 600; color: #F58226; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
   .fu-actions { display: flex; gap: 8px; }
   .btn-sm { border-radius: 8px; padding: 7px 12px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 5px; border: none; transition: opacity .15s; }
@@ -29,7 +29,7 @@ const css = `
   .btn-orange { background: #F58226; color: #fff; }
   .btn-wa { background: #E8F5E9; color: #2E7D32; }
   .btn-red { background: #FFEBEE; color: #C62828; }
-  .empty-fu { text-align: center; padding: 64px; color: #bbb; font-size: 14px; }
+  .empty-fu { text-align: center; padding: 64px; color: var(--text-muted); font-size: 14px; }
   .empty-fu-icon { font-size: 40px; margin-bottom: 12px; }
   .section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin: 20px 0 10px; }
 `
