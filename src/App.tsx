@@ -16,6 +16,7 @@ import { useAuth } from './hooks/useAuth'
 import { useCompany } from './hooks/useCompany'
 import { useSoundNotification } from './hooks/useSoundNotification'
 import type { PageName, PedidoStatus } from './types'
+import { useTheme } from './hooks/useTheme'
 
 const appCss = `
   .app-shell { display: flex; min-height: 100vh; background: #F6F6F6; }
@@ -28,6 +29,7 @@ const appCss = `
 
 export default function App() {
   const { user, loading: authLoading, signOut } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const companyId = useCompany()
   const [page, setPage] = useState<PageName>('dashboard')
   const [toasts, setToasts] = useState<string[]>([])
@@ -95,7 +97,7 @@ export default function App() {
           userEmail={user.email}
         />
         <div className="app-main">
-          <Topbar page={page} n8nOnline={n8nOnline} toasts={toasts} />
+          <Topbar page={page} n8nOnline={n8nOnline} toasts={toasts} theme={theme} onToggleTheme={toggleTheme} />
           <div className="app-content">
             {pedidosLoading ? (
               <div className="loading-screen" style={{ height: 300, background: 'transparent' }}>
