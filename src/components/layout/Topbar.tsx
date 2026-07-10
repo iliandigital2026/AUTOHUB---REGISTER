@@ -34,8 +34,8 @@ const style = `
     display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600;
     padding: 5px 12px; border-radius: 20px; font-family: 'Montserrat', sans-serif;
   }
-  .n8n-badge.online { background: #E8F5E9; color: #2E7D32; }
-  .n8n-badge.offline { background: #F5F5F5; color: var(--text-muted); }
+  .n8n-badge.online { background: var(--bg-success); color: var(--color-success); }
+  .n8n-badge.offline { background: var(--bg-input); color: var(--text-muted); }
   .n8n-dot { width: 7px; height: 7px; border-radius: 50%; }
   .n8n-badge.online .n8n-dot { background: #2E7D32; animation: pulse-dot 2s infinite; }
   .n8n-badge.offline .n8n-dot { background: #ddd; }

@@ -9,10 +9,10 @@ const css = `
   .clientes-page { padding: 24px; }
   .clientes-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
   .search-box { flex: 1; position: relative; max-width: 360px; }
-  .search-box input { width: 100%; padding: 9px 14px 9px 36px; border: 0.5px solid var(--border-card); border-radius: 10px; font-family: 'Montserrat',sans-serif; font-size: 13px; background: #fff; color: var(--text-primary); outline: none; }
+  .search-box input { width: 100%; padding: 9px 14px 9px 36px; border: 0.5px solid var(--border-card); border-radius: 10px; font-family: 'Montserrat',sans-serif; font-size: 13px; background: var(--bg-card); color: var(--text-primary); outline: none; }
   .search-box input:focus { border-color: #F58226; }
   .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
-  .table-wrap { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; overflow: hidden; }
+  .table-wrap { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; overflow: hidden; }
   .table-wrap table { width: 100%; border-collapse: collapse; }
   .table-wrap th { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; padding: 12px 16px; background: var(--bg-table-head); border-bottom: 0.5px solid var(--border-card); text-align: left; }
   .table-wrap td { font-size: 13px; color: var(--text-primary); padding: 12px 16px; border-bottom: 0.5px solid var(--border-color); vertical-align: middle; }
@@ -21,10 +21,10 @@ const css = `
   .avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: var(--bg-card)0E9; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #F58226; flex-shrink: 0; }
   .btn-hist { background: var(--bg-card)0E9; color: #F58226; border: 0.5px solid #F5822640; border-radius: 8px; padding: 5px 12px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; transition: background .15s; }
   .btn-hist:hover { background: #F58226; color: #fff; }
-  .wa-link { display: inline-flex; align-items: center; gap: 5px; color: #2E7D32; font-size: 12px; font-weight: 600; text-decoration: none; }
+  .wa-link { display: inline-flex; align-items: center; gap: 5px; color: var(--color-success); font-size: 12px; font-weight: 600; text-decoration: none; }
   .wa-link:hover { text-decoration: underline; }
   .drawer-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 100; }
-  .drawer { position: fixed; right: 0; top: 0; bottom: 0; width: 420px; background: #fff; z-index: 101; box-shadow: -4px 0 24px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+  .drawer { position: fixed; right: 0; top: 0; bottom: 0; width: 420px; background: var(--bg-card); z-index: 101; box-shadow: -4px 0 24px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
   .drawer-header { padding: 20px 24px; border-bottom: 0.5px solid var(--border-card); display: flex; align-items: center; justify-content: space-between; }
   .drawer-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
   .drawer-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
@@ -34,7 +34,7 @@ const css = `
   .hist-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .hist-date { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
   .hist-status { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
-  .status-fin { background: #E8F5E9; color: #2E7D32; }
+  .status-fin { background: var(--bg-success); color: var(--color-success); }
   .status-ag { background: var(--bg-card)8E1; color: #F57F17; }
   .status-em { background: var(--bg-card)0E9; color: #F58226; }
   .hist-item { font-size: 12px; color: var(--text-secondary); margin-bottom: 3px; display: flex; justify-content: space-between; }

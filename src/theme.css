@@ -6,12 +6,23 @@
   --bg-input: #F6F6F6;
   --bg-stats: #FFFFFF;
   --bg-table-head: #F9F9F9;
+  --bg-brand-light: #FFF3EC;
+  --bg-success: #E8F5E9;
+  --bg-danger: #FFEBEE;
+  --bg-warning: #FFF8E1;
+  --bg-purple-light: #F3E5F5;
+  --bg-blue-light: #E3F2FD;
+  --bg-login: #1e0f0a;
+  --bg-login-card: #2a1208;
   --border-color: #EEEEEE;
   --border-card: #E0E0E0;
   --text-primary: #1A1A1A;
   --text-secondary: #666666;
   --text-muted: #999999;
   --text-label: #CCCCCC;
+  --color-success: #2E7D32;
+  --color-danger: #C62828;
+  --color-warning: #F57F17;
   --brand-orange: #F58226;
   --brand-red: #D62C27;
   --topbar-bg: #FFFFFF;
@@ -30,12 +41,23 @@
   --bg-input: #2A2010;
   --bg-stats: #252015;
   --bg-table-head: #1E1710;
+  --bg-brand-light: #2E1E08;
+  --bg-success: #0D2B0F;
+  --bg-danger: #2B0D0D;
+  --bg-warning: #2B2008;
+  --bg-purple-light: #1E1030;
+  --bg-blue-light: #0D1B2B;
+  --bg-login: #1C1611;
+  --bg-login-card: #252015;
   --border-color: #3A2E1E;
   --border-card: #3A2E1E;
   --text-primary: #F0E6D3;
   --text-secondary: #B8A88A;
   --text-muted: #7A6A52;
   --text-label: #5A4A32;
+  --color-success: #4CAF50;
+  --color-danger: #EF5350;
+  --color-warning: #FFB300;
   --brand-orange: #F58226;
   --brand-red: #D62C27;
   --topbar-bg: #151008;
@@ -47,6 +69,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
 body {
   font-family: 'Montserrat', 'Inter', sans-serif;
   background: var(--bg-app);
@@ -59,7 +82,7 @@ body {
   min-height: 100vh;
 }
 
-/* Garante visibilidade de inputs e selects no dark mode */
+/* Inputs e selects */
 [data-theme="dark"] input,
 [data-theme="dark"] select,
 [data-theme="dark"] textarea {
@@ -68,15 +91,16 @@ body {
   border-color: var(--border-card) !important;
 }
 
-[data-theme="dark"] table {
-  background: var(--bg-card);
-}
-
+/* Tabelas */
 [data-theme="dark"] tr:hover td {
   background: var(--bg-card-hover) !important;
 }
 
-/* Logo texto no dark */
-[data-theme="dark"] .logo-hub {
-  color: var(--text-primary) !important;
+/* Scrollbar */
+[data-theme="dark"] ::-webkit-scrollbar {
+  background: var(--bg-app);
+}
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--border-card);
+  border-radius: 4px;
 }

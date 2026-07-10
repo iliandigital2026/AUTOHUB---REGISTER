@@ -40,7 +40,7 @@ const style = `
   .nav-section { padding: 14px 10px 4px; }
   .nav-label {
     font-size: 10px; font-weight: 700; letter-spacing: 1px;
-    text-transform: uppercase; padding: 0 10px; margin-bottom: 6px; color: #CCCCCC;
+    text-transform: uppercase; padding: 0 10px; margin-bottom: 6px; color: var(--text-label);
     font-family: 'Montserrat', sans-serif;
   }
   .nav-item {
@@ -85,9 +85,9 @@ const style = `
   .signout-btn {
     display: flex; align-items: center; gap: 8px; padding: 8px 12px;
     border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
-    color: #C62828; transition: background .15s; font-family: 'Montserrat', sans-serif;
+    color: var(--color-danger); transition: background .15s; font-family: 'Montserrat', sans-serif;
   }
-  .signout-btn:hover { background: #FFEBEE; }
+  .signout-btn:hover { background: var(--bg-danger); }
 `
 
 const ROLE_LABEL: Record<string, string> = {

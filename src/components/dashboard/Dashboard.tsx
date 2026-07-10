@@ -25,7 +25,7 @@ const LABELS_PGTO: Record<string, string> = {
 
 const css = `
   .dash-page { padding: 24px; max-width: 1400px; }
-  .filter-bar { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .filter-bar { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
   .filter-bar label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
   .filter-bar input[type=date] { font-family: 'Montserrat', sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid var(--border-card); border-radius: 8px; background: var(--bg-input); color: var(--text-primary); outline: none; }
   .filter-bar input[type=date]:focus { border-color: #F58226; }
@@ -35,14 +35,14 @@ const css = `
   .btn-outline:hover { background: var(--bg-card)0E9; }
   .periodo-label { font-size: 12px; color: var(--text-muted); margin-left: auto; font-weight: 600; }
   .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
-  .kpi-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
+  .kpi-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
   .kpi-accent { position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #F58226; }
   .kpi-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
   .kpi-value { font-size: 24px; font-weight: 700; color: var(--text-primary); }
   .kpi-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
   .charts-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 14px; margin-bottom: 20px; }
   .tables-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
+  .card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
   .card-title { font-size: 12px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
   .card-title-icon { color: #F58226; }
   .peca-table { width: 100%; border-collapse: collapse; }
@@ -86,7 +86,7 @@ const css = `
   .entrega-pct { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
   @media(max-width:900px){ .kpis{grid-template-columns:1fr 1fr 1fr} .charts-row,.tables-row{grid-template-columns:1fr} .entrega-grid{grid-template-columns:1fr} }
   .peca-scroll::-webkit-scrollbar { width: 10px; }
-  .peca-scroll::-webkit-scrollbar-track { background: #F5F5F5; border-radius: 10px; }
+  .peca-scroll::-webkit-scrollbar-track { background: var(--bg-input); border-radius: 10px; }
   .peca-scroll::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #F58226, #D62C27); border-radius: 10px; border: 2px solid #F5F5F5; }
   .peca-scroll::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #E8421F, #C62828); }
   .peca-scroll::-webkit-scrollbar-button:single-button { display: block; height: 16px; border-radius: 4px; }

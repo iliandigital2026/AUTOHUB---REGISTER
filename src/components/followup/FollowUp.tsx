@@ -9,14 +9,14 @@ interface Props { pedidos: Pedido[] }
 const css = `
   .followup-page { padding: 24px; }
   .followup-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
-  .fs-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
+  .fs-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
   .fs-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .fs-val { font-size: 22px; font-weight: 700; color: var(--text-primary); }
   .fs-label { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; }
   .followup-list { display: flex; flex-direction: column; gap: 10px; }
-  .fu-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
+  .fu-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
   .fu-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
-  .fu-urgente { background: #FFEBEE; color: #C62828; }
+  .fu-urgente { background: var(--bg-danger); color: var(--color-danger); }
   .fu-moderado { background: var(--bg-card)8E1; color: #F57F17; }
   .fu-info { flex: 1; min-width: 0; }
   .fu-nome { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
@@ -25,10 +25,10 @@ const css = `
   .fu-actions { display: flex; gap: 8px; }
   .btn-sm { border-radius: 8px; padding: 7px 12px; font-size: 11px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 5px; border: none; transition: opacity .15s; }
   .btn-sm:hover { opacity: .85; }
-  .btn-green { background: #E8F5E9; color: #2E7D32; }
+  .btn-green { background: var(--bg-success); color: var(--color-success); }
   .btn-orange { background: #F58226; color: #fff; }
-  .btn-wa { background: #E8F5E9; color: #2E7D32; }
-  .btn-red { background: #FFEBEE; color: #C62828; }
+  .btn-wa { background: var(--bg-success); color: var(--color-success); }
+  .btn-red { background: var(--bg-danger); color: var(--color-danger); }
   .empty-fu { text-align: center; padding: 64px; color: var(--text-muted); font-size: 14px; }
   .empty-fu-icon { font-size: 40px; margin-bottom: 12px; }
   .section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin: 20px 0 10px; }

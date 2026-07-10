@@ -10,7 +10,7 @@ const CORES = ['#F58226', '#F97B3B', '#FAC775', '#FBDBA0', '#FDE8C4']
 
 const css = `
   .rel-page { padding: 24px; }
-  .rel-filter { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+  .rel-filter { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
   .rel-filter label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
   .rel-filter input[type=date] { font-family: 'Montserrat',sans-serif; font-size: 12px; padding: 7px 10px; border: 0.5px solid var(--border-card); border-radius: 8px; background: var(--bg-input); outline: none; }
   .rel-filter input[type=date]:focus { border-color: #F58226; }
@@ -18,7 +18,7 @@ const css = `
   .rank-header { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 14px; }
   .rank-icon { color: #F58226; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
-  .card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
+  .card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 20px; }
   .card-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 16px; }
   .vend-rank { display: flex; flex-direction: column; gap: 10px; }
   .vend-rank-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 10px; background: var(--bg-table-head); border: 0.5px solid var(--border-color); }
@@ -33,7 +33,7 @@ const css = `
   .rank-val { font-size: 13px; font-weight: 700; color: #F58226; }
   .rank-sub { font-size: 11px; color: var(--text-muted); }
   .kpis-vend { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 20px; }
-  .kv-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
+  .kv-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 16px; position: relative; overflow: hidden; }
   .kv-accent { position: absolute; top:0; left:0; width:4px; height:100%; background:#F58226; }
   .kv-icon { color: #F58226; margin-bottom: 8px; }
   .kv-val { font-size: 20px; font-weight: 700; color: var(--text-primary); }

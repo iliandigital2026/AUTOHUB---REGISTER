@@ -13,29 +13,29 @@ const css = `
   .btn-add { background: #F58226; color: #fff; border: none; border-radius: 10px; padding: 10px 18px; font-size: 13px; font-weight: 700; font-family: 'Montserrat',sans-serif; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: opacity .15s; }
   .btn-add:hover { opacity: .88; }
   .add-form { background: var(--bg-card)0E9; border: 0.5px solid #F5822640; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; display: flex; gap: 10px; align-items: center; }
-  .add-form input { flex: 1; padding: 10px 14px; border: 0.5px solid var(--border-card); border-radius: 9px; font-family: 'Montserrat',sans-serif; font-size: 13px; color: var(--text-primary); outline: none; background: #fff; }
+  .add-form input { flex: 1; padding: 10px 14px; border: 0.5px solid var(--border-card); border-radius: 9px; font-family: 'Montserrat',sans-serif; font-size: 13px; color: var(--text-primary); outline: none; background: var(--bg-card); }
   .add-form input:focus { border-color: #F58226; }
   .btn-confirm { background: #F58226; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; }
   .btn-cancel { background: var(--border-color); color: var(--text-secondary); border: none; border-radius: 9px; padding: 10px 14px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; }
   .vend-list { display: flex; flex-direction: column; gap: 8px; }
-  .vend-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
+  .vend-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
   .vend-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card)0E9; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #F58226; flex-shrink: 0; }
   .vend-avatar.inativo { background: var(--border-color); color: var(--text-muted); }
   .vend-info { flex: 1; }
   .vend-nome { font-size: 14px; font-weight: 600; color: var(--text-primary); }
   .vend-nome.inativo { color: var(--text-muted); text-decoration: line-through; }
   .vend-status { font-size: 11px; font-weight: 600; margin-top: 2px; }
-  .vend-status.ativo { color: #2E7D32; }
+  .vend-status.ativo { color: var(--color-success); }
   .vend-status.inativo { color: var(--text-muted); }
   .vend-actions { display: flex; gap: 6px; }
   .btn-icon { width: 32px; height: 32px; border-radius: 8px; border: 0.5px solid var(--border-card); background: var(--bg-input); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: all .15s; }
   .btn-icon:hover { background: #F58226; color: #fff; border-color: #F58226; }
-  .btn-icon.danger:hover { background: #FFEBEE; color: #C62828; border-color: #C62828; }
-  .btn-icon.success:hover { background: #E8F5E9; color: #2E7D32; border-color: #2E7D32; }
+  .btn-icon.danger:hover { background: var(--bg-danger); color: var(--color-danger); border-color: var(--color-danger); }
+  .btn-icon.success:hover { background: var(--bg-success); color: var(--color-success); border-color: var(--color-success); }
   .edit-input { padding: 6px 10px; border: 0.5px solid #F58226; border-radius: 8px; font-family: 'Montserrat',sans-serif; font-size: 13px; color: var(--text-primary); outline: none; width: 200px; }
-  .empty-vend { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; background: #fff; border: 0.5px solid var(--border-card); border-radius: 12px; }
+  .empty-vend { text-align: center; padding: 40px; color: var(--text-muted); font-size: 13px; background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; }
   .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-  .stat-card { background: #fff; border: 0.5px solid var(--border-card); border-radius: 10px; padding: 14px 16px; text-align: center; }
+  .stat-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 10px; padding: 14px 16px; text-align: center; }
   .stat-num { font-size: 20px; font-weight: 700; color: #F58226; }
   .stat-lbl { font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: .4px; margin-top: 3px; }
 `
