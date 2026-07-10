@@ -66,24 +66,24 @@ export default function Lixeira() {
     <div style={{ padding: "2rem", maxWidth: 900, margin: "0 auto" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.5rem" }}>
         <Trash2 size={24} color="#E8421F" />
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "#1a1a1a", margin: 0 }}>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--text-primary)", margin: 0 }}>
           Lixeira
         </h1>
         <span style={{
-          marginLeft: "auto", fontSize: 13, color: "#888",
-          background: "#f5f5f5", padding: "4px 12px", borderRadius: 20
+          marginLeft: "auto", fontSize: 13, color: "var(--text-muted)",
+          background: "var(--bg-input)", padding: "4px 12px", borderRadius: 20
         }}>
           Itens apagados automaticamente após 60 dias
         </span>
       </div>
 
       {loading && (
-        <p style={{ color: "#888", textAlign: "center", marginTop: "3rem" }}>Carregando...</p>
+        <p style={{ color: "var(--text-muted)", textAlign: "center", marginTop: "3rem" }}>Carregando...</p>
       )}
 
       {!loading && pedidos.length === 0 && (
-        <div style={{ textAlign: "center", marginTop: "4rem", color: "#aaa" }}>
-          <Trash2 size={48} color="#ddd" />
+        <div style={{ textAlign: "center", marginTop: "4rem", color: "var(--text-muted)" }}>
+          <Trash2 size={48} color="var(--text-label)" />
           <p style={{ marginTop: 12, fontSize: 15 }}>Lixeira vazia</p>
         </div>
       )}
@@ -107,12 +107,12 @@ export default function Lixeira() {
             }}>
               <div style={{ flex: 1 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                  <span style={{ fontWeight: 700, fontSize: 15, color: "#1a1a1a" }}>
+                  <span style={{ fontWeight: 700, fontSize: 15, color: "var(--text-primary)" }}>
                     {p.cliente_nome}
                   </span>
                   {p.veiculo_carro && (
                     <span style={{
-                      fontSize: 11, background: "#f0f0f0", color: "#666",
+                      fontSize: 11, background: "var(--bg-input)", color: "var(--text-secondary)",
                       padding: "2px 8px", borderRadius: 10
                     }}>
                       {p.veiculo_carro}
@@ -127,15 +127,15 @@ export default function Lixeira() {
                     </span>
                   )}
                 </div>
-                <div style={{ fontSize: 13, color: "#666", marginBottom: 4 }}>
+                <div style={{ fontSize: 13, color: "var(--text-secondary)", marginBottom: 4 }}>
                   {itens.length > 0
                     ? itens.map((it: any) =>
                         typeof it === "string" ? it : `${it.quantidade || 1}x ${it.descricao || it.nome || ""}`
                       ).join(", ")
                     : "Sem itens"}
                 </div>
-                <div style={{ fontSize: 12, color: "#999" }}>
-                  Total: <strong style={{ color: "#1a1a1a" }}>
+                <div style={{ fontSize: 12, color: "var(--text-muted)" }}>
+                  Total: <strong style={{ color: "var(--text-primary)" }}>
                     R$ {Number(p.total || 0).toFixed(2)}
                   </strong>
                   {p.forma_pagamento && (
@@ -147,10 +147,10 @@ export default function Lixeira() {
               <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{
                   display: "flex", alignItems: "center", gap: 5,
-                  background: urgente ? "#FFF0F0" : "#f5f5f5",
+                  background: urgente ? "var(--bg-danger)" : "var(--bg-input)",
                   padding: "4px 10px", borderRadius: 20,
                   fontSize: 12,
-                  color: urgente ? "#E8421F" : "#888"
+                  color: urgente ? "#E8421F" : "var(--text-muted)"
                 }}>
                   <Clock size={12} />
                   {dias}d restantes

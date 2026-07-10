@@ -104,3 +104,6 @@ body {
   background: var(--border-card);
   border-radius: 4px;
 }
+
+[data-theme='dark'] .logo-hub { color: #FFFFFF !important; }
+[data-theme='dark'] .nav-label { color: var(--text-label) !important; }

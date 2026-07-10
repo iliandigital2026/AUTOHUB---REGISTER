@@ -79,6 +79,7 @@ export default function Estoque() {
   const [editando, setEditando] = useState<(Peca & { id: string }) | null>(null)
   const [form, setForm] = useState<Peca>(VAZIA)
   const [saving, setSaving] = useState(false)
+  const [filterText, setFilterText] = useState('')
   const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -209,6 +210,16 @@ export default function Estoque() {
             </button>
           )}
           <input ref={fileRef} type="file" accept=".xlsx,.xls,.csv" style={{ display: 'none' }} onChange={importar} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--bg-input)', border: '1px solid var(--border-card)', borderRadius: 10, padding: '6px 12px', minWidth: 220 }}>
+            <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>🔍</span>
+            <input
+              type="text"
+              placeholder="Buscar no estoque..."
+              value={filterText}
+              onChange={e => setFilterText(e.target.value)}
+              style={{ border: 'none', outline: 'none', background: 'transparent', fontSize: 12, color: 'var(--text-primary)', fontFamily: 'Montserrat, sans-serif', width: '100%' }}
+            />
+          </div>
           {podeGerenciar && (
             <button className="btn-primary" onClick={abrirNovo}>
               <Plus size={13} /> Nova peça
