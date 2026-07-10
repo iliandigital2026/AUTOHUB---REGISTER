@@ -80,6 +80,8 @@ export default function Estoque() {
   const [form, setForm] = useState<Peca>(VAZIA)
   const [saving, setSaving] = useState(false)
   const [filterText, setFilterText] = useState('')
+  const [colFilters, setColFilters] = useState<Record<string,string>>({})
+  const [openFilter, setOpenFilter] = useState<string|null>(null)
   const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -256,18 +258,52 @@ export default function Estoque() {
                 <tr>
                   <th style={{ width: 40 }}></th>
                   <th>Codigo</th>
-                  <th>Produto</th>
-                  <th>Marca</th>
-                  <th>Carro</th>
-                  <th>Motor</th>
-                  <th>Ano</th>
+                  {[
+                    { label: 'Produto', col: 'produto' },
+                    { label: 'Marca', col: 'marca_produto' },
+                    { label: 'Carro', col: 'carro' },
+                    { label: 'Motor', col: 'motor_carro' },
+                    { label: 'Ano', col: 'ano_carro' },
+                  ].map(({ label, col }) => (
+                    <th key={col} style={{ position: 'relative' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer', userSelect: 'none' }} onClick={() => setOpenFilter(openFilter === col ? null : col)}>
+                        <span>{label}</span>
+                        <span style={{ fontSize: 9, color: colFilters[col] ? 'var(--brand-orange)' : 'var(--text-muted)', marginLeft: 2 }}>{colFilters[col] ? '▼' : '⇅'}</span>
+                      </div>
+                      {openFilter === col && (
+                        <div style={{ position: 'absolute', top: '100%', left: 0, zIndex: 100, background: 'var(--bg-card)', border: '1px solid var(--border-card)', borderRadius: 8, padding: 8, minWidth: 160, boxShadow: '0 4px 16px rgba(0,0,0,0.2)' }}>
+                          <input
+                            autoFocus
+                            type="text"
+                            placeholder={`Filtrar ${label}...`}
+                            value={colFilters[col] || ''}
+                            onChange={e => setColFilters(f => ({ ...f, [col]: e.target.value }))}
+                            onKeyDown={e => e.key === 'Escape' && setOpenFilter(null)}
+                            style={{ width: '100%', padding: '6px 8px', border: '1px solid var(--border-card)', borderRadius: 6, fontSize: 12, background: 'var(--bg-input)', color: 'var(--text-primary)', outline: 'none', fontFamily: 'Montserrat, sans-serif' }}
+                          />
+                          {colFilters[col] && (
+                            <div onClick={() => { setColFilters(f => ({ ...f, [col]: '' })); setOpenFilter(null) }} style={{ marginTop: 6, fontSize: 11, color: 'var(--color-danger)', cursor: 'pointer', textAlign: 'right' }}>
+                              Limpar filtro
+                            </div>
+                          )}
+                          <div style={{ marginTop: 4, maxHeight: 150, overflowY: 'auto' }}>
+                            {[...new Set(pecas.map(p => String(p[col as keyof typeof p] || '')))].filter(Boolean).filter(v => !colFilters[col] || v.toLowerCase().includes((colFilters[col]||'').toLowerCase())).slice(0,10).map(val => (
+                              <div key={val} onClick={() => { setColFilters(f => ({ ...f, [col]: val })); setOpenFilter(null) }} style={{ padding: '4px 8px', fontSize: 11, cursor: 'pointer', borderRadius: 4, color: 'var(--text-secondary)' }} onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-input)')} onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}>
+                                {val}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </th>
+                  ))}
                   <th>Qtd</th>
                   <th>Valor</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                {pecas.map(p => (
+                {pecasFiltradas.map(p => (
                   <tr key={p.id}>
                     <td>
                       <input

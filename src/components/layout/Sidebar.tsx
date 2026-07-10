@@ -2,6 +2,7 @@ import { LayoutDashboard, Kanban, Users, Bell, Settings, BarChart2, UserCog, Log
 import type { PageName } from '../../types'
 import { LogoFull } from './Logo'
 import { useUserRole } from '../../hooks/useUserRole'
+import { useTheme } from '../../hooks/useTheme'
 
 interface Props {
   page: PageName
@@ -99,6 +100,7 @@ const ROLE_LABEL: Record<string, string> = {
 
 export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEmail }: Props) {
   const { role, vendedorNome, loading } = useUserRole()
+  const { theme } = useTheme()
   const initials = userEmail ? userEmail.slice(0, 2).toUpperCase() : 'AG'
 
   const navMainVisible = NAV_MAIN.filter(item => (item.roles as readonly string[]).includes(role))
@@ -113,7 +115,7 @@ export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEm
         <style>{style}</style>
         <aside className="sidebar">
           <div className="sidebar-logo">
-            <LogoFull variant="light" />
+            {theme === "dark" ? <LogoFull variant="dark" /> : <LogoFull variant="light" />}
           </div>
         </aside>
       </>
@@ -125,7 +127,7 @@ export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEm
       <style>{style}</style>
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <LogoFull variant="light" />
+          {theme === "dark" ? <LogoFull variant="dark" /> : <LogoFull variant="light" />}
         </div>
 
         <div className="nav-section">
