@@ -182,6 +182,14 @@ export default function Estoque() {
   const totalValor = pecas.reduce((a, p) => a + (p.valor * p.quantidade), 0)
   const semEstoque = pecas.filter(p => p.quantidade === 0).length
 
+  const pecasFiltradas = pecas.filter(p => {
+    if (filterText && !['produto','marca_produto','carro','motor_carro','ano_carro'].some(k => String(p[k as keyof typeof p] || '').toLowerCase().includes(filterText.toLowerCase()))) return false
+    for (const [col, val] of Object.entries(colFilters || {})) {
+      if (val && !String(p[col as keyof typeof p] || '').toLowerCase().includes(val.toLowerCase())) return false
+    }
+    return true
+  })
+
   return (
     <>
       <style>{css}</style>
