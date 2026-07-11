@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { useTheme } from '../../hooks/useTheme'
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors, useDroppable, useDraggable } from '@dnd-kit/core'
 import { User, Clock, CheckCircle, ChevronDown, Trash2, Square, SquareCheck } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
@@ -11,11 +12,11 @@ interface Props {
   onUpdate: (id: string, status: PedidoStatus, vendedor?: string) => Promise<unknown>
 }
 
-const COLS: { id: PedidoStatus; label: string; cor: string; bordaTopo: string; bg: string }[] = [
-  { id: 'aguardando_humano', label: 'Aguardando Humano', cor: 'var(--col-purple)', bordaTopo: 'var(--col-purple)', bg: 'var(--col-purple-bg)' },
-  { id: 'em_atendimento', label: 'Em Atendimento', cor: '#F58226', bordaTopo: '#F58226', bg: '#FFF5F0' },
-  { id: 'aguardando_registro', label: 'Aguardando Registro', cor: 'var(--col-amber)', bordaTopo: 'var(--col-amber)', bg: 'var(--col-amber-bg)' },
-  { id: 'finalizado', label: 'Finalizado / Registrado', cor: 'var(--col-green)', bordaTopo: 'var(--col-green)', bg: 'var(--col-green-bg)' },
+const COLS: { id: PedidoStatus; label: string; cor: string; bordaTopo: string; bg: string; bgDark: string }[] = [
+  { id: 'aguardando_humano', label: 'Aguardando Humano', cor: '#7C3AED', bordaTopo: '#7C3AED', bg: '#F5F3FF', bgDark: '#1E1030' },
+  { id: 'em_atendimento', label: 'Em Atendimento', cor: '#F58226', bordaTopo: '#F58226', bg: '#FFF5F0', bgDark: '#2E1E08' },
+  { id: 'aguardando_registro', label: 'Aguardando Registro', cor: '#F59E0B', bordaTopo: '#F59E0B', bg: '#FFFBEB', bgDark: '#2B2008' },
+  { id: 'finalizado', label: 'Finalizado / Registrado', cor: '#16A34A', bordaTopo: '#16A34A', bg: '#F0FDF4', bgDark: '#0D2B0F' },
 ]
 
 const ENTREGA_BADGE: Record<string, { bg: string; color: string; label: string; icon: string }> = {
@@ -233,8 +234,9 @@ function DraggableCard({ pedido, vendedores, onUpdate, selecionado, onSelecionar
   )
 }
 
-function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar }: {
+function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar, isDark }: {
   col: typeof COLS[0]
+  isDark?: boolean
   pedidos: Pedido[]
   vendedores: Props['vendedores']
   onUpdate: Props['onUpdate']
@@ -246,7 +248,7 @@ function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar
     <div style={{ flex: 1, minWidth: 0 }}>
       <div style={{
         borderRadius: 12, border: `0.5px solid ${col.bordaTopo}30`,
-        borderTop: `3px solid ${col.bordaTopo}`, background: col.bg,
+        borderTop: `3px solid ${col.bordaTopo}`, background: isDark ? col.bgDark : col.bg,
         padding: 14, minHeight: 500,
         outline: isOver ? `2px dashed ${col.bordaTopo}` : 'none',
         transition: 'outline 0.15s',
@@ -300,6 +302,8 @@ function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar
 }
 
 export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
   const [activeId, setActiveId] = useState<string | null>(null)
   const [selecionados, setSelecionados] = useState<Set<string>>(new Set())
   const [processando, setProcessando] = useState(false)
@@ -401,7 +405,7 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
       <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd}>
         <div style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
           {COLS.map(col => (
-            <Column key={col.id} col={col} pedidos={byStatus[col.id] || []} vendedores={vendedores} onUpdate={onUpdate} selecionados={col.id === 'finalizado' ? selecionados : undefined} onSelecionar={col.id === 'finalizado' ? toggleSelecionar : undefined} />
+            <Column key={col.id} col={col} pedidos={byStatus[col.id] || []} vendedores={vendedores} onUpdate={onUpdate} selecionados={col.id === 'finalizado' ? selecionados : undefined} onSelecionar={col.id === 'finalizado' ? toggleSelecionar : undefined} isDark={isDark} />
           ))}
         </div>
         <DragOverlay>
