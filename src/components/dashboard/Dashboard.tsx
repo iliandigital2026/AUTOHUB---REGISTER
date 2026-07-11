@@ -47,7 +47,7 @@ const css = `
   .card-title-icon { color: #F58226; }
   .peca-table { width: 100%; border-collapse: collapse; }
   .peca-table th { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; padding: 0 8px 10px 0; text-align: left; border-bottom: 0.5px solid var(--border-color); }
-  .peca-table td { font-size: 12px; color: var(--text-secondary); padding: 8px 8px 8px 0; border-bottom: 0.5px solid #F8F8F8; vertical-align: middle; }
+  .peca-table td { font-size: 12px; color: var(--text-secondary); padding: 8px 8px 8px 0; border-bottom: 0.5px solid var(--border-color); vertical-align: middle; }
   .peca-table tr:last-child td { border-bottom: none; }
   .peca-bar-wrap { display: flex; align-items: center; gap: 8px; }
   .peca-bar-track { flex: 1; background: var(--border-color); border-radius: 20px; height: 8px; overflow: hidden; min-width: 60px; }
@@ -208,7 +208,7 @@ export default function Dashboard({ pedidos }: Props) {
     pgtoMap.set(fp, (pgtoMap.get(fp) || 0) + p.total)
   })
   const pgtoData = Array.from(pgtoMap.entries()).map(([tipo, valor]) => ({
-    tipo, valor, label: LABELS_PGTO[tipo] || tipo.toUpperCase(), cor: CORES_PGTO[tipo] || '#ccc',
+    tipo, valor, label: LABELS_PGTO[tipo] || tipo.toUpperCase(), cor: CORES_PGTO[tipo] || 'var(--text-label)',
     pct: faturamento ? Math.round((valor / faturamento) * 100) : 0,
   })).sort((a, b) => b.valor - a.valor)
 
@@ -219,9 +219,9 @@ export default function Dashboard({ pedidos }: Props) {
     entregaMap.set(fe, (entregaMap.get(fe) || 0) + 1)
   })
   const entregaData = [
-    { tipo: 'balcao', label: 'Balcao', qtd: entregaMap.get('balcao') || 0, cor: '#7C3AED' },
-    { tipo: 'entrega', label: 'Entrega', qtd: entregaMap.get('entrega') || 0, cor: '#1565C0' },
-    { tipo: 'transportadora', label: 'Transportadora', qtd: entregaMap.get('transportadora') || 0, cor: '#E65100' },
+    { tipo: 'balcao', label: 'Balcao', qtd: entregaMap.get('balcao') || 0, cor: 'var(--col-purple)' },
+    { tipo: 'entrega', label: 'Entrega', qtd: entregaMap.get('entrega') || 0, cor: 'var(--tag-blue-text)' },
+    { tipo: 'transportadora', label: 'Transportadora', qtd: entregaMap.get('transportadora') || 0, cor: 'var(--color-warning)' },
   ]
 
   // Top 5 clientes
@@ -252,7 +252,7 @@ export default function Dashboard({ pedidos }: Props) {
         <div className="filter-bar">
           <label>Periodo</label>
           <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
-          <span style={{ fontSize: 12, color: '#999' }}>ate</span>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>ate</span>
           <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} />
           <button className="btn-primary" onClick={() => setFilteredRange({ from: dateFrom, to: dateTo })}>
             <Filter size={13} /> Filtrar
@@ -277,8 +277,8 @@ export default function Dashboard({ pedidos }: Props) {
             <div className="kpi-sub">total no periodo</div>
           </div>
           <div className="kpi-card">
-            <div className="kpi-accent" style={{ background: '#7C3AED' }} />
-            <div className="kpi-label" style={{ color: '#7C3AED' }}>🤖 Consultas IA</div>
+            <div className="kpi-accent" style={{ background: 'var(--col-purple)' }} />
+            <div className="kpi-label" style={{ color: 'var(--col-purple)' }}>🤖 Consultas IA</div>
             <div className="kpi-value">{conversasFiltradas.length}</div>
             <div className="kpi-sub">conversas ativas da IA</div>
           </div>
@@ -301,17 +301,17 @@ export default function Dashboard({ pedidos }: Props) {
           <div className="card">
             <div className="card-title"><span className="card-title-icon">▪</span> Pecas mais vendidas</div>
             {pecasTop.length === 0 ? (
-              <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no periodo</p>
+              <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Nenhum dado no periodo</p>
             ) : (
               <div style={{ maxHeight: 236, overflowY: 'scroll', borderRadius: 8 }} className="peca-scroll">
             <table className="peca-table" style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
-                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Marca</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Produto</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Carro</th>
-                    <th style={{ position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Ano</th>
-                    <th style={{ width: 120, position: 'sticky', top: 0, background: '#fff', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Unidades</th>
+                    <th style={{ minWidth: 70, position: 'sticky', top: 0, background: 'var(--bg-card)', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Marca</th>
+                    <th style={{ position: 'sticky', top: 0, background: 'var(--bg-card)', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Produto</th>
+                    <th style={{ position: 'sticky', top: 0, background: 'var(--bg-card)', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Carro</th>
+                    <th style={{ position: 'sticky', top: 0, background: 'var(--bg-card)', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Ano</th>
+                    <th style={{ width: 120, position: 'sticky', top: 0, background: 'var(--bg-card)', zIndex: 1, boxShadow: '0 1px 0 var(--border-color)' }}>Unidades</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -319,8 +319,8 @@ export default function Dashboard({ pedidos }: Props) {
                     <tr key={i}>
                       <td style={{ fontWeight: 600, color: 'var(--text-primary)' }}>{p.marca}</td>
                       <td>{p.descricao}</td>
-                      <td style={{ color: '#666', fontSize: 12 }}>{p.carro}</td>
-                      <td style={{ color: '#666', fontSize: 12 }}>{p.ano}</td>
+                      <td style={{ color: 'var(--text-secondary)', fontSize: 12 }}>{p.carro}</td>
+                      <td style={{ color: 'var(--text-secondary)', fontSize: 12 }}>{p.ano}</td>
                       <td>
                         <div className="peca-bar-wrap">
                           <div className="peca-bar-track">
@@ -402,7 +402,7 @@ export default function Dashboard({ pedidos }: Props) {
                 <div className="client-val">{fmtMoeda(d.total)}</div>
               </div>
             ))}
-            {top5.length === 0 && <p style={{ fontSize: 13, color: '#999' }}>Nenhum dado no periodo</p>}
+            {top5.length === 0 && <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>Nenhum dado no periodo</p>}
           </div>
 
           <div className="card">
@@ -424,14 +424,14 @@ export default function Dashboard({ pedidos }: Props) {
             {lineData.length > 0 && (
               <ResponsiveContainer width="100%" height={100}>
                 <LineChart data={lineData}>
-                  <XAxis dataKey="dia" tick={{ fontSize: 10, fill: '#999' }} />
+                  <XAxis dataKey="dia" tick={{ fontSize: 10, fill: 'var(--text-muted)' }} />
                   <YAxis hide />
                   <Tooltip formatter={(v: number) => [`${v} atend.`, '']} />
                   <Line type="monotone" dataKey="qtd" stroke="#F58226" strokeWidth={2} dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             )}
-            <div style={{ fontSize: 10, color: '#bbb', textAlign: 'center', marginTop: 4 }}>Atendimentos por dia</div>
+            <div style={{ fontSize: 10, color: 'var(--text-label)', textAlign: 'center', marginTop: 4 }}>Atendimentos por dia</div>
           </div>
         </div>
       </div>

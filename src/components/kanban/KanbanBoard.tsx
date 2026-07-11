@@ -12,23 +12,23 @@ interface Props {
 }
 
 const COLS: { id: PedidoStatus; label: string; cor: string; bordaTopo: string; bg: string }[] = [
-  { id: 'aguardando_humano', label: 'Aguardando Humano', cor: '#7C3AED', bordaTopo: '#7C3AED', bg: '#F5F3FF' },
+  { id: 'aguardando_humano', label: 'Aguardando Humano', cor: 'var(--col-purple)', bordaTopo: 'var(--col-purple)', bg: 'var(--col-purple-bg)' },
   { id: 'em_atendimento', label: 'Em Atendimento', cor: '#F58226', bordaTopo: '#F58226', bg: '#FFF5F0' },
-  { id: 'aguardando_registro', label: 'Aguardando Registro', cor: '#F59E0B', bordaTopo: '#F59E0B', bg: '#FFFBEB' },
-  { id: 'finalizado', label: 'Finalizado / Registrado', cor: '#16A34A', bordaTopo: '#16A34A', bg: '#F0FDF4' },
+  { id: 'aguardando_registro', label: 'Aguardando Registro', cor: 'var(--col-amber)', bordaTopo: 'var(--col-amber)', bg: 'var(--col-amber-bg)' },
+  { id: 'finalizado', label: 'Finalizado / Registrado', cor: 'var(--col-green)', bordaTopo: 'var(--col-green)', bg: 'var(--col-green-bg)' },
 ]
 
 const ENTREGA_BADGE: Record<string, { bg: string; color: string; label: string; icon: string }> = {
-  balcao: { bg: '#EDE7F6', color: '#4527A0', label: 'Balcao', icon: '🏪' },
-  entrega: { bg: '#E3F2FD', color: '#1565C0', label: 'Entrega', icon: '📦' },
-  transportadora: { bg: '#FFF8E1', color: '#E65100', label: 'Transportadora', icon: '🚚' },
+  balcao: { bg: 'var(--tag-purple-bg)', color: 'var(--tag-purple-text)', label: 'Balcao', icon: '🏪' },
+  entrega: { bg: 'var(--tag-blue-bg)', color: 'var(--tag-blue-text)', label: 'Entrega', icon: '📦' },
+  transportadora: { bg: 'var(--bg-warning)', color: 'var(--color-warning)', label: 'Transportadora', icon: '🚚' },
 }
 
 const PGTO_BADGE: Record<string, { bg: string; color: string; label: string }> = {
-  pix: { bg: '#E8F5E9', color: '#2E7D32', label: 'PIX' },
-  credito: { bg: '#E3F2FD', color: '#1565C0', label: 'Crédito' },
-  debito: { bg: '#F3E5F5', color: '#6A1B9A', label: 'Débito' },
-  dinheiro: { bg: '#FFF8E1', color: '#E65100', label: 'Dinheiro' },
+  pix: { bg: 'var(--bg-success)', color: 'var(--color-success)', label: 'PIX' },
+  credito: { bg: 'var(--tag-blue-bg)', color: 'var(--tag-blue-text)', label: 'Crédito' },
+  debito: { bg: 'var(--bg-purple-light)', color: 'var(--col-purple)', label: 'Débito' },
+  dinheiro: { bg: 'var(--bg-warning)', color: 'var(--color-warning)', label: 'Dinheiro' },
 }
 
 function tempoDecorrido(dt: string) {
@@ -52,7 +52,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
   onSelecionar?: (id: string) => void
 }) {
   const [showVendedor, setShowVendedor] = useState(false)
-  const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: 'var(--border-color)', color: '#666', label: pedido.forma_pagamento || '—' }
+  const badge = PGTO_BADGE[(pedido.forma_pagamento || '').toLowerCase()] || { bg: 'var(--border-color)', color: 'var(--text-secondary)', label: pedido.forma_pagamento || '—' }
   const itensRaw = Array.isArray(pedido.itens) ? pedido.itens : []
   const itens = itensRaw.map((it: string | { descricao: string; valor: number }) =>
     typeof it === 'string' ? { descricao: it, valor: 0 } : (it || { descricao: '', valor: 0 })
@@ -80,7 +80,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
 
   return (
     <div style={{
-      background: '#fff', border: '0.5px solid var(--border-card)', borderRadius: 12, padding: '14px 16px',
+      background: 'var(--bg-card)', border: '0.5px solid var(--border-card)', borderRadius: 12, padding: '14px 16px',
       marginBottom: 10, cursor: 'grab', opacity: isDragging ? 0.5 : 1,
       boxShadow: isDragging ? 'none' : '0 1px 3px rgba(0,0,0,0.04)',
       transition: 'box-shadow 0.15s',
@@ -89,7 +89,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
         <span style={{ background: badge.bg, color: badge.color, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 20 }}>
           {badge.label}
         </span>
-        <span style={{ fontSize: 10, color: '#999', display: 'flex', alignItems: 'center', gap: 4 }}>
+        <span style={{ fontSize: 10, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>
           <Clock size={11} /> {tempoDecorrido(pedido.created_at)}
         </span>
       </div>
@@ -100,11 +100,11 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
             marginBottom: 10, cursor: 'pointer',
-            background: selecionado ? '#F0FDF4' : 'var(--bg-input)',
-            border: selecionado ? '0.5px solid #A5D6A7' : '0.5px solid var(--border-card)',
+            background: selecionado ? 'var(--bg-success)' : 'var(--bg-input)',
+            border: selecionado ? '0.5px solid var(--color-success)' : '0.5px solid var(--border-card)',
             borderRadius: 8, padding: '6px 10px',
             fontSize: 11, fontWeight: 700,
-            color: selecionado ? '#16A34A' : '#999',
+            color: selecionado ? 'var(--color-success)' : 'var(--text-muted)',
             transition: 'all 0.15s',
           }}
         >
@@ -127,7 +127,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
         </span>
       </div>
       {(pedido as { endereco_entrega?: string }).endereco_entrega && (
-        <div style={{ fontSize: 11, color: '#555', background: 'var(--bg-table-head)', padding: '6px 10px', borderRadius: 8, marginBottom: 8, display: 'flex', gap: 6 }}>
+        <div style={{ fontSize: 11, color: 'var(--text-secondary)', background: 'var(--bg-table-head)', padding: '6px 10px', borderRadius: 8, marginBottom: 8, display: 'flex', gap: 6 }}>
           <span>📍</span>
           <span>{(pedido as { endereco_entrega?: string }).endereco_entrega}</span>
         </div>
@@ -135,7 +135,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
 
       <div style={{ borderTop: '0.5px solid var(--border-color)', borderBottom: '0.5px solid var(--border-color)', padding: '8px 0', marginBottom: 8 }}>
         {itens.map((it: { descricao: string; valor: number }, i: number) => (
-          <div key={i} style={{ fontSize: 11, color: '#555', marginBottom: 3, display: 'flex', justifyContent: 'space-between' }}>
+          <div key={i} style={{ fontSize: 11, color: 'var(--text-secondary)', marginBottom: 3, display: 'flex', justifyContent: 'space-between' }}>
             <span>
               {(pedido as { quantidade?: string }).quantidade && `${(pedido as { quantidade?: string }).quantidade}x `}
               {it.descricao}
@@ -161,12 +161,12 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
             onClick={e => e.stopPropagation()}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 6,
-              background: '#E8F5E9', color: '#2E7D32', fontSize: 11, fontWeight: 700,
+              background: 'var(--bg-success)', color: 'var(--color-success)', fontSize: 11, fontWeight: 700,
               padding: '4px 10px', borderRadius: 20, textDecoration: 'none',
-              border: '0.5px solid #A5D6A7',
+              border: '0.5px solid var(--color-success)',
             }}
           >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="#2E7D32">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-success)">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
               <path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.555 4.122 1.528 5.856L.057 23.215a.75.75 0 0 0 .916.919l5.433-1.462A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.9 0-3.7-.497-5.27-1.446l-.376-.222-3.894 1.048 1.065-3.787-.245-.389A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
             </svg>
@@ -176,7 +176,7 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
       )}
 
       {(pedido.veiculo_carro || pedido.veiculo_placa) && (
-        <div style={{ fontSize: 11, color: '#888', marginBottom: 10 }}>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 10 }}>
           🚗 {[pedido.veiculo_carro, pedido.veiculo_ano, pedido.veiculo_motor].filter(Boolean).join(' / ')}
           {pedido.veiculo_placa && <span style={{ marginLeft: 6, background: 'var(--border-color)', padding: '1px 6px', borderRadius: 4, fontWeight: 600 }}>{pedido.veiculo_placa}</span>}
         </div>
@@ -192,11 +192,11 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
           <ChevronDown size={12} style={{ marginLeft: 'auto' }} />
         </button>
         {showVendedor && (
-          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: '#fff', border: '0.5px solid var(--border-card)', borderRadius: 8, zIndex: 50, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
+          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, background: 'var(--bg-card)', border: '0.5px solid var(--border-card)', borderRadius: 8, zIndex: 50, boxShadow: '0 4px 12px rgba(0,0,0,0.1)', overflow: 'hidden' }}>
             {vendedores.map(v => (
               <div key={v.id} onClick={() => atribuirVendedor(v.nome)}
-                style={{ padding: '9px 14px', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text-primary)', borderBottom: '0.5px solid #F5F5F5' }}
-                onMouseEnter={e => (e.currentTarget.style.background = '#FFF0E9')}
+                style={{ padding: '9px 14px', fontSize: 12, fontWeight: 500, cursor: 'pointer', color: 'var(--text-primary)', borderBottom: '0.5px solid var(--border-color)' }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'var(--bg-brand-light)')}
                 onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
                 {v.nome}
@@ -209,14 +209,14 @@ function Card({ pedido, vendedores, onUpdate, isDragging, selecionado, onSelecio
       {pedido.status !== 'finalizado' && (
         <button
           onClick={finalizar}
-          style={{ width: '100%', background: '#E8F5E9', border: '0.5px solid #A5D6A7', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 700, color: '#2E7D32', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
+          style={{ width: '100%', background: 'var(--bg-success)', border: '0.5px solid var(--color-success)', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 700, color: 'var(--color-success)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
         >
           <CheckCircle size={13} /> Marcar como Finalizado
         </button>
       )}
       <button
         onClick={moverLixeira}
-        style={{ width: '100%', marginTop: 6, background: '#FFF0F0', border: '0.5px solid #FFCDD2', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 700, color: '#C62828', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
+        style={{ width: '100%', marginTop: 6, background: 'var(--bg-danger)', border: '0.5px solid var(--color-danger)', borderRadius: 8, padding: '7px 12px', fontSize: 12, fontWeight: 700, color: 'var(--color-danger)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, fontFamily: 'Montserrat,sans-serif' }}
       >
         <Trash2 size={13} /> Mover para Lixeira
       </button>
@@ -270,9 +270,9 @@ function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar
                 }}
                 style={{
                   fontSize: 10, fontWeight: 700, cursor: 'pointer',
-                  background: pedidos.every(p => selecionados?.has(p.id)) ? '#16A34A' : '#F0FDF4',
-                  color: pedidos.every(p => selecionados?.has(p.id)) ? '#fff' : '#16A34A',
-                  border: '0.5px solid #A5D6A7', borderRadius: 6,
+                  background: pedidos.every(p => selecionados?.has(p.id)) ? 'var(--color-success)' : 'var(--bg-success)',
+                  color: pedidos.every(p => selecionados?.has(p.id)) ? '#fff' : 'var(--color-success)',
+                  border: '0.5px solid var(--color-success)', borderRadius: 6,
                   padding: '3px 8px', fontFamily: 'Montserrat,sans-serif',
                 }}
               >
@@ -289,7 +289,7 @@ function Column({ col, pedidos, vendedores, onUpdate, selecionados, onSelecionar
             <DraggableCard key={p.id} pedido={p} vendedores={vendedores} onUpdate={onUpdate} selecionado={selecionados?.has(p.id)} onSelecionar={onSelecionar} />
           ))}
           {pedidos.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '30px 0', color: '#ccc', fontSize: 12 }}>
+            <div style={{ textAlign: 'center', padding: '30px 0', color: 'var(--text-label)', fontSize: 12 }}>
               Nenhum pedido aqui
             </div>
           )}
@@ -362,7 +362,7 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
   return (
     <div style={{ padding: 24 }}>
       <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}>
+        <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>
           💡 Arraste os cards entre as colunas ou use os botões para atualizar o status
         </span>
       </div>
@@ -373,26 +373,26 @@ export default function KanbanBoard({ pedidos, vendedores, onUpdate }: Props) {
           display: 'flex', alignItems: 'center', gap: 12,
           boxShadow: '0 8px 32px rgba(0,0,0,0.25)', zIndex: 200,
         }}>
-          <span style={{ fontSize: 13, fontWeight: 700, color: '#fff' }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-white)' }}>
             {selecionados.size} selecionado(s)
           </span>
           <button
             onClick={marcarConcluidos}
             disabled={processando}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#16A34A', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--color-success)', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
           >
             <CheckCircle size={13} /> Concluído
           </button>
           <button
             onClick={moverSelecionadosLixeira}
             disabled={processando}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#C62828', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--color-danger)', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer', opacity: processando ? 0.6 : 1 }}
           >
             <Trash2 size={13} /> Lixeira
           </button>
           <button
             onClick={limparSelecao}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#444', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--text-secondary)', color: '#fff', border: 'none', borderRadius: 8, padding: '8px 16px', fontSize: 12, fontWeight: 700, cursor: 'pointer' }}
           >
             Cancelar
           </button>

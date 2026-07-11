@@ -96,8 +96,8 @@ export default function Lixeira() {
 
           return (
             <div key={p.id} style={{
-              background: "#fff",
-              border: "1px solid #eee",
+              background: "var(--bg-card)",
+              border: "1px solid var(--border-color)",
               borderRadius: 12,
               padding: "1rem 1.25rem",
               display: "flex",

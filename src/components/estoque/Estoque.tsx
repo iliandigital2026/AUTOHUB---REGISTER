@@ -41,7 +41,7 @@ const css = `
   .est-table tr:hover td { background: var(--bg-card)AF8; }
   .badge-qtd { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 700; }
   .badge-ok { background: var(--bg-success); color: var(--color-success); }
-  .badge-low { background: var(--bg-card)8E1; color: #F57F17; }
+  .badge-low { background: var(--bg-warning); color: var(--color-warning); }
   .badge-zero { background: var(--bg-danger); color: var(--color-danger); }
   .btn-icon { width: 28px; height: 28px; border-radius: 7px; border: 0.5px solid var(--border-card); background: var(--bg-input); display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); transition: all .15s; }
   .btn-icon:hover { background: #F58226; color: #fff; border-color: #F58226; }
@@ -200,7 +200,7 @@ export default function Estoque() {
             Estoque de Peças
           </div>
           {podeGerenciar && selecionados.size > 0 && (
-            <button className="btn-primary" style={{ background: '#C62828' }} onClick={excluirSelecionados}>
+            <button className="btn-primary" style={{ background: 'var(--color-danger)' }} onClick={excluirSelecionados}>
               <Trash2 size={13} /> Excluir {selecionados.size} selecionado(s)
             </button>
           )}
@@ -247,17 +247,17 @@ export default function Estoque() {
             <div className="est-stat-lbl">Valor em estoque</div>
           </div>
           <div className="est-stat">
-            <div className="est-stat-val" style={{ color: semEstoque > 0 ? '#C62828' : '#2E7D32' }}>{semEstoque}</div>
+            <div className="est-stat-val" style={{ color: semEstoque > 0 ? 'var(--color-danger)' : 'var(--color-success)' }}>{semEstoque}</div>
             <div className="est-stat-lbl">Sem estoque</div>
           </div>
         </div>
 
         <div className="table-wrap">
           {loading ? (
-            <div style={{ padding: 40, textAlign: 'center', color: '#bbb' }}>Carregando...</div>
+            <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-label)' }}>Carregando...</div>
           ) : pecas.length === 0 ? (
             <div className="empty-est">
-              <Package size={40} color="#ddd" />
+              <Package size={40} color="var(--text-label)" />
               <p style={{ marginTop: 12 }}>Nenhuma peça cadastrada ainda.</p>
             </div>
           ) : (
@@ -321,12 +321,12 @@ export default function Estoque() {
                         style={{ width: 16, height: 16, accentColor: '#F58226', cursor: 'pointer' }}
                       />
                     </td>
-                    <td style={{ fontSize: 11, color: '#888', fontFamily: 'monospace' }}>{p.codigo_peca || '—'}</td>
+                    <td style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'monospace' }}>{p.codigo_peca || '—'}</td>
                     <td style={{ fontWeight: 600 }}>{p.produto}</td>
                     <td>{p.marca_produto}</td>
                     <td>{p.carro}</td>
-                    <td style={{ color: '#888' }}>{p.motor_carro}</td>
-                    <td style={{ color: '#888', fontSize: 11 }}>{p.ano_carro}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{p.motor_carro}</td>
+                    <td style={{ color: 'var(--text-muted)', fontSize: 11 }}>{p.ano_carro}</td>
                     <td>
                       <span className={`badge-qtd ${p.quantidade === 0 ? 'badge-zero' : p.quantidade <= 3 ? 'badge-low' : 'badge-ok'}`}>
                         {p.quantidade} un.

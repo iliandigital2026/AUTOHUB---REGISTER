@@ -40,7 +40,7 @@ export function LogoIconLight({ size = 36 }: { size?: number }) {
           <stop offset="100%" stopColor="#D62C27"/>
         </linearGradient>
       </defs>
-      <rect width="50" height="50" rx="12" fill="#FFF3EC" stroke="#F9A05A" strokeWidth="0.75"/>
+      <rect width="50" height="50" rx="12" fill="var(--bg-brand-light)" stroke="var(--brand-orange)" strokeWidth="0.75"/>
       <circle cx="25" cy="25" r="7" fill="url(#lig-lc)" opacity="0.9"/>
       <circle cx="39" cy="13" r="4" fill="#E8421F" opacity="0.45"/>
       <circle cx="42" cy="31" r="4" fill="#E8421F" opacity="0.45"/>
@@ -69,8 +69,8 @@ export function LogoFull({ variant = 'light' }: { variant?: 'dark' | 'light' }) 
           }}>Auto</span>
           <span style={{
             fontWeight: 300,
-            color: isDark ? '#ffffff' : '#1a1a1a',
-            WebkitTextFillColor: isDark ? '#ffffff' : '#1a1a1a',
+            color: 'var(--text-primary)',
+            WebkitTextFillColor: 'var(--text-primary)',
           }}>Hub</span>
         </div>
 
@@ -96,7 +96,7 @@ export function LogoFull({ variant = 'light' }: { variant?: 'dark' | 'light' }) 
           fontSize: 7.5,
           fontWeight: 300,
           letterSpacing: '0.12em',
-          color: isDark ? 'rgba(255,255,255,0.28)' : '#bbb',
+          color: 'var(--text-label)',
           textTransform: 'uppercase',
           fontFamily: 'Montserrat, sans-serif',
           marginTop: 3,
@@ -148,7 +148,7 @@ export function LogoLogin() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, fontFamily: 'Montserrat, sans-serif', fontSize: 10.5 }}>
           <span style={{ color: '#F58226', fontWeight: 600, letterSpacing: '0.04em' }}>Pedidos</span>
           <span style={{ color: 'rgba(255,255,255,0.3)' }}>·</span>
-          <span style={{ color: '#F06040', fontWeight: 600, letterSpacing: '0.04em' }}>Métricas</span>
+          <span style={{ color: 'var(--brand-orange)', fontWeight: 600, letterSpacing: '0.04em' }}>Métricas</span>
           <span style={{ color: 'rgba(255,255,255,0.3)' }}>·</span>
           <span style={{ color: '#D62C27', fontWeight: 600, letterSpacing: '0.04em' }}>Controle</span>
         </div>

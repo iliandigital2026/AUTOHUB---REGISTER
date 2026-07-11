@@ -5,7 +5,7 @@ import { LogoLogin } from '../layout/Logo'
 const css = `
   .login-bg {
     min-height: 100vh;
-    background: linear-gradient(140deg, #111111 0%, #1e100a 55%, #150808 100%);
+    background: var(--bg-login);
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
   }
@@ -54,7 +54,7 @@ const css = `
     font-size: 14px; font-weight: 700; font-family: 'Montserrat', sans-serif;
     cursor: pointer; margin-top: 6px; letter-spacing: 0.02em;
     background: linear-gradient(90deg, #F58226 0%, #E8421F 55%, #D62C27 100%);
-    color: #fff; box-shadow: 0 5px 18px rgba(245,130,38,0.32);
+    color: var(--text-white); box-shadow: 0 5px 18px rgba(245,130,38,0.32);
     transition: opacity .15s, box-shadow .15s;
   }
   .btn-login:hover { opacity: .91; box-shadow: 0 7px 22px rgba(245,130,38,0.42); }
@@ -147,7 +147,7 @@ export default function Login() {
 
           <div className="divider">ou</div>
 
-          <div style={{ textAlign: 'center', fontSize: 12, color: '#aaa', fontFamily: 'Montserrat, sans-serif' }}>
+          <div style={{ textAlign: 'center', fontSize: 12, color: 'var(--text-muted)', fontFamily: 'Montserrat, sans-serif' }}>
             {modo === 'login' ? 'Não tem acesso? ' : 'Já tem conta? '}
             <span
               style={{ color: '#F58226', fontWeight: 700, cursor: 'pointer' }}

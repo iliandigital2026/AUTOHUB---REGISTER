@@ -37,8 +37,8 @@ const style = `
   .n8n-badge.online { background: var(--bg-success); color: var(--color-success); }
   .n8n-badge.offline { background: var(--bg-input); color: var(--text-muted); }
   .n8n-dot { width: 7px; height: 7px; border-radius: 50%; }
-  .n8n-badge.online .n8n-dot { background: #2E7D32; animation: pulse-dot 2s infinite; }
-  .n8n-badge.offline .n8n-dot { background: #ddd; }
+  .n8n-badge.online .n8n-dot { background: var(--color-success); animation: pulse-dot 2s infinite; }
+  .n8n-badge.offline .n8n-dot { background: var(--border-card); }
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
   }
@@ -54,7 +54,7 @@ const style = `
     display: flex; flex-direction: column; gap: 8px; pointer-events: none;
   }
   .toast {
-    background: var(--text-primary); color: #fff; font-size: 13px; font-weight: 500;
+    background: var(--text-primary); color: var(--bg-app); font-size: 13px; font-weight: 500;
     padding: 12px 18px; border-radius: 10px; max-width: 320px;
     border-left: 4px solid #F58226; animation: slideIn 0.3s ease;
     font-family: 'Montserrat', sans-serif;

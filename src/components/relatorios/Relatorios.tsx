@@ -94,7 +94,7 @@ export default function Relatorios({ pedidos }: Props) {
   const totalGeral = ranking.reduce((a, v) => a + v.total, 0)
   const melhor = ranking[0]
 
-  const chartData = ranking.map((v, i) => ({ nome: v.nome.split(' ')[0], total: v.total, cor: CORES[i] || '#ddd' }))
+  const chartData = ranking.map((v, i) => ({ nome: v.nome.split(' ')[0], total: v.total, cor: CORES[i] || 'var(--border-card)' }))
 
   return (
     <>
@@ -103,10 +103,10 @@ export default function Relatorios({ pedidos }: Props) {
         <div className="rel-filter">
           <label>Período</label>
           <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} />
-          <span style={{ fontSize: 12, color: '#999' }}>até</span>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>até</span>
           <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} />
           <button className="btn-filtrar" onClick={() => setRange({ from: dateFrom, to: dateTo })}>Filtrar</button>
-          <span style={{ fontSize: 12, color: '#999', marginLeft: 'auto', fontWeight: 600 }}>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 'auto', fontWeight: 600 }}>
             {finalizados.length} pedidos com vendedor atribuído
           </span>
         </div>
@@ -163,9 +163,9 @@ export default function Relatorios({ pedidos }: Props) {
               {chartData.length > 0 && (
                 <ResponsiveContainer width="100%" height={260}>
                   <BarChart data={chartData} layout="vertical" margin={{ left: 0, right: 16 }}>
-                    <XAxis type="number" tick={{ fontSize: 10, fill: '#999' }} tickFormatter={v => `R$${(v/1000).toFixed(0)}k`} />
-                    <YAxis type="category" dataKey="nome" tick={{ fontSize: 12, fill: '#555', fontWeight: 600 }} width={70} />
-                    <Tooltip formatter={(v: number) => fmtMoeda(v)} cursor={{ fill: '#FFF0E9' }} />
+                    <XAxis type="number" tick={{ fontSize: 10, fill: 'var(--text-muted)' }} tickFormatter={v => `R$${(v/1000).toFixed(0)}k`} />
+                    <YAxis type="category" dataKey="nome" tick={{ fontSize: 12, fill: 'var(--text-secondary)', fontWeight: 600 }} width={70} />
+                    <Tooltip formatter={(v: number) => fmtMoeda(v)} cursor={{ fill: 'var(--bg-brand-light)' }} />
                     <Bar dataKey="total" radius={[0, 6, 6, 0]}>
                       {chartData.map((entry, i) => <Cell key={i} fill={entry.cor} />)}
                     </Bar>
@@ -183,25 +183,25 @@ export default function Relatorios({ pedidos }: Props) {
               <thead>
                 <tr>
                   {['Vendedor','Pedidos','Faturamento','Ticket Médio','Tempo Médio','% do Total'].map(h => (
-                    <th key={h} style={{ fontSize: 11, fontWeight: 700, color: '#999', textTransform: 'uppercase', letterSpacing: '.4px', padding: '8px 12px', textAlign: 'left', borderBottom: '0.5px solid var(--border-color)' }}>{h}</th>
+                    <th key={h} style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px', padding: '8px 12px', textAlign: 'left', borderBottom: '0.5px solid var(--border-color)' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {ranking.map((v, i) => (
-                  <tr key={v.nome} style={{ background: i % 2 === 0 ? '#fff' : '#FAFAFA' }}>
+                  <tr key={v.nome} style={{ background: i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-table-head)' }}>
                     <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 600, color: 'var(--text-primary)' }}>
                       <span style={{ marginRight: 8, fontSize: 14 }}>{i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `${i+1}º`}</span>
                       {v.nome}
                     </td>
-                    <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>{v.pedidos}</td>
+                    <td style={{ padding: '10px 12px', fontSize: 13, color: 'var(--text-secondary)' }}>{v.pedidos}</td>
                     <td style={{ padding: '10px 12px', fontSize: 13, fontWeight: 700, color: '#F58226' }}>{fmtMoeda(v.total)}</td>
-                    <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>{fmtMoeda(v.total / v.pedidos)}</td>
-                    <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>{calcTempo(v.pedidosData)}</td>
-                    <td style={{ padding: '10px 12px', fontSize: 13, color: '#555' }}>
+                    <td style={{ padding: '10px 12px', fontSize: 13, color: 'var(--text-secondary)' }}>{fmtMoeda(v.total / v.pedidos)}</td>
+                    <td style={{ padding: '10px 12px', fontSize: 13, color: 'var(--text-secondary)' }}>{calcTempo(v.pedidosData)}</td>
+                    <td style={{ padding: '10px 12px', fontSize: 13, color: 'var(--text-secondary)' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <div style={{ flex: 1, background: 'var(--border-color)', borderRadius: 20, height: 7, overflow: 'hidden', minWidth: 60 }}>
-                          <div style={{ width: `${totalGeral ? Math.round((v.total/totalGeral)*100) : 0}%`, height: '100%', background: CORES[i] || '#ddd', borderRadius: 20 }} />
+                          <div style={{ width: `${totalGeral ? Math.round((v.total/totalGeral)*100) : 0}%`, height: '100%', background: CORES[i] || 'var(--border-card)', borderRadius: 20 }} />
                         </div>
                         {totalGeral ? Math.round((v.total/totalGeral)*100) : 0}%
                       </div>

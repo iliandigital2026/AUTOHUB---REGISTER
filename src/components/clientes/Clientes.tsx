@@ -35,7 +35,7 @@ const css = `
   .hist-date { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; }
   .hist-status { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
   .status-fin { background: var(--bg-success); color: var(--color-success); }
-  .status-ag { background: var(--bg-card)8E1; color: #F57F17; }
+  .status-ag { background: var(--bg-warning); color: var(--color-warning); }
   .status-em { background: var(--bg-card)0E9; color: #F58226; }
   .hist-item { font-size: 12px; color: var(--text-secondary); margin-bottom: 3px; display: flex; justify-content: space-between; }
   .hist-total { font-size: 13px; font-weight: 700; color: #F58226; margin-top: 8px; }
@@ -125,7 +125,7 @@ export default function Clientes({ pedidos }: Props) {
               onChange={e => setBusca(e.target.value)}
             />
           </div>
-          <span style={{ fontSize: 12, color: '#999', fontWeight: 500 }}>{lista.length} clientes</span>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>{lista.length} clientes</span>
         </div>
 
         <div className="table-wrap">
@@ -163,7 +163,7 @@ export default function Clientes({ pedidos }: Props) {
                   </td>
                   <td><span style={{ fontWeight: 700 }}>{d.pedidos.length}</span></td>
                   <td><span style={{ color: '#F58226', fontWeight: 700 }}>{fmtMoeda(d.total)}</span></td>
-                  <td style={{ color: '#999', fontSize: 12 }}>{d.ultima ? fmtData(d.ultima) : '-'}</td>
+                  <td style={{ color: 'var(--text-muted)', fontSize: 12 }}>{d.ultima ? fmtData(d.ultima) : '-'}</td>
                   <td>
                     <button className="btn-hist" onClick={() => setHistorico(nome)}>
                       Ver historico
@@ -217,7 +217,7 @@ export default function Clientes({ pedidos }: Props) {
                       </div>
 
                       {itens.length === 0 ? (
-                        <div className="hist-item" style={{ color: '#bbb' }}>Sem itens registrados</div>
+                        <div className="hist-item" style={{ color: 'var(--text-label)' }}>Sem itens registrados</div>
                       ) : (
                         itens.map((it, i) => (
                           <div key={i} className="hist-item">
@@ -232,7 +232,7 @@ export default function Clientes({ pedidos }: Props) {
                       <div className="hist-total">Total: {fmtMoeda(p.total)}</div>
 
                       {p.veiculo_carro && (
-                        <div style={{ fontSize: 11, color: '#999', marginTop: 6 }}>
+                        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 6 }}>
                           carro {[p.veiculo_carro, p.veiculo_ano, p.veiculo_placa].filter(Boolean).join(' · ')}
                         </div>
                       )}
@@ -244,22 +244,22 @@ export default function Clientes({ pedidos }: Props) {
                           </span>
                         )}
                         {p.forma_entrega && (
-                          <span className="badge" style={{ background: '#EDE7F6', color: '#4527A0' }}>
+                          <span className="badge" style={{ background: 'var(--tag-purple-bg)', color: 'var(--tag-purple-text)' }}>
                             {p.forma_entrega.charAt(0).toUpperCase() + p.forma_entrega.slice(1)}
                           </span>
                         )}
                         {p.vendedor && (
-                          <span className="badge" style={{ background: '#E8F5E9', color: '#2E7D32' }}>
+                          <span className="badge" style={{ background: 'var(--bg-success)', color: 'var(--color-success)' }}>
                             👤 {p.vendedor}
                           </span>
                         )}
                         {p.endereco_entrega && (
-                          <span style={{ fontSize: 10, color: '#888' }}>📍 {p.endereco_entrega}</span>
+                          <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>📍 {p.endereco_entrega}</span>
                         )}
                         <button
                           onClick={() => moverLixeira(p.id)}
                           disabled={removendo === p.id}
-                          style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, background: '#FFF0F0', border: '0.5px solid #FFCDD2', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 700, color: '#C62828', cursor: 'pointer', opacity: removendo === p.id ? 0.6 : 1 }}
+                          style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 4, background: 'var(--bg-danger)', border: '0.5px solid var(--color-danger)', borderRadius: 6, padding: '4px 10px', fontSize: 11, fontWeight: 700, color: 'var(--color-danger)', cursor: 'pointer', opacity: removendo === p.id ? 0.6 : 1 }}
                         >
                           <Trash2 size={11} /> {removendo === p.id ? 'Removendo...' : 'Lixeira'}
                         </button>

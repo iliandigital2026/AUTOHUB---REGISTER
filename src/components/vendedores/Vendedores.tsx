@@ -101,11 +101,11 @@ export default function Vendedores() {
             <div className="stat-lbl">Total</div>
           </div>
           <div className="stat-card">
-            <div className="stat-num" style={{ color: '#2E7D32' }}>{ativos}</div>
+            <div className="stat-num" style={{ color: 'var(--color-success)' }}>{ativos}</div>
             <div className="stat-lbl">Ativos</div>
           </div>
           <div className="stat-card">
-            <div className="stat-num" style={{ color: '#bbb' }}>{vendedores.length - ativos}</div>
+            <div className="stat-num" style={{ color: 'var(--text-label)' }}>{vendedores.length - ativos}</div>
             <div className="stat-lbl">Inativos</div>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function Vendedores() {
         )}
 
         {loading ? (
-          <div style={{ textAlign: 'center', padding: 40, color: '#bbb' }}>Carregando...</div>
+          <div style={{ textAlign: 'center', padding: 40, color: 'var(--text-label)' }}>Carregando...</div>
         ) : (
           <div className="vend-list">
             {vendedores.length === 0 && (

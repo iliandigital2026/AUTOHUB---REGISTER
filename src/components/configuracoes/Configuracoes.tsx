@@ -64,17 +64,17 @@ const css = `
   .wh-input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 12px; }
   .wh-input { flex: 1; padding: 10px 14px; border: 0.5px solid var(--border-card); border-radius: 9px; font-family: 'Montserrat',sans-serif; font-size: 12px; color: var(--text-primary); background: var(--bg-table-head); outline: none; }
   .wh-input:focus { border-color: #F58226; background: var(--bg-card); }
-  .wh-input.saved { border-color: #A5D6A7; background: var(--bg-success); }
+  .wh-input.saved { border-color: var(--color-success); background: var(--bg-success); }
   .btn-test { background: var(--bg-input); color: var(--text-secondary); border: 0.5px solid var(--border-card); border-radius: 9px; padding: 10px 14px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; white-space: nowrap; transition: all .15s; }
   .btn-test:hover { background: #F58226; color: #fff; border-color: #F58226; }
   .btn-save-wh { background: #F58226; color: #fff; border: none; border-radius: 9px; padding: 10px 16px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Montserrat',sans-serif; display: flex; align-items: center; gap: 6px; }
   .test-result { font-size: 11px; font-weight: 600; padding: 6px 10px; border-radius: 7px; display: flex; align-items: center; gap: 5px; }
   .test-ok { background: var(--bg-success); color: var(--color-success); }
   .test-fail { background: var(--bg-danger); color: var(--color-danger); }
-  .payload-block { background: var(--text-primary); color: #E8E8E8; border-radius: 10px; padding: 14px 16px; font-size: 11px; font-family: monospace; line-height: 1.7; overflow-x: auto; position: relative; }
-  .copy-btn { position: absolute; top: 10px; right: 10px; background: #333; color: var(--text-label); border: none; border-radius: 6px; padding: 4px 8px; font-size: 10px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .payload-block { background: var(--text-primary); color: var(--bg-app); border-radius: 10px; padding: 14px 16px; font-size: 11px; font-family: monospace; line-height: 1.7; overflow-x: auto; position: relative; }
+  .copy-btn { position: absolute; top: 10px; right: 10px; background: var(--bg-input); color: var(--text-label); border: none; border-radius: 6px; padding: 4px 8px; font-size: 10px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
   .copy-btn:hover { background: #F58226; color: #fff; }
-  .info-box { background: var(--bg-card)8E1; border: 0.5px solid #F59E0B40; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #92400E; display: flex; gap: 10px; margin-bottom: 14px; }
+  .info-box { background: var(--bg-warning); border: 0.5px solid var(--col-amber); border-radius: 10px; padding: 14px 16px; font-size: 12px; color: var(--color-warning); display: flex; gap: 10px; margin-bottom: 14px; }
   .env-list { background: var(--bg-input); border-radius: 10px; padding: 14px 16px; font-size: 12px; font-family: monospace; line-height: 2; }
   .env-row { display: flex; justify-content: space-between; align-items: center; }
   .env-key { color: #F58226; font-weight: 700; }
@@ -160,7 +160,7 @@ export default function Configuracoes() {
               )}
 
               <div style={{ marginTop: 12 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#999', textTransform: 'uppercase', letterSpacing: '.4px', marginBottom: 6 }}>
+                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '.4px', marginBottom: 6 }}>
                   Payload enviado pelo sistema:
                 </div>
                 <div className="payload-block">

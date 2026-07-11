@@ -17,7 +17,7 @@ const css = `
   .fu-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; }
   .fu-badge { font-size: 10px; font-weight: 700; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
   .fu-urgente { background: var(--bg-danger); color: var(--color-danger); }
-  .fu-moderado { background: var(--bg-card)8E1; color: #F57F17; }
+  .fu-moderado { background: var(--bg-warning); color: var(--color-warning); }
   .fu-info { flex: 1; min-width: 0; }
   .fu-nome { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-bottom: 3px; }
   .fu-detalhe { font-size: 12px; color: var(--text-muted); }
@@ -84,8 +84,8 @@ export default function FollowUp({ pedidos }: Props) {
       <div className="followup-page">
         <div className="followup-summary">
           <div className="fs-card">
-            <div className="fs-icon" style={{ background: '#FFEBEE' }}>
-              <AlertTriangle size={20} color="#C62828" />
+            <div className="fs-icon" style={{ background: 'var(--bg-danger)' }}>
+              <AlertTriangle size={20} color="var(--color-danger)" />
             </div>
             <div>
               <div className="fs-val">{urgentes.length}</div>
@@ -93,8 +93,8 @@ export default function FollowUp({ pedidos }: Props) {
             </div>
           </div>
           <div className="fs-card">
-            <div className="fs-icon" style={{ background: '#FFF8E1' }}>
-              <Clock size={20} color="#F57F17" />
+            <div className="fs-icon" style={{ background: 'var(--bg-warning)' }}>
+              <Clock size={20} color="var(--color-warning)" />
             </div>
             <div>
               <div className="fs-val">{moderados.length}</div>
@@ -102,7 +102,7 @@ export default function FollowUp({ pedidos }: Props) {
             </div>
           </div>
           <div className="fs-card">
-            <div className="fs-icon" style={{ background: '#FFF0E9' }}>
+            <div className="fs-icon" style={{ background: 'var(--bg-brand-light)' }}>
               <Clock size={20} color="#F58226" />
             </div>
             <div>
@@ -111,8 +111,8 @@ export default function FollowUp({ pedidos }: Props) {
             </div>
           </div>
           <div className="fs-card">
-            <div className="fs-icon" style={{ background: '#F5F5F5' }}>
-              <XCircle size={20} color="#999" />
+            <div className="fs-icon" style={{ background: 'var(--bg-input)' }}>
+              <XCircle size={20} color="var(--text-muted)" />
             </div>
             <div>
               <div className="fs-val">{naoFinalizados.length}</div>
@@ -192,7 +192,7 @@ export default function FollowUp({ pedidos }: Props) {
                     const itens = Array.isArray(p.itens) ? p.itens : []
                     return (
                       <div key={p.id} className="fu-card" style={{ opacity: 0.7 }}>
-                        <span className="fu-badge" style={{ background: '#F5F5F5', color: '#999' }}>
+                        <span className="fu-badge" style={{ background: 'var(--bg-input)', color: 'var(--text-muted)' }}>
                           Nao Finalizado
                         </span>
                         <div className="fu-info">
