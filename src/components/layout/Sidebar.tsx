@@ -103,10 +103,7 @@ export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEm
   const initials = userEmail ? userEmail.slice(0, 2).toUpperCase() : 'AG'
 
   const navMainVisible = NAV_MAIN.filter(item => (item.roles as readonly string[]).includes(role))
-  const navConfigVisible = NAV_CONFIG.filter(item =>
-    (item.roles as readonly string[]).includes(role) &&
-    true // acesso controlado pelo role no array roles[]
-  )
+  const navConfigVisible = NAV_CONFIG.filter(item => item.roles.includes(role as never))
 
   if (loading) {
     return (
