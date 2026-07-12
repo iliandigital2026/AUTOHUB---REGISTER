@@ -27,7 +27,6 @@ const NAV_CONFIG = [
   { id: 'configuracoes',  label: 'Integrações N8N',  icon: Settings, roles: ['suporte'] },
 ] as const
 
-const ADMIN_EMAIL = 'iliandigital2026@gmail.com'
 
 const style = `
   .sidebar {
@@ -106,7 +105,7 @@ export default function Sidebar({ page, setPage, pendingCount, onSignOut, userEm
   const navMainVisible = NAV_MAIN.filter(item => (item.roles as readonly string[]).includes(role))
   const navConfigVisible = NAV_CONFIG.filter(item =>
     (item.roles as readonly string[]).includes(role) &&
-    (item.id !== 'configuracoes' || userEmail === ADMIN_EMAIL)
+    true // acesso controlado pelo role no array roles[]
   )
 
   if (loading) {

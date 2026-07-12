@@ -206,6 +206,8 @@ export default function Configuracoes() {
                 ['VITE_SUPABASE_ANON_KEY', 'sb_publishable_4L53n3X9...'],
                 ['VITE_N8N_WEBHOOK_ATUALIZAR_STATUS', 'https://seu-n8n.com/webhook/...'],
                 ['VITE_N8N_WEBHOOK_FOLLOW_UP', 'https://seu-n8n.com/webhook/...'],
+                ['forma_entrega', 'balcao | entrega | transportadora'],
+                ['endereco_entrega', 'Rua exemplo, 123 — só quando entrega/transportadora'],
               ].map(([k, v]) => (
                 <div key={k} className="env-row">
                   <span className="env-key">{k}</span>
