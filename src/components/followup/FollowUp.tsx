@@ -268,7 +268,7 @@ export default function FollowUp({ pedidos }: Props) {
                       </div>
                       <div className="fu-actions">
                         {c.telefone && (
-                          
+                            <a
                             href={`https://wa.me/${c.telefone.replace(/\D/g, '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
