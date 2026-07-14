@@ -8,7 +8,7 @@ interface Props { pedidos: Pedido[] }
 
 const css = `
   .followup-page { padding: 24px; }
-  .followup-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
+  .followup-summary { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 20px; }
   .fs-card { background: var(--bg-card); border: 0.5px solid var(--border-card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; }
   .fs-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .fs-val { font-size: 22px; font-weight: 700; color: var(--text-primary); }
@@ -51,7 +51,7 @@ export default function FollowUp({ pedidos }: Props) {
     return pedidos
       .filter(p => p.status === 'em_atendimento' || p.status === 'aguardando_registro')
       .filter(p => !(p as { deleted_at?: string }).deleted_at)
-      .filter(p => minutosDesde(p.created_at) >= 1320) // 22 horas
+      .filter(p => minutosDesde(p.created_at) >= 480) // 8 horas
       .sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime())
   }, [pedidos])
 
@@ -62,8 +62,25 @@ export default function FollowUp({ pedidos }: Props) {
   })
   const recentes = pendentes.filter(p => {
     const m = minutosDesde(p.created_at)
-    return m >= 1320 && m < 1440 // 22h-24h
+    return m >= 480 && m < 1440 // 8h-24h
   })
+
+  // Clientes inativos — 2+ dias sem comprar, baseado na ultima compra concluida
+  const clientesInativos = useMemo(() => {
+    const compras = pedidos.filter(p => (p.status === 'finalizado' || p.status === 'concluido') && !(p as { deleted_at?: string }).deleted_at)
+    const porCliente = new Map<string, { nome: string; telefone: string; ultimaCompra: string }>()
+    compras.forEach(p => {
+      const chave = p.cliente_telefone || p.cliente_nome
+      const atual = porCliente.get(chave)
+      if (!atual || new Date(p.created_at) > new Date(atual.ultimaCompra)) {
+        porCliente.set(chave, { nome: p.cliente_nome, telefone: p.cliente_telefone, ultimaCompra: p.created_at })
+      }
+    })
+    return Array.from(porCliente.values())
+      .map(c => ({ ...c, dias: Math.floor((Date.now() - new Date(c.ultimaCompra).getTime()) / (1000 * 60 * 60 * 24)) }))
+      .filter(c => c.dias >= 2)
+      .sort((a, b) => b.dias - a.dias)
+  }, [pedidos])
 
   const naoFinalizados = pedidos.filter(p => p.status === 'nao_finalizado')
 
@@ -107,7 +124,7 @@ export default function FollowUp({ pedidos }: Props) {
             </div>
             <div>
               <div className="fs-val">{recentes.length}</div>
-              <div className="fs-label">Recentes (22-24h)</div>
+              <div className="fs-label">Recentes (8-24h)</div>
             </div>
           </div>
           <div className="fs-card">
@@ -119,9 +136,18 @@ export default function FollowUp({ pedidos }: Props) {
               <div className="fs-label">Nao Finalizados</div>
             </div>
           </div>
+          <div className="fs-card">
+            <div className="fs-icon" style={{ background: 'var(--tag-purple-bg)' }}>
+              <Clock size={20} color="var(--tag-purple-text)" />
+            </div>
+            <div>
+              <div className="fs-val">{clientesInativos.length}</div>
+              <div className="fs-label">Inativos (2+ dias)</div>
+            </div>
+          </div>
         </div>
 
-        {pendentes.length === 0 && naoFinalizados.length === 0 ? (
+        {pendentes.length === 0 && naoFinalizados.length === 0 && clientesInativos.length === 0 ? (
           <div className="empty-fu">
             <div className="empty-fu-icon">🎉</div>
             <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: 16, marginBottom: 6 }}>Tudo em dia!</div>
@@ -223,6 +249,38 @@ export default function FollowUp({ pedidos }: Props) {
                       </div>
                     )
                   })}
+                </div>
+              </>
+            )}
+
+            {clientesInativos.length > 0 && (
+              <>
+                <div className="section-title">Clientes sem comprar ha 2+ dias</div>
+                <div className="followup-list">
+                  {clientesInativos.map(c => (
+                    <div key={c.telefone || c.nome} className="fu-card">
+                      <span className="fu-badge" style={{ background: 'var(--tag-purple-bg)', color: 'var(--tag-purple-text)' }}>
+                        {c.dias} {c.dias === 1 ? 'dia' : 'dias'}
+                      </span>
+                      <div className="fu-info">
+                        <div className="fu-nome">{c.nome}</div>
+                        <div className="fu-detalhe">Ultima compra: {new Date(c.ultimaCompra).toLocaleDateString('pt-BR')}</div>
+                      </div>
+                      <div className="fu-actions">
+                        {c.telefone && (
+                          
+                            href={`https://wa.me/${c.telefone.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn-sm btn-wa"
+                            style={{ textDecoration: 'none' }}
+                          >
+                            <Phone size={12} /> WA
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </>
             )}

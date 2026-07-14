@@ -25,7 +25,7 @@ function parseItens(itens: any): any[] {
 
 function diasRestantes(deleted_at: string): number {
   const deletedDate = new Date(deleted_at);
-  const expira = new Date(deletedDate.getTime() + 60 * 24 * 60 * 60 * 1000);
+  const expira = new Date(deletedDate.getTime() + 10 * 24 * 60 * 60 * 1000);
   const agora = new Date();
   const diff = Math.ceil((expira.getTime() - agora.getTime()) / (1000 * 60 * 60 * 24));
   return Math.max(0, diff);
@@ -73,7 +73,7 @@ export default function Lixeira() {
           marginLeft: "auto", fontSize: 13, color: "var(--text-muted)",
           background: "var(--bg-input)", padding: "4px 12px", borderRadius: 20
         }}>
-          Itens apagados automaticamente após 60 dias
+          Itens apagados automaticamente após 10 dias
         </span>
       </div>
 

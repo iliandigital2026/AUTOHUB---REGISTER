@@ -224,9 +224,10 @@ export default function Dashboard({ pedidos }: Props) {
     { tipo: 'transportadora', label: 'Transportadora', qtd: entregaMap.get('transportadora') || 0, cor: 'var(--color-warning)' },
   ]
 
-  // Top 5 clientes
+  // Top 5 clientes — só vendas fechadas (aguardando_registro + finalizado)
+  const vendasFechadas = filtrados.filter(p => p.status === 'aguardando_registro' || p.status === 'finalizado' || p.status === 'concluido')
   const clienteMap = new Map<string, { pedidos: number; total: number }>()
-  filtrados.forEach(p => {
+  vendasFechadas.forEach(p => {
     const ex = clienteMap.get(p.cliente_nome) || { pedidos: 0, total: 0 }
     clienteMap.set(p.cliente_nome, { pedidos: ex.pedidos + 1, total: ex.total + p.total })
   })
